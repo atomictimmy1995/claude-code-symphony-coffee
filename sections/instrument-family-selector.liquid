@@ -1,0 +1,231 @@
+{% comment %} Instrument Family Subscription Selector — Subi + Shopify Flow {% endcomment %}
+
+<div class="instrument-family-selector" data-section-id="{{ section.id }}">
+
+  <div class="ifs-hero">
+    <p class="ifs-eyebrow">Subscriber exclusive</p>
+    <h2 class="ifs-heading">{{ section.settings.heading }}</h2>
+    <p class="ifs-subheading">{{ section.settings.subheading }}</p>
+  </div>
+
+  <div class="ifs-families" role="radiogroup" aria-label="Choose your instrument family">
+    {% for block in section.blocks %}
+      {% if block.type == 'family' %}
+        <div
+          class="ifs-family-card"
+          data-family="{{ block.settings.handle }}"
+          data-preview-title="{{ block.settings.preview_title }}"
+          data-preview-desc="{{ block.settings.preview_description }}"
+          tabindex="0"
+          role="radio"
+          aria-checked="false"
+          {{ block.shopify_attributes }}
+        >
+          <p class="ifs-family-name">{{ block.settings.name }}</p>
+          <p class="ifs-family-instruments">{{ block.settings.instruments }}</p>
+          <p class="ifs-family-flavor">{{ block.settings.flavor_hint }}</p>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+
+  <div class="ifs-preview" id="ifs-preview-{{ section.id }}" aria-live="polite" hidden>
+    <div class="ifs-preview-header">
+      <div>
+        <p class="ifs-preview-label" id="ifs-preview-label-{{ section.id }}"></p>
+        <p class="ifs-preview-title" id="ifs-preview-title-{{ section.id }}"></p>
+      </div>
+      <span class="ifs-surprise-badge">Surprise</span>
+    </div>
+    <p class="ifs-preview-desc" id="ifs-preview-desc-{{ section.id }}"></p>
+  </div>
+
+  <form action="/cart/add" method="post" id="ifs-form-{{ section.id }}" class="ifs-form">
+    <input type="hidden" name="id" value="{{ section.settings.subscription_variant_id }}">
+    <input type="hidden" name="quantity" value="1">
+    <input type="hidden" name="selling_plan" value="{{ section.settings.subi_selling_plan_id }}">
+    <input
+      type="hidden"
+      name="properties[Instrument Family]"
+      id="ifs-family-input-{{ section.id }}"
+      value=""
+    >
+
+    <div class="ifs-pricing">
+      <span class="ifs-price">{{ section.settings.price | money }}</span>
+      <span class="ifs-price-meta">/ month · cancel anytime</span>
+    </div>
+
+    <button
+      type="submit"
+      class="ifs-cta"
+      id="ifs-cta-{{ section.id }}"
+      disabled
+      aria-disabled="true"
+    >
+      Select a family to continue
+    </button>
+  </form>
+
+  <div class="ifs-how-it-works">
+    <p class="ifs-hiw-heading">How it works</p>
+    <div class="ifs-hiw-steps">
+      <div class="ifs-hiw-step">
+        <span class="ifs-hiw-num">1</span>
+        <p class="ifs-hiw-title">Pick your family</p>
+        <p class="ifs-hiw-desc">Choose the instrument family that speaks to you — strings, brass, woodwinds, or percussion.</p>
+      </div>
+      <div class="ifs-hiw-step">
+        <span class="ifs-hiw-num">2</span>
+        <p class="ifs-hiw-title">We roast your surprise</p>
+        <p class="ifs-hiw-desc">Each month a new exclusive blend inspired by an instrument within your family is roasted just for you.</p>
+      </div>
+      <div class="ifs-hiw-step">
+        <span class="ifs-hiw-num">3</span>
+        <p class="ifs-hiw-title">Discover & collect</p>
+        <p class="ifs-hiw-desc">The blend name, story, and tasting notes arrive with your shipment. Build your collection across the orchestra.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{{ 'instrument-family-selector.css' | asset_url | stylesheet_tag }}
+{{ 'instrument-family-selector.js' | asset_url | script_tag }}
+
+{% schema %}
+{
+  "name": "Instrument Family",
+  "tag": "section",
+  "class": "instrument-family-section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Instrument Family Subscription"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Choose your instrument family. Every month, a new surprise blend inspired by that family — roasted exclusively for subscribers."
+    },
+    {
+      "type": "text",
+      "id": "subscription_variant_id",
+      "label": "Subscription product variant ID",
+      "info": "The Shopify variant ID for your Instrument Family subscription product."
+    },
+    {
+      "type": "text",
+      "id": "subi_selling_plan_id",
+      "label": "Subi selling plan ID",
+      "info": "Found in your Subi dashboard under your subscription plan details."
+    },
+    {
+      "type": "text",
+      "id": "price",
+      "label": "Price (in cents)",
+      "default": "2000",
+      "info": "Enter price in cents e.g. 2000 for $20.00"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "family",
+      "name": "Instrument Family",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Family name",
+          "default": "Strings"
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Family handle (no spaces, lowercase)",
+          "default": "strings",
+          "info": "Used internally e.g. strings, brass, woodwinds, percussion"
+        },
+        {
+          "type": "text",
+          "id": "instruments",
+          "label": "Instruments",
+          "default": "Violin, viola, cello, bass"
+        },
+        {
+          "type": "text",
+          "id": "flavor_hint",
+          "label": "Flavor hint",
+          "default": "Warm, rich, layered roasts"
+        },
+        {
+          "type": "text",
+          "id": "preview_title",
+          "label": "Preview title (shown after selection)",
+          "default": "A warm, layered surprise awaits"
+        },
+        {
+          "type": "textarea",
+          "id": "preview_description",
+          "label": "Preview description",
+          "default": "Your blend is inspired by the strings section. Expect rich, complex flavors with depth and warmth — the rest is a surprise until it arrives."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instrument Family",
+      "blocks": [
+        {
+          "type": "family",
+          "settings": {
+            "name": "Strings",
+            "handle": "strings",
+            "instruments": "Violin, viola, cello, bass",
+            "flavor_hint": "Warm, rich, layered roasts",
+            "preview_title": "A warm, layered surprise awaits",
+            "preview_description": "Your blend is inspired by the strings section. Expect rich, complex flavors with depth and warmth — the rest is a surprise until it arrives."
+          }
+        },
+        {
+          "type": "family",
+          "settings": {
+            "name": "Brass",
+            "handle": "brass",
+            "instruments": "Trumpet, trombone, French horn",
+            "flavor_hint": "Bold, bright, full-bodied roasts",
+            "preview_title": "A bold, bright surprise awaits",
+            "preview_description": "Your blend is inspired by the brass section. Expect bold, full-bodied flavors with a bright finish — the rest is a surprise until it arrives."
+          }
+        },
+        {
+          "type": "family",
+          "settings": {
+            "name": "Woodwinds",
+            "handle": "woodwinds",
+            "instruments": "Flute, oboe, clarinet, bassoon",
+            "flavor_hint": "Delicate, floral, complex roasts",
+            "preview_title": "A delicate, floral surprise awaits",
+            "preview_description": "Your blend is inspired by the woodwinds section. Expect delicate, floral notes with elegant complexity — the rest is a surprise until it arrives."
+          }
+        },
+        {
+          "type": "family",
+          "settings": {
+            "name": "Percussion",
+            "handle": "percussion",
+            "instruments": "Drums, mallets, timpani",
+            "flavor_hint": "Dark, intense, punchy roasts",
+            "preview_title": "A dark, punchy surprise awaits",
+            "preview_description": "Your blend is inspired by the percussion section. Expect intense, dark flavors with a bold kick — the rest is a surprise until it arrives."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

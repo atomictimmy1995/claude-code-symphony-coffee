@@ -1,0 +1,251 @@
+.instrument-family-selector {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  font-family: inherit;
+}
+
+/* Hero */
+.ifs-hero {
+  background: #1a1a1a;
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.ifs-eyebrow {
+  font-size: 11px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.5rem;
+}
+
+.ifs-heading {
+  font-size: 26px;
+  font-weight: 500;
+  color: #ffffff;
+  margin: 0 0 0.75rem;
+  line-height: 1.2;
+}
+
+.ifs-subheading {
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  margin: 0 auto;
+  max-width: 480px;
+  line-height: 1.6;
+}
+
+/* Family cards grid */
+.ifs-families {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 1.25rem;
+}
+
+@media (max-width: 480px) {
+  .ifs-families {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ifs-family-card {
+  background: #f5f5f3;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 1rem 1.125rem;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+  outline: none;
+}
+
+.ifs-family-card:hover {
+  border-color: rgba(0,0,0,0.25);
+}
+
+.ifs-family-card:focus-visible {
+  box-shadow: 0 0 0 3px rgba(55, 138, 221, 0.35);
+}
+
+.ifs-family-card.is-selected {
+  background: #e6f1fb;
+  border: 2px solid #378add;
+}
+
+.ifs-family-card.is-selected .ifs-family-name {
+  color: #0c447c;
+}
+
+.ifs-family-name {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0 0 3px;
+  color: #1a1a1a;
+}
+
+.ifs-family-instruments {
+  font-size: 12px;
+  color: #666;
+  margin: 0 0 4px;
+}
+
+.ifs-family-flavor {
+  font-size: 12px;
+  color: #888;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Preview box */
+.ifs-preview {
+  background: #f5f5f3;
+  border: 1px solid rgba(0,0,0,0.1);
+  border-radius: 10px;
+  padding: 1rem 1.125rem;
+  margin-bottom: 1.25rem;
+}
+
+.ifs-preview[hidden] {
+  display: none;
+}
+
+.ifs-preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 8px;
+}
+
+.ifs-preview-label {
+  font-size: 11px;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 3px;
+}
+
+.ifs-preview-title {
+  font-size: 14px;
+  font-weight: 500;
+  margin: 0;
+  color: #1a1a1a;
+}
+
+.ifs-surprise-badge {
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.ifs-preview-desc {
+  font-size: 13px;
+  color: #555;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Pricing */
+.ifs-pricing {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-bottom: 1rem;
+}
+
+.ifs-price {
+  font-size: 24px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+
+.ifs-price-meta {
+  font-size: 13px;
+  color: #888;
+}
+
+/* CTA button */
+.ifs-cta {
+  width: 100%;
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  border: none;
+  cursor: not-allowed;
+  background: #ccc;
+  color: #fff;
+  transition: background 0.15s ease;
+  margin-bottom: 2rem;
+}
+
+.ifs-cta:not([disabled]) {
+  background: #1a1a1a;
+  cursor: pointer;
+}
+
+.ifs-cta:not([disabled]):hover {
+  background: #333;
+}
+
+.ifs-cta:not([disabled]):active {
+  transform: scale(0.98);
+}
+
+/* How it works */
+.ifs-hiw-heading {
+  font-size: 11px;
+  font-weight: 500;
+  color: #888;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0 0 0.75rem;
+}
+
+.ifs-hiw-steps {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 600px) {
+  .ifs-hiw-steps {
+    grid-template-columns: 1fr;
+  }
+}
+
+.ifs-hiw-step {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,0.08);
+  border-radius: 10px;
+  padding: 1rem 1.125rem;
+}
+
+.ifs-hiw-num {
+  display: block;
+  font-size: 22px;
+  font-weight: 500;
+  color: #ccc;
+  margin-bottom: 8px;
+}
+
+.ifs-hiw-title {
+  font-size: 13px;
+  font-weight: 500;
+  margin: 0 0 4px;
+  color: #1a1a1a;
+}
+
+.ifs-hiw-desc {
+  font-size: 12px;
+  color: #666;
+  margin: 0;
+  line-height: 1.5;
+}

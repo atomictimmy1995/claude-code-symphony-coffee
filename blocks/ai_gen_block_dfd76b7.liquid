@@ -1,0 +1,598 @@
+{% doc %}
+  @prompt
+    Create a responsive subscription chooser section called "Instrument Family" for a coffee brand. It should include:
+    
+    
+    - A title "Instrument Family" and subtitle explaining subscribers get a monthly surprise blend
+    - A "PICK YOUR FAMILY" label above a 2x2 grid of selectable option cards (4 options):
+      1. Strings – Violin, viola, cello, bass — warm, rich, layered roasts
+      2. Brass – Trumpet, trombone, horn — bold, bright, full-bodied roasts
+      3. Woodwinds – Flute, oboe, clarinet — delicate, floral, complex roasts
+      4. Percussion – Drums, mallets, timpani — dark, intense, punchy roasts
+    - Clicking a card highlights it (selected state with a blue/accent border)
+    - A dynamic preview section below the grid that updates based on the selected option, showing the month, family name, a teaser description, and a "Surprise" badge
+    - A price display: "$20 / month · cancel anytime"
+    - A CTA button at the bottom that dynamically updates its label to match the selected family (e.g., "Join the Woodwinds family →")
+    - Dark background with light text, premium minimal aesthetic
+    - Fully responsive for mobile (cards stack to single column on small screens)
+    - All interactivity handled with vanilla JavaScript (no frameworks), remove the preview section
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-subscription-chooser-{{ ai_gen_id }} {
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    background-color: {{ block.settings.background_color }};
+    color: {{ block.settings.text_color }};
+    padding: {{ block.settings.section_padding }}px;
+  }
+
+  .ai-subscription-chooser__container-{{ ai_gen_id }} {
+    max-width: {{ block.settings.max_width }}px;
+    margin: 0 auto;
+  }
+
+  .ai-subscription-chooser__header-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .ai-subscription-chooser__title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    margin: 0 0 16px;
+    color: {{ block.settings.text_color }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ai-subscription-chooser__subtitle-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subtitle_size }}px;
+    margin: 0;
+    color: {{ block.settings.text_color }};
+    opacity: 0.8;
+  }
+
+  .ai-subscription-chooser__grid-label-{{ ai_gen_id }} {
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.7;
+  }
+
+  .ai-subscription-chooser__grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+
+  .ai-subscription-chooser__card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border: 2px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: 24px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ai-subscription-chooser__card-{{ ai_gen_id }}:hover {
+    border-color: {{ block.settings.card_hover_border }};
+  }
+
+  .ai-subscription-chooser__card-{{ ai_gen_id }}.active {
+    border-color: {{ block.settings.accent_color }};
+    background-color: {{ block.settings.card_active_background }};
+  }
+
+  .ai-subscription-chooser__card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_title_size }}px;
+    font-weight: 600;
+    margin: 0 0 8px;
+    color: {{ block.settings.text_color }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ai-subscription-chooser__card-instruments-{{ ai_gen_id }} {
+    font-size: 13px;
+    margin: 0 0 12px;
+    color: {{ block.settings.text_color }};
+    opacity: 0.7;
+  }
+
+  .ai-subscription-chooser__card-description-{{ ai_gen_id }} {
+    font-size: 14px;
+    margin: 0;
+    color: {{ block.settings.text_color }};
+    opacity: 0.9;
+    line-height: 1.5;
+  }
+
+  .ai-subscription-chooser__pricing-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
+  .ai-subscription-chooser__price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.text_color }};
+  }
+
+  .ai-subscription-chooser__cta-{{ ai_gen_id }} {
+    text-align: center;
+  }
+
+  .ai-subscription-chooser__button-{{ ai_gen_id }} {
+    display: inline-block;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    padding: 16px 48px;
+    border: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_text_size }}px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .ai-subscription-chooser__button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-subscription-chooser__grid-{{ ai_gen_id }} {
+      grid-template-columns: 1fr;
+    }
+
+    .ai-subscription-chooser__title-{{ ai_gen_id }} {
+      font-size: {{ block.settings.title_size | times: 0.7 }}px;
+    }
+
+    .ai-subscription-chooser__card-{{ ai_gen_id }} {
+      padding: 20px;
+    }
+  }
+{% endstyle %}
+
+<subscription-chooser-{{ ai_gen_id }}
+  class="ai-subscription-chooser-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+>
+  <div class="ai-subscription-chooser__container-{{ ai_gen_id }}">
+    <div class="ai-subscription-chooser__header-{{ ai_gen_id }}">
+      <h2 class="ai-subscription-chooser__title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+      <p class="ai-subscription-chooser__subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</p>
+    </div>
+
+    <div class="ai-subscription-chooser__grid-label-{{ ai_gen_id }}">
+      {{ block.settings.grid_label }}
+    </div>
+
+    <div class="ai-subscription-chooser__grid-{{ ai_gen_id }}">
+      <div
+        class="ai-subscription-chooser__card-{{ ai_gen_id }} active"
+        data-family="strings"
+      >
+        <h3 class="ai-subscription-chooser__card-title-{{ ai_gen_id }}">{{ block.settings.strings_title }}</h3>
+        <p class="ai-subscription-chooser__card-instruments-{{ ai_gen_id }}">{{ block.settings.strings_instruments }}</p>
+        <p class="ai-subscription-chooser__card-description-{{ ai_gen_id }}">{{ block.settings.strings_description }}</p>
+      </div>
+
+      <div
+        class="ai-subscription-chooser__card-{{ ai_gen_id }}"
+        data-family="brass"
+      >
+        <h3 class="ai-subscription-chooser__card-title-{{ ai_gen_id }}">{{ block.settings.brass_title }}</h3>
+        <p class="ai-subscription-chooser__card-instruments-{{ ai_gen_id }}">{{ block.settings.brass_instruments }}</p>
+        <p class="ai-subscription-chooser__card-description-{{ ai_gen_id }}">{{ block.settings.brass_description }}</p>
+      </div>
+
+      <div
+        class="ai-subscription-chooser__card-{{ ai_gen_id }}"
+        data-family="woodwinds"
+      >
+        <h3 class="ai-subscription-chooser__card-title-{{ ai_gen_id }}">{{ block.settings.woodwinds_title }}</h3>
+        <p class="ai-subscription-chooser__card-instruments-{{ ai_gen_id }}">{{ block.settings.woodwinds_instruments }}</p>
+        <p class="ai-subscription-chooser__card-description-{{ ai_gen_id }}">{{ block.settings.woodwinds_description }}</p>
+      </div>
+
+      <div
+        class="ai-subscription-chooser__card-{{ ai_gen_id }}"
+        data-family="percussion"
+      >
+        <h3 class="ai-subscription-chooser__card-title-{{ ai_gen_id }}">{{ block.settings.percussion_title }}</h3>
+        <p class="ai-subscription-chooser__card-instruments-{{ ai_gen_id }}">{{ block.settings.percussion_instruments }}</p>
+        <p class="ai-subscription-chooser__card-description-{{ ai_gen_id }}">{{ block.settings.percussion_description }}</p>
+      </div>
+    </div>
+
+    <div class="ai-subscription-chooser__pricing-{{ ai_gen_id }}">
+      <p class="ai-subscription-chooser__price-{{ ai_gen_id }}">{{ block.settings.price_text }}</p>
+    </div>
+
+    <div class="ai-subscription-chooser__cta-{{ ai_gen_id }}">
+      <a
+        href="{{ block.settings.cta_link }}"
+        class="ai-subscription-chooser__button-{{ ai_gen_id }}"
+        data-cta-button
+      >
+        {{ block.settings.cta_text_prefix }} {{ block.settings.strings_title }} {{ block.settings.cta_text_suffix }}
+      </a>
+    </div>
+  </div>
+</subscription-chooser-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class SubscriptionChooser{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.cards = this.querySelectorAll('.ai-subscription-chooser__card-{{ ai_gen_id }}');
+        this.ctaButton = this.querySelector('[data-cta-button]');
+        this.ctaPrefix = '{{ block.settings.cta_text_prefix }}';
+        this.ctaSuffix = '{{ block.settings.cta_text_suffix }}';
+
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.cards.forEach((card) => {
+          card.addEventListener('click', () => {
+            this.cards.forEach((c) => c.classList.remove('active'));
+            card.classList.add('active');
+
+            const familyName = card.querySelector('.ai-subscription-chooser__card-title-{{ ai_gen_id }}').textContent;
+            this.ctaButton.textContent = this.ctaPrefix + ' ' + familyName + ' ' + this.ctaSuffix;
+          });
+        });
+      }
+    }
+
+    customElements.define('subscription-chooser-{{ ai_gen_id }}', SubscriptionChooser{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Instrument family",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Section"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "range",
+      "id": "section_padding",
+      "label": "Section padding",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "default": 60
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Max width",
+      "min": 600,
+      "max": 1400,
+      "step": 50,
+      "unit": "px",
+      "default": 1000
+    },
+    {
+      "type": "header",
+      "content": "Header"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Instrument Family"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 20,
+      "max": 60,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Subscribers receive a monthly surprise blend curated from their chosen family"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "header",
+      "content": "Grid"
+    },
+    {
+      "type": "text",
+      "id": "grid_label",
+      "label": "Grid label",
+      "default": "PICK YOUR FAMILY"
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Card title size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Strings family"
+    },
+    {
+      "type": "text",
+      "id": "strings_title",
+      "label": "Title",
+      "default": "Strings"
+    },
+    {
+      "type": "text",
+      "id": "strings_instruments",
+      "label": "Instruments",
+      "default": "Violin, viola, cello, bass"
+    },
+    {
+      "type": "textarea",
+      "id": "strings_description",
+      "label": "Description",
+      "default": "Warm, rich, layered roasts"
+    },
+    {
+      "type": "header",
+      "content": "Brass family"
+    },
+    {
+      "type": "text",
+      "id": "brass_title",
+      "label": "Title",
+      "default": "Brass"
+    },
+    {
+      "type": "text",
+      "id": "brass_instruments",
+      "label": "Instruments",
+      "default": "Trumpet, trombone, horn"
+    },
+    {
+      "type": "textarea",
+      "id": "brass_description",
+      "label": "Description",
+      "default": "Bold, bright, full-bodied roasts"
+    },
+    {
+      "type": "header",
+      "content": "Woodwinds family"
+    },
+    {
+      "type": "text",
+      "id": "woodwinds_title",
+      "label": "Title",
+      "default": "Woodwinds"
+    },
+    {
+      "type": "text",
+      "id": "woodwinds_instruments",
+      "label": "Instruments",
+      "default": "Flute, oboe, clarinet"
+    },
+    {
+      "type": "textarea",
+      "id": "woodwinds_description",
+      "label": "Description",
+      "default": "Delicate, floral, complex roasts"
+    },
+    {
+      "type": "header",
+      "content": "Percussion family"
+    },
+    {
+      "type": "text",
+      "id": "percussion_title",
+      "label": "Title",
+      "default": "Percussion"
+    },
+    {
+      "type": "text",
+      "id": "percussion_instruments",
+      "label": "Instruments",
+      "default": "Drums, mallets, timpani"
+    },
+    {
+      "type": "textarea",
+      "id": "percussion_description",
+      "label": "Description",
+      "default": "Dark, intense, punchy roasts"
+    },
+    {
+      "type": "header",
+      "content": "Pricing"
+    },
+    {
+      "type": "text",
+      "id": "price_text",
+      "label": "Price text",
+      "default": "$20 / month · cancel anytime"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 14,
+      "max": 28,
+      "step": 1,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "header",
+      "content": "Call to action"
+    },
+    {
+      "type": "text",
+      "id": "cta_text_prefix",
+      "label": "Button text prefix",
+      "default": "Join the"
+    },
+    {
+      "type": "text",
+      "id": "cta_text_suffix",
+      "label": "Button text suffix",
+      "default": "family →"
+    },
+    {
+      "type": "range",
+      "id": "button_text_size",
+      "label": "Button text size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Button border radius",
+      "min": 0,
+      "max": 50,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "Accent",
+      "default": "#648169"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "card_active_background",
+      "label": "Card active background",
+      "default": "#2a2a2a"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Card border",
+      "default": "#3a3a3a"
+    },
+    {
+      "type": "color",
+      "id": "card_hover_border",
+      "label": "Card hover border",
+      "default": "#4a4a4a"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#648169"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Button hover background",
+      "default": "#7a9a7f"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Button hover text",
+      "default": "#ffffff"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instrument family"
+    }
+  ]
+}
+{% endschema %}

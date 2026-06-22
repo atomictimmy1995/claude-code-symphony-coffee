@@ -1,0 +1,525 @@
+{% doc %}
+  @prompt
+    Edit the existing "Instrument family" block (file: blocks/ai_gen_block_dfd76b7.liquid) to add four separate URL settings to the block schema — one per instrument family (Strings, Brass, Woodwinds, Percussion) — and update the JavaScript so that when a user selects a family card, the bottom CTA button's href dynamically updates to the corresponding product URL. The four new schema settings should be of type "url", labeled clearly (e.g., "Strings product link", "Brass product link", etc.), and should be editable in the theme editor sidebar. The button should default to the Strings link on page load and update instantly on card selection without a page reload., change the last card from "percussion" to "Tutti Orchestra" and change the icon to a music note, add an option for an editable h2 that says "Subscriptions start at $17/month , lesson the space between the title and subtitle and then add a paragraph option below the subtitle for a description, For the "shop now" button can we make it so it changes saying "Join the "" family" where the blank changes to which ever instrument family is selected
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-instrument-family-{{ ai_gen_id }} {
+    display: block;
+    width: 100%;
+    padding: 40px 20px;
+  }
+
+  .ai-instrument-family-container-{{ ai_gen_id }} {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: {{ block.settings.desktop_width_percent }}%;
+  }
+
+  .ai-instrument-family-title-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 12px;
+    font-size: {{ block.settings.title_size }}px;
+    color: {{ block.settings.title_color }};
+  }
+
+  .ai-instrument-family-subtitle-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 16px;
+    font-size: {{ block.settings.subtitle_size }}px;
+    color: {{ block.settings.subtitle_color }};
+  }
+
+  .ai-instrument-family-description-wrapper-{{ ai_gen_id }} {
+    text-align: center;
+    margin-bottom: 32px;
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ai-instrument-family-grid-{{ ai_gen_id }} {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 40px;
+  }
+
+  .ai-instrument-family-card-{{ ai_gen_id }} {
+    background-color: {{ block.settings.card_background }};
+    border: 2px solid {{ block.settings.card_border_color }};
+    border-radius: {{ block.settings.card_border_radius }}px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .ai-instrument-family-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  .ai-instrument-family-card-{{ ai_gen_id }}.active {
+    border-color: {{ block.settings.card_active_border_color }};
+    background-color: {{ block.settings.card_active_background }};
+  }
+
+  .ai-instrument-family-icon-{{ ai_gen_id }} {
+    font-size: 48px;
+    margin-bottom: 16px;
+  }
+
+  .ai-instrument-family-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_title_size }}px;
+    color: {{ block.settings.card_title_color }};
+    margin-bottom: 8px;
+  }
+
+  .ai-instrument-family-card-{{ ai_gen_id }}.active .ai-instrument-family-card-title-{{ ai_gen_id }} {
+    color: {{ block.settings.card_active_title_color }};
+  }
+
+  .ai-instrument-family-card-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.card_description_size }}px;
+    color: {{ block.settings.card_description_color }};
+  }
+
+  .ai-instrument-family-cta-{{ ai_gen_id }} {
+    text-align: center;
+  }
+
+  .ai-instrument-family-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 16px 32px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-size: {{ block.settings.button_font_size }}px;
+    transition: all 0.3s ease;
+  }
+
+  .ai-instrument-family-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+    color: {{ block.settings.button_hover_text_color }};
+  }
+
+  @media screen and (max-width: 768px) {
+    .ai-instrument-family-grid-{{ ai_gen_id }} {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .ai-instrument-family-card-{{ ai_gen_id }} {
+      padding: 20px;
+    }
+  }
+{% endstyle %}
+
+<instrument-family-selector-{{ ai_gen_id }}
+  class="ai-instrument-family-{{ ai_gen_id }}"
+  {{ block.shopify_attributes }}
+  data-strings-url="{{ block.settings.strings_product_link }}"
+  data-brass-url="{{ block.settings.brass_product_link }}"
+  data-woodwinds-url="{{ block.settings.woodwinds_product_link }}"
+  data-tutti-url="{{ block.settings.tutti_product_link }}"
+>
+  <div class="ai-instrument-family-container-{{ ai_gen_id }}">
+    {% if block.settings.title != blank %}
+      <h2 class="ai-instrument-family-title-{{ ai_gen_id }}">{{ block.settings.title }}</h2>
+    {% endif %}
+
+    {% if block.settings.subtitle != blank %}
+      <h2 class="ai-instrument-family-subtitle-{{ ai_gen_id }}">{{ block.settings.subtitle }}</h2>
+    {% endif %}
+
+    {% if block.settings.description != blank %}
+      <div class="ai-instrument-family-description-wrapper-{{ ai_gen_id }}">
+        <p>{{ block.settings.description }}</p>
+      </div>
+    {% endif %}
+
+    <div class="ai-instrument-family-grid-{{ ai_gen_id }}">
+      <div
+        class="ai-instrument-family-card-{{ ai_gen_id }} active"
+        data-family="strings"
+        data-family-name="Strings"
+      >
+        <div class="ai-instrument-family-icon-{{ ai_gen_id }}">🎻</div>
+        <h3 class="ai-instrument-family-card-title-{{ ai_gen_id }}">Strings</h3>
+        <p class="ai-instrument-family-card-description-{{ ai_gen_id }}">
+          {{ block.settings.strings_description }}
+        </p>
+      </div>
+
+      <div
+        class="ai-instrument-family-card-{{ ai_gen_id }}"
+        data-family="brass"
+        data-family-name="Brass"
+      >
+        <div class="ai-instrument-family-icon-{{ ai_gen_id }}">🎺</div>
+        <h3 class="ai-instrument-family-card-title-{{ ai_gen_id }}">Brass</h3>
+        <p class="ai-instrument-family-card-description-{{ ai_gen_id }}">
+          {{ block.settings.brass_description }}
+        </p>
+      </div>
+
+      <div
+        class="ai-instrument-family-card-{{ ai_gen_id }}"
+        data-family="woodwinds"
+        data-family-name="Woodwinds"
+      >
+        <div class="ai-instrument-family-icon-{{ ai_gen_id }}">🎷</div>
+        <h3 class="ai-instrument-family-card-title-{{ ai_gen_id }}">Woodwinds</h3>
+        <p class="ai-instrument-family-card-description-{{ ai_gen_id }}">
+          {{ block.settings.woodwinds_description }}
+        </p>
+      </div>
+
+      <div
+        class="ai-instrument-family-card-{{ ai_gen_id }}"
+        data-family="tutti"
+        data-family-name="Tutti Orchestra"
+      >
+        <div class="ai-instrument-family-icon-{{ ai_gen_id }}">🎵</div>
+        <h3 class="ai-instrument-family-card-title-{{ ai_gen_id }}">Tutti Orchestra</h3>
+        <p class="ai-instrument-family-card-description-{{ ai_gen_id }}">
+          {{ block.settings.tutti_description }}
+        </p>
+      </div>
+    </div>
+
+    <div class="ai-instrument-family-cta-{{ ai_gen_id }}">
+      <a
+        href="{{ block.settings.strings_product_link }}"
+        class="ai-instrument-family-button-{{ ai_gen_id }}"
+      >
+        Join the Strings family
+      </a>
+    </div>
+  </div>
+</instrument-family-selector-{{ ai_gen_id }}>
+
+<script>
+  (function() {
+    class InstrumentFamilySelector{{ ai_gen_id }} extends HTMLElement {
+      constructor() {
+        super();
+      }
+
+      connectedCallback() {
+        this.cards = this.querySelectorAll('.ai-instrument-family-card-{{ ai_gen_id }}');
+        this.button = this.querySelector('.ai-instrument-family-button-{{ ai_gen_id }}');
+        this.urls = {
+          strings: this.dataset.stringsUrl || '',
+          brass: this.dataset.brassUrl || '',
+          woodwinds: this.dataset.woodwindsUrl || '',
+          tutti: this.dataset.tuttiUrl || ''
+        };
+
+        this.setupEventListeners();
+      }
+
+      setupEventListeners() {
+        this.cards.forEach((card) => {
+          card.addEventListener('click', () => {
+            this.cards.forEach((c) => c.classList.remove('active'));
+            card.classList.add('active');
+
+            const family = card.dataset.family;
+            const familyName = card.dataset.familyName;
+
+            if (this.urls[family]) {
+              this.button.href = this.urls[family];
+            }
+
+            this.button.textContent = 'Join the ' + familyName + ' family';
+          });
+        });
+      }
+    }
+
+    customElements.define('instrument-family-selector-{{ ai_gen_id }}', InstrumentFamilySelector{{ ai_gen_id }});
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Instrument family",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "General"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Choose Your Instrument Family"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 16,
+      "max": 72,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtitle",
+      "default": "Subscriptions start at $17/month"
+    },
+    {
+      "type": "range",
+      "id": "subtitle_size",
+      "label": "Subtitle size",
+      "min": 14,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "subtitle_color",
+      "label": "Subtitle color",
+      "default": "#666666"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "header",
+      "content": "Strings"
+    },
+    {
+      "type": "url",
+      "id": "strings_product_link",
+      "label": "Strings product link"
+    },
+    {
+      "type": "textarea",
+      "id": "strings_description",
+      "label": "Description",
+      "default": "Violin, viola, cello, and more"
+    },
+    {
+      "type": "header",
+      "content": "Brass"
+    },
+    {
+      "type": "url",
+      "id": "brass_product_link",
+      "label": "Brass product link"
+    },
+    {
+      "type": "textarea",
+      "id": "brass_description",
+      "label": "Description",
+      "default": "Trumpet, trombone, tuba, and more"
+    },
+    {
+      "type": "header",
+      "content": "Woodwinds"
+    },
+    {
+      "type": "url",
+      "id": "woodwinds_product_link",
+      "label": "Woodwinds product link"
+    },
+    {
+      "type": "textarea",
+      "id": "woodwinds_description",
+      "label": "Description",
+      "default": "Flute, clarinet, saxophone, and more"
+    },
+    {
+      "type": "header",
+      "content": "Tutti Orchestra"
+    },
+    {
+      "type": "url",
+      "id": "tutti_product_link",
+      "label": "Tutti Orchestra product link"
+    },
+    {
+      "type": "textarea",
+      "id": "tutti_description",
+      "label": "Description",
+      "default": "Complete orchestral collection"
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "card_border_color",
+      "label": "Border color",
+      "default": "#e6e6e6"
+    },
+    {
+      "type": "color",
+      "id": "card_active_background",
+      "label": "Active background",
+      "default": "#f5f5f5"
+    },
+    {
+      "type": "color",
+      "id": "card_active_border_color",
+      "label": "Active border color",
+      "default": "#648169"
+    },
+    {
+      "type": "range",
+      "id": "card_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "card_title_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "card_title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "card_active_title_color",
+      "label": "Active title color",
+      "default": "#648169"
+    },
+    {
+      "type": "range",
+      "id": "card_description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "card_description_color",
+      "label": "Description color",
+      "default": "#666666"
+    },
+    {
+      "type": "header",
+      "content": "Button"
+    },
+    {
+      "type": "range",
+      "id": "button_font_size",
+      "label": "Font size",
+      "min": 12,
+      "max": 24,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#648169"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instrument family"
+    }
+  ]
+}
+{% endschema %}

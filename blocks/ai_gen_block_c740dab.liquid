@@ -1,0 +1,654 @@
+{% doc %}
+  @prompt
+    Add a "Subscriber Exclusive" overlay to the Premium product card block. The overlay should blur the entire card including the button using a CSS backdrop-filter blur effect, and display centered text that says "Subscriber Exclusive" along with a CTA button that links to a subscriptions page. The overlay should sit on top of all card content with a frosted glass effect, using position absolute to cover the full card area., add an option for eyebrow text, taste notes, subscription price option to match the other generated product cards, separate the notes into 3 text input options that have a border 
+{% enddoc %}
+{% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
+
+{% style %}
+  .ai-premium-card-{{ ai_gen_id }} {
+    position: relative;
+    display: block;
+    width: {{ block.settings.desktop_width_percent }}%;
+    max-width: 100%;
+    background-color: {{ block.settings.card_background }};
+    border-radius: {{ block.settings.border_radius }}px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .ai-premium-card-{{ ai_gen_id }}:hover {
+    transform: translateY(-4px);
+  }
+
+  .ai-premium-card-image-{{ ai_gen_id }} {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  .ai-premium-card-image-{{ ai_gen_id }} img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .ai-premium-card-image-placeholder-{{ ai_gen_id }} {
+    background-color: #f4f4f4;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ai-premium-card-image-placeholder-{{ ai_gen_id }} svg {
+    width: 100%;
+    height: 100%;
+    max-width: 300px;
+    max-height: 300px;
+  }
+
+  .ai-premium-card-content-{{ ai_gen_id }} {
+    padding: {{ block.settings.content_padding }}px;
+  }
+
+  .ai-premium-card-eyebrow-{{ ai_gen_id }} {
+    font-size: {{ block.settings.eyebrow_size }}px;
+    color: {{ block.settings.eyebrow_color }};
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+
+  .ai-premium-card-title-{{ ai_gen_id }} {
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
+    margin: 0 0 8px 0;
+  }
+
+  .ai-premium-card-description-{{ ai_gen_id }} {
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
+    margin: 0 0 12px 0;
+    line-height: 1.5;
+  }
+
+  .ai-premium-card-taste-notes-{{ ai_gen_id }} {
+    display: flex;
+    gap: 8px;
+    margin: 0 0 16px 0;
+    flex-wrap: wrap;
+  }
+
+  .ai-premium-card-taste-note-{{ ai_gen_id }} {
+    font-size: {{ block.settings.taste_notes_size }}px;
+    color: {{ block.settings.taste_notes_color }};
+    padding: 6px 12px;
+    border: {{ block.settings.taste_notes_border_width }}px solid {{ block.settings.taste_notes_border_color }};
+    border-radius: {{ block.settings.taste_notes_border_radius }}px;
+    background-color: {{ block.settings.taste_notes_background }};
+  }
+
+  .ai-premium-card-pricing-{{ ai_gen_id }} {
+    margin: 0 0 16px 0;
+  }
+
+  .ai-premium-card-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.price_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.price_color }};
+    margin: 0 0 4px 0;
+  }
+
+  .ai-premium-card-subscription-price-{{ ai_gen_id }} {
+    font-size: {{ block.settings.subscription_price_size }}px;
+    color: {{ block.settings.subscription_price_color }};
+    margin: 0;
+  }
+
+  .ai-premium-card-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+
+  .ai-premium-card-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
+  }
+
+  .ai-premium-card-overlay-{{ ai_gen_id }} {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    backdrop-filter: blur({{ block.settings.blur_amount }}px);
+    background-color: {{ block.settings.overlay_background }};
+    z-index: 10;
+    padding: 24px;
+  }
+
+  .ai-premium-card-overlay-text-{{ ai_gen_id }} {
+    font-size: {{ block.settings.overlay_text_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.overlay_text_color }};
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .ai-premium-card-overlay-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: {{ block.settings.overlay_button_background }};
+    color: {{ block.settings.overlay_button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.overlay_button_border_radius }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid {{ block.settings.overlay_button_border }};
+  }
+
+  .ai-premium-card-overlay-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.overlay_button_hover_background }};
+    color: {{ block.settings.overlay_button_hover_text_color }};
+    border-color: {{ block.settings.overlay_button_hover_border }};
+  }
+
+  @media screen and (max-width: 749px) {
+    .ai-premium-card-{{ ai_gen_id }} {
+      width: 100%;
+    }
+  }
+{% endstyle %}
+
+<div class="ai-premium-card-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
+  <div class="ai-premium-card-image-{{ ai_gen_id }}">
+    {% if block.settings.product_image %}
+      <img
+        src="{{ block.settings.product_image | image_url: width: 800 }}"
+        alt="{{ block.settings.product_image.alt | escape }}"
+        loading="lazy"
+        width="{{ block.settings.product_image.width }}"
+        height="{{ block.settings.product_image.height }}"
+      >
+    {% else %}
+      <div class="ai-premium-card-image-placeholder-{{ ai_gen_id }}">
+        {{ 'product-1' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="ai-premium-card-content-{{ ai_gen_id }}">
+    {% if block.settings.eyebrow_text != blank %}
+      <div class="ai-premium-card-eyebrow-{{ ai_gen_id }}">{{ block.settings.eyebrow_text }}</div>
+    {% endif %}
+
+    {% if block.settings.product_title != blank %}
+      <h3 class="ai-premium-card-title-{{ ai_gen_id }}">{{ block.settings.product_title }}</h3>
+    {% endif %}
+
+    {% if block.settings.product_description != blank %}
+      <p class="ai-premium-card-description-{{ ai_gen_id }}">{{ block.settings.product_description }}</p>
+    {% endif %}
+
+    {% if block.settings.taste_note_1 != blank or block.settings.taste_note_2 != blank or block.settings.taste_note_3 != blank %}
+      <div class="ai-premium-card-taste-notes-{{ ai_gen_id }}">
+        {% if block.settings.taste_note_1 != blank %}
+          <span class="ai-premium-card-taste-note-{{ ai_gen_id }}">{{ block.settings.taste_note_1 }}</span>
+        {% endif %}
+        {% if block.settings.taste_note_2 != blank %}
+          <span class="ai-premium-card-taste-note-{{ ai_gen_id }}">{{ block.settings.taste_note_2 }}</span>
+        {% endif %}
+        {% if block.settings.taste_note_3 != blank %}
+          <span class="ai-premium-card-taste-note-{{ ai_gen_id }}">{{ block.settings.taste_note_3 }}</span>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="ai-premium-card-pricing-{{ ai_gen_id }}">
+      {% if block.settings.product_price != blank %}
+        <div class="ai-premium-card-price-{{ ai_gen_id }}">{{ block.settings.product_price }}</div>
+      {% endif %}
+
+      {% if block.settings.subscription_price != blank %}
+        <div class="ai-premium-card-subscription-price-{{ ai_gen_id }}">{{ block.settings.subscription_price }}</div>
+      {% endif %}
+    </div>
+
+    {% if block.settings.button_text != blank %}
+      <a href="{{ block.settings.button_link }}" class="ai-premium-card-button-{{ ai_gen_id }}">
+        {{ block.settings.button_text }}
+      </a>
+    {% endif %}
+  </div>
+
+  {% if block.settings.show_overlay %}
+    <div class="ai-premium-card-overlay-{{ ai_gen_id }}">
+      <h2 class="ai-premium-card-overlay-text-{{ ai_gen_id }}">{{ block.settings.overlay_text }}</h2>
+      <a href="{{ block.settings.overlay_button_link }}" class="ai-premium-card-overlay-button-{{ ai_gen_id }}">
+        {{ block.settings.overlay_button_text }}
+      </a>
+    </div>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "Premium product card",
+  "tag": null,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Product details"
+    },
+    {
+      "type": "image_picker",
+      "id": "product_image",
+      "label": "Product image"
+    },
+    {
+      "type": "text",
+      "id": "eyebrow_text",
+      "label": "Eyebrow text",
+      "default": "Premium Selection"
+    },
+    {
+      "type": "text",
+      "id": "product_title",
+      "label": "Product title",
+      "default": "Premium Coffee Blend"
+    },
+    {
+      "type": "textarea",
+      "id": "product_description",
+      "label": "Product description",
+      "default": "Experience our finest selection of specialty coffee beans."
+    },
+    {
+      "type": "text",
+      "id": "taste_note_1",
+      "label": "Taste note 1",
+      "default": "Chocolate"
+    },
+    {
+      "type": "text",
+      "id": "taste_note_2",
+      "label": "Taste note 2",
+      "default": "Caramel"
+    },
+    {
+      "type": "text",
+      "id": "taste_note_3",
+      "label": "Taste note 3",
+      "default": "Citrus"
+    },
+    {
+      "type": "text",
+      "id": "product_price",
+      "label": "Product price",
+      "default": "$24.99"
+    },
+    {
+      "type": "text",
+      "id": "subscription_price",
+      "label": "Subscription price",
+      "default": "$21.99/month with subscription"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Add to Cart"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "header",
+      "content": "Subscriber overlay"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_overlay",
+      "label": "Show subscriber overlay",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "overlay_text",
+      "label": "Overlay text",
+      "default": "Subscriber Exclusive"
+    },
+    {
+      "type": "text",
+      "id": "overlay_button_text",
+      "label": "Overlay button text",
+      "default": "Subscribe Now"
+    },
+    {
+      "type": "url",
+      "id": "overlay_button_link",
+      "label": "Overlay button link"
+    },
+    {
+      "type": "range",
+      "id": "blur_amount",
+      "label": "Blur amount",
+      "min": 0,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "header",
+      "content": "Card style"
+    },
+    {
+      "type": "range",
+      "id": "desktop_width_percent",
+      "label": "Desktop width",
+      "min": 50,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "Card background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "Card border radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "content_padding",
+      "label": "Content padding",
+      "min": 10,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "eyebrow_size",
+      "label": "Eyebrow size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "eyebrow_color",
+      "label": "Eyebrow color",
+      "default": "#648169"
+    },
+    {
+      "type": "range",
+      "id": "title_size",
+      "label": "Title size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "color",
+      "id": "title_color",
+      "label": "Title color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "description_size",
+      "label": "Description size",
+      "min": 12,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "description_color",
+      "label": "Description color",
+      "default": "#666666"
+    },
+    {
+      "type": "range",
+      "id": "price_size",
+      "label": "Price size",
+      "min": 14,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 18
+    },
+    {
+      "type": "color",
+      "id": "price_color",
+      "label": "Price color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "subscription_price_size",
+      "label": "Subscription price size",
+      "min": 12,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "subscription_price_color",
+      "label": "Subscription price color",
+      "default": "#648169"
+    },
+    {
+      "type": "header",
+      "content": "Taste notes style"
+    },
+    {
+      "type": "range",
+      "id": "taste_notes_size",
+      "label": "Font size",
+      "min": 10,
+      "max": 18,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "color",
+      "id": "taste_notes_color",
+      "label": "Text color",
+      "default": "#666666"
+    },
+    {
+      "type": "color",
+      "id": "taste_notes_background",
+      "label": "Background color",
+      "default": "#f9f9f9"
+    },
+    {
+      "type": "color",
+      "id": "taste_notes_border_color",
+      "label": "Border color",
+      "default": "#e0e0e0"
+    },
+    {
+      "type": "range",
+      "id": "taste_notes_border_width",
+      "label": "Border width",
+      "min": 0,
+      "max": 4,
+      "step": 1,
+      "unit": "px",
+      "default": 1
+    },
+    {
+      "type": "range",
+      "id": "taste_notes_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 20,
+      "step": 2,
+      "unit": "px",
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "Button style"
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Background",
+      "default": "#648169"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "button_hover_background",
+      "label": "Hover background",
+      "default": "#4a6050"
+    },
+    {
+      "type": "range",
+      "id": "button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Overlay style"
+    },
+    {
+      "type": "color",
+      "id": "overlay_background",
+      "label": "Overlay background",
+      "default": "#ffffff99"
+    },
+    {
+      "type": "range",
+      "id": "overlay_text_size",
+      "label": "Text size",
+      "min": 16,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "color",
+      "id": "overlay_text_color",
+      "label": "Text color",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "Overlay button"
+    },
+    {
+      "type": "color",
+      "id": "overlay_button_background",
+      "label": "Background",
+      "default": "#648169"
+    },
+    {
+      "type": "color",
+      "id": "overlay_button_text_color",
+      "label": "Text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_button_border",
+      "label": "Border color",
+      "default": "#648169"
+    },
+    {
+      "type": "color",
+      "id": "overlay_button_hover_background",
+      "label": "Hover background",
+      "default": "#4a6050"
+    },
+    {
+      "type": "color",
+      "id": "overlay_button_hover_text_color",
+      "label": "Hover text color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "overlay_button_hover_border",
+      "label": "Hover border color",
+      "default": "#4a6050"
+    },
+    {
+      "type": "range",
+      "id": "overlay_button_border_radius",
+      "label": "Border radius",
+      "min": 0,
+      "max": 40,
+      "step": 5,
+      "unit": "px",
+      "default": 15
+    }
+  ],
+  "presets": [
+    {
+      "name": "Premium product card"
+    }
+  ]
+}
+{% endschema %}
