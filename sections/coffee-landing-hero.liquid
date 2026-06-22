@@ -1,0 +1,601 @@
+{% liquid
+  assign heading = section.settings.heading | default: 'Carefully selected beans roasted with love & care'
+  assign button_label = section.settings.button_label | default: 'KNOW MORE'
+  assign button_link = section.settings.button_link | default: '/collections/all'
+  assign description = section.settings.description | default: 'Colombian coffee with notes of cocoa and caramel'
+  assign more_link = section.settings.more_link | default: '/collections/all'
+%}
+
+<div class="clh-hero" id="CoffeeLandingHero-{{ section.id }}">
+  {%- comment -%} Left panel: coffee beans background + headline {%- endcomment -%}
+  <div class="clh-left">
+    {%- if section.settings.background_image != blank -%}
+      <div class="clh-left__image">
+        {{
+          section.settings.background_image
+          | image_url: width: 1200
+          | image_tag: class: 'clh-left__bg', alt: section.settings.background_image.alt, loading: 'eager'
+        }}
+      </div>
+    {%- else -%}
+      <div class="clh-left__image clh-left__image--placeholder">
+        {{ 'hero-apparel-1' | placeholder_svg_tag: 'clh-left__bg' }}
+      </div>
+    {%- endif -%}
+
+    <div class="clh-left__overlay"></div>
+
+    <div class="clh-left__content">
+      <div class="clh-brand">
+        <span class="clh-brand__coffee">Coffee</span><span class="clh-brand__roast">Roast</span>
+      </div>
+      <h1 class="clh-heading">{{ heading }}</h1>
+      <a href="{{ button_link }}" class="clh-btn">{{ button_label }}</a>
+    </div>
+
+    <div class="clh-socials">
+      <a href="{{ section.settings.facebook_url | default: '#' }}" class="clh-social" aria-label="Facebook">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+      </a>
+      <a href="{{ section.settings.instagram_url | default: '#' }}" class="clh-social" aria-label="Instagram">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+      </a>
+    </div>
+  </div>
+
+  {%- comment -%} Right panel: product carousel {%- endcomment -%}
+  <div class="clh-right">
+    <div class="clh-carousel" data-carousel>
+      <div class="clh-carousel__track" data-carousel-track>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'product_slide' -%}
+            <div class="clh-slide {% if forloop.index == 2 %}clh-slide--active{% endif %}" {{ block.shopify_attributes }}>
+              <div class="clh-bag-wrap">
+                {%- if block.settings.image != blank -%}
+                  {{
+                    block.settings.image
+                    | image_url: width: 400
+                    | image_tag: class: 'clh-bag', alt: block.settings.image.alt, loading: 'lazy'
+                  }}
+                {%- else -%}
+                  <div class="clh-bag clh-bag--placeholder" style="background: {{ block.settings.bag_color | default: '#e05c1a' }};">
+                    <div class="clh-bag__inner">
+                      <div class="clh-bag__logo">
+                        <span class="clh-bag__logo-coffee">Coffee</span><span class="clh-bag__logo-roast">Roast</span>
+                        <div class="clh-bag__est">EST 1965</div>
+                      </div>
+                    </div>
+                    <div class="clh-bag__origin">MADE IN COLOMBIA</div>
+                  </div>
+                {%- endif -%}
+              </div>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- if section.blocks.size == 0 -%}
+          {%- assign default_colors = '#c8b830,#e05c1a,#2a9e6a' | split: ',' -%}
+          {%- for i in (1..3) -%}
+            <div class="clh-slide {% if i == 2 %}clh-slide--active{% endif %}">
+              <div class="clh-bag-wrap">
+                <div class="clh-bag clh-bag--placeholder" style="background: {{ default_colors[forloop.index0] }};">
+                  <div class="clh-bag__inner">
+                    <div class="clh-bag__logo">
+                      <span class="clh-bag__logo-coffee">Coffee</span><span class="clh-bag__logo-roast">Roast</span>
+                      <div class="clh-bag__est">EST 1965</div>
+                    </div>
+                  </div>
+                  <div class="clh-bag__origin">MADE IN COLOMBIA</div>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+
+      <div class="clh-carousel__info">
+        <p class="clh-description">{{ description }}</p>
+        <a href="{{ more_link }}" class="clh-more">MORE</a>
+      </div>
+
+      <div class="clh-carousel__controls">
+        <button class="clh-arrow clh-arrow--prev" data-prev aria-label="Previous">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="clh-arrow clh-arrow--next" data-next aria-label="Next">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% stylesheet %}
+  .clh-hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 100svh;
+    font-family: var(--font-body--family, sans-serif);
+    background: #1a1a1a;
+  }
+
+  @media screen and (max-width: 749px) {
+    .clh-hero {
+      grid-template-columns: 1fr;
+      min-height: auto;
+    }
+  }
+
+  /* ─── Left panel ─── */
+  .clh-left {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+
+  .clh-left__image,
+  .clh-left__image--placeholder {
+    position: absolute;
+    inset: 0;
+  }
+
+  .clh-left__bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .clh-left__image--placeholder svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .clh-left__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0,0,0,0.15) 0%,
+      rgba(0,0,0,0.55) 60%,
+      rgba(0,0,0,0.75) 100%
+    );
+  }
+
+  .clh-left__content {
+    position: relative;
+    z-index: 2;
+    padding: 3rem 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .clh-brand {
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+
+  .clh-brand__coffee {
+    color: #fff;
+  }
+
+  .clh-brand__roast {
+    color: #e05c1a;
+  }
+
+  .clh-heading {
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 800;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0;
+    max-width: 14ch;
+  }
+
+  .clh-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e05c1a;
+    color: #fff;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    padding: 0.85rem 2rem;
+    border: none;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: background 0.2s;
+  }
+
+  .clh-btn:hover {
+    background: #c44f14;
+  }
+
+  .clh-socials {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem 2rem;
+  }
+
+  .clh-social {
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    transition: color 0.2s;
+    text-decoration: none;
+  }
+
+  .clh-social:hover {
+    color: #fff;
+  }
+
+  /* ─── Right panel ─── */
+  .clh-right {
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1.5rem;
+  }
+
+  .clh-carousel {
+    width: 100%;
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    position: relative;
+  }
+
+  .clh-carousel__track {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    gap: 0;
+    width: 100%;
+    min-height: 320px;
+    position: relative;
+  }
+
+  /* Three-bag perspective layout */
+  .clh-slide {
+    position: absolute;
+    transition: transform 0.4s ease, opacity 0.4s ease, z-index 0s;
+    transform-origin: bottom center;
+  }
+
+  .clh-slide:nth-child(1) {
+    left: 5%;
+    bottom: 0;
+    z-index: 1;
+    transform: scale(0.75) translateX(-10%);
+    opacity: 0.6;
+  }
+
+  .clh-slide:nth-child(2),
+  .clh-slide--active {
+    left: 50%;
+    bottom: 0;
+    z-index: 3;
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+
+  .clh-slide:nth-child(3) {
+    right: 5%;
+    bottom: 0;
+    z-index: 1;
+    transform: scale(0.75) translateX(10%);
+    opacity: 0.6;
+  }
+
+  .clh-bag-wrap {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+  }
+
+  .clh-bag {
+    display: block;
+    width: 130px;
+    height: 210px;
+    object-fit: contain;
+  }
+
+  .clh-bag--placeholder {
+    border-radius: 6px 6px 4px 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.25rem 0.75rem 0.75rem;
+    position: relative;
+  }
+
+  .clh-bag__inner {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .clh-bag__logo {
+    background: rgba(0,0,0,0.75);
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0.5rem;
+  }
+
+  .clh-bag__logo-coffee {
+    color: #fff;
+    font-size: 0.55rem;
+    font-weight: 700;
+  }
+
+  .clh-bag__logo-roast {
+    color: #e05c1a;
+    font-size: 0.55rem;
+    font-weight: 700;
+  }
+
+  .clh-bag__est {
+    color: rgba(255,255,255,0.6);
+    font-size: 0.45rem;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  .clh-bag__origin {
+    font-size: 0.5rem;
+    letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.7);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .clh-carousel__info {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .clh-description {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.95rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .clh-more {
+    color: #e05c1a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    transition: opacity 0.2s;
+  }
+
+  .clh-more:hover {
+    opacity: 0.75;
+  }
+
+  .clh-carousel__controls {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+  }
+
+  .clh-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.2s, color 0.2s;
+  }
+
+  .clh-arrow:hover {
+    border-color: rgba(255,255,255,0.6);
+    color: #fff;
+  }
+{% endstylesheet %}
+
+{% javascript %}
+  (function () {
+    const carousel = document.querySelector('[data-carousel]');
+    if (!carousel) return;
+
+    const slides = Array.from(carousel.querySelectorAll('.clh-slide'));
+    const description = carousel.querySelector('.clh-description');
+    const moreLink = carousel.querySelector('.clh-more');
+    let current = 1;
+
+    const descriptions = slides.map(s => s.dataset.description || '');
+    const moreLinks = slides.map(s => s.dataset.moreLink || '#');
+
+    function update() {
+      slides.forEach((slide, i) => {
+        slide.style.position = 'absolute';
+        if (i === current) {
+          slide.style.left = '50%';
+          slide.style.right = 'auto';
+          slide.style.bottom = '0';
+          slide.style.zIndex = '3';
+          slide.style.transform = 'translateX(-50%) scale(1)';
+          slide.style.opacity = '1';
+        } else if (i === (current - 1 + slides.length) % slides.length) {
+          slide.style.left = '5%';
+          slide.style.right = 'auto';
+          slide.style.bottom = '0';
+          slide.style.zIndex = '1';
+          slide.style.transform = 'scale(0.75) translateX(-10%)';
+          slide.style.opacity = '0.6';
+        } else {
+          slide.style.left = 'auto';
+          slide.style.right = '5%';
+          slide.style.bottom = '0';
+          slide.style.zIndex = '1';
+          slide.style.transform = 'scale(0.75) translateX(10%)';
+          slide.style.opacity = '0.6';
+        }
+      });
+
+      if (description && descriptions[current]) {
+        description.textContent = descriptions[current];
+      }
+      if (moreLink && moreLinks[current]) {
+        moreLink.href = moreLinks[current];
+      }
+    }
+
+    carousel.querySelector('[data-prev]')?.addEventListener('click', () => {
+      current = (current - 1 + slides.length) % slides.length;
+      update();
+    });
+
+    carousel.querySelector('[data-next]')?.addEventListener('click', () => {
+      current = (current + 1) % slides.length;
+      update();
+    });
+
+    update();
+  })();
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "Coffee Landing Hero",
+  "tag": "section",
+  "class": "coffee-landing-hero-wrapper",
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "product_slide",
+      "name": "Product Bag",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Product bag image"
+        },
+        {
+          "type": "color",
+          "id": "bag_color",
+          "label": "Bag color (if no image)",
+          "default": "#e05c1a"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description",
+          "default": "Colombian coffee with notes of cocoa and caramel"
+        },
+        {
+          "type": "url",
+          "id": "more_link",
+          "label": "More link"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image (coffee beans)"
+    },
+    {
+      "type": "textarea",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Carefully selected beans roasted with love & care"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "KNOW MORE"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Default product description",
+      "default": "Colombian coffee with notes of cocoa and caramel"
+    },
+    {
+      "type": "url",
+      "id": "more_link",
+      "label": "Default more link"
+    },
+    {
+      "type": "url",
+      "id": "facebook_url",
+      "label": "Facebook URL"
+    },
+    {
+      "type": "url",
+      "id": "instagram_url",
+      "label": "Instagram URL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Coffee Landing Hero",
+      "category": "Hero",
+      "blocks": [
+        {
+          "type": "product_slide",
+          "settings": {
+            "bag_color": "#c8b830",
+            "description": "Colombian coffee with notes of cocoa and caramel"
+          }
+        },
+        {
+          "type": "product_slide",
+          "settings": {
+            "bag_color": "#e05c1a",
+            "description": "Colombian coffee with notes of cocoa and caramel"
+          }
+        },
+        {
+          "type": "product_slide",
+          "settings": {
+            "bag_color": "#2a9e6a",
+            "description": "Colombian coffee with earthy and floral notes"
+          }
+        }
+      ]
+    }
+  ],
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  }
+}
+{% endschema %}
