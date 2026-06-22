@@ -24,6 +24,7 @@
         "slide_2": {
           "type": "product_slide",
           "settings": {
+            "image": "shopify://shop_images/xylophone_blend-mockup-1.png",
             "bag_color": "#e05c1a",
             "description": "Colombian coffee with notes of cocoa and caramel",
             "more_link": ""
@@ -32,6 +33,7 @@
         "slide_3": {
           "type": "product_slide",
           "settings": {
+            "image": "shopify://shop_images/034cc907-eb38-4d00-a2c9-dc4e7a360d3e.png",
             "bag_color": "#2a9e6a",
             "description": "Trombone Blend — bold, smooth, and full of character",
             "more_link": ""
@@ -44,6 +46,7 @@
         "slide_3"
       ],
       "settings": {
+        "background_image": "shopify://shop_images/xylophone_blend-mockup-1.png",
         "heading": "Carefully selected beans roasted with love & care",
         "button_label": "KNOW MORE",
         "button_link": "/collections/all",
