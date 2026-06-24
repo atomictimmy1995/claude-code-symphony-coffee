@@ -4938,6 +4938,13 @@ product-recommendations:has([data-has-recommendations='false']) {
   clip-path: circle(100% at 50% 50%);
 }
 
+/* Ensure the sticky nav always sits above card overlays (which use z-index: 10) */
+.header-section:has(> #header-component[sticky]),
+.header-section:has(> #header-component[sticky='always']),
+.header-section:has(> #header-component[sticky='scroll-up'][data-sticky-state='active']) {
+  z-index: var(--layer-header-menu) !important;
+}
+
 @keyframes atc-slide {
   to {
     opacity: var(--atc-opacity, 1);
