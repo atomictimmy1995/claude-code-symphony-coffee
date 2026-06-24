@@ -232,9 +232,9 @@
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
+            "horizontal_alignment_flex_direction_column": "flex-end",
             "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
+            "gap": 13,
             "width": "fill",
             "custom_width": 100,
             "width_mobile": "fill",
@@ -262,79 +262,82 @@
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
-          "blocks": {}
-        },
-        "text_znjVYe": {
-          "type": "text",
-          "settings": {
-            "text": "<h1>The Percussion</h1><h1>Section</h1>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "h1",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+          "blocks": {
+            "text_JMnLh4": {
+              "type": "text",
+              "settings": {
+                "text": "<h1>The Percussion</h1><h1>Section</h1>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h1",
+                "font": "var(--font-heading--family)",
+                "font_size": "4.5rem",
+                "line_height": "tight",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_gwDJQL": {
+              "type": "text",
+              "settings": {
+                "text": "<p>Pre-order from the Percussion Section and save %15!</p>",
+                "width": "fit-content",
+                "max_width": "narrow",
+                "alignment": "left",
+                "type_preset": "paragraph",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 32,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_MhEbRp": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "Pre-Order Now",
+                "link": "shopify://collections/the-percussion-section",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
           },
-          "blocks": {}
-        },
-        "text_GdnE48": {
-          "type": "text",
-          "settings": {
-            "text": "<p>Pre-order from the percussion section and save %15!</p>",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "type_preset": "paragraph",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "color": "var(--color-foreground)",
-            "background": false,
-            "background_color": "#00000026",
-            "corner_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 32,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {}
-        },
-        "button_eFrHmD": {
-          "type": "button",
-          "name": "t:names.button",
-          "settings": {
-            "label": "Pre-Order Now",
-            "link": "shopify://collections/the-percussion-section",
-            "open_in_new_tab": false,
-            "style_class": "button",
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100
-          },
-          "blocks": {}
+          "block_order": [
+            "text_JMnLh4",
+            "text_gwDJQL",
+            "button_MhEbRp"
+          ]
         }
       },
       "block_order": [
-        "group_T7f6dB",
-        "text_znjVYe",
-        "text_GdnE48",
-        "button_eFrHmD"
+        "group_T7f6dB"
       ],
       "name": "t:names.hero",
       "settings": {
@@ -367,6 +370,20 @@
         "reflection_opacity": 75,
         "padding-block-start": 40,
         "padding-block-end": 40
+      }
+    },
+    "divider_q7bWKG": {
+      "type": "divider",
+      "name": "t:names.divider_section",
+      "settings": {
+        "color_scheme": "",
+        "section_width": "full-width",
+        "thickness": 1,
+        "corner_radius": "square",
+        "width_percent": 75,
+        "alignment_horizontal": "center",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     },
     "product_list_X8Q7bi": {
@@ -2190,6 +2207,7 @@
   "order": [
     "hero_RkimKJ",
     "hero_HweCCW",
+    "divider_q7bWKG",
     "product_list_X8Q7bi",
     "177769213156d73ef0",
     "product_list_rmB4N4",
