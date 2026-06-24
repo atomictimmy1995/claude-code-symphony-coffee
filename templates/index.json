@@ -614,7 +614,7 @@
       "name": "Featured collection",
       "settings": {
         "collection": "frontpage",
-        "layout_type": "carousel",
+        "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 6,
         "columns": 3,
@@ -1231,7 +1231,7 @@
       "name": "Featured collection",
       "settings": {
         "collection": "frontpage",
-        "layout_type": "carousel",
+        "layout_type": "grid",
         "carousel_on_mobile": false,
         "max_products": 6,
         "columns": 3,
