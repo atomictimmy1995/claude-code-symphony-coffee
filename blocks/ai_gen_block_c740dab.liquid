@@ -1,17 +1,16 @@
 {% doc %}
   @prompt
-    Add a "Subscriber Exclusive" overlay to the Premium product card block. The overlay should blur the entire card including the button using a CSS backdrop-filter blur effect, and display centered text that says "Subscriber Exclusive" along with a CTA button that links to a subscriptions page. The overlay should sit on top of all card content with a frosted glass effect, using position absolute to cover the full card area., add an option for eyebrow text, taste notes, subscription price option to match the other generated product cards, separate the notes into 3 text input options that have a border
+    Add a "Subscriber Exclusive" overlay to the Premium product card block. The overlay should blur the entire card including the button using a CSS backdrop-filter blur effect, and display centered text that says "Subscriber Exclusive" along with a CTA button that links to a subscriptions page. The overlay should sit on top of all card content with a frosted glass effect, using position absolute to cover the full card area., add an option for eyebrow text, taste notes, subscription price option to match the other generated product cards, separate the notes into 3 text input options that have a border 
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
 {% style %}
   .ai-premium-card-{{ ai_gen_id }} {
     position: relative;
-    display: flex;
-    flex-direction: column;
+    display: block;
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
-    background-color: var(--color-background);
+    background-color: {{ block.settings.card_background }};
     border-radius: {{ block.settings.border_radius }}px;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -34,7 +33,7 @@
   }
 
   .ai-premium-card-image-placeholder-{{ ai_gen_id }} {
-    background-color: var(--color-background-contrast, #f4f4f4);
+    background-color: #f4f4f4;
     width: 100%;
     aspect-ratio: 1 / 1;
     display: flex;
@@ -51,39 +50,29 @@
 
   .ai-premium-card-content-{{ ai_gen_id }} {
     padding: {{ block.settings.content_padding }}px;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
   }
 
   .ai-premium-card-eyebrow-{{ ai_gen_id }} {
-    font-family: var(--font-body--family);
-    font-size: var(--font-h6--size, 0.75rem);
-    color: var(--color-foreground);
+    font-size: {{ block.settings.eyebrow_size }}px;
+    color: {{ block.settings.eyebrow_color }};
     text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-sm, 0.06em);
+    letter-spacing: 1px;
     font-weight: 600;
     margin: 0 0 8px 0;
-    opacity: 0.7;
   }
 
   .ai-premium-card-title-{{ ai_gen_id }} {
-    font-family: var(--font-heading--family);
-    font-style: var(--font-heading--style);
-    font-weight: var(--font-heading--weight);
-    font-size: var(--font-h4--size, 1.25rem);
-    line-height: var(--line-height--heading-normal, 1.25);
-    color: var(--color-foreground-heading);
+    font-size: {{ block.settings.title_size }}px;
+    font-weight: 600;
+    color: {{ block.settings.title_color }};
     margin: 0 0 8px 0;
   }
 
   .ai-premium-card-description-{{ ai_gen_id }} {
-    font-family: var(--font-body--family);
-    font-size: var(--font-paragraph--size, 1rem);
-    color: var(--color-foreground);
+    font-size: {{ block.settings.description_size }}px;
+    color: {{ block.settings.description_color }};
     margin: 0 0 12px 0;
-    line-height: var(--line-height--body-normal, 1.4);
-    opacity: 0.8;
+    line-height: 1.5;
   }
 
   .ai-premium-card-taste-notes-{{ ai_gen_id }} {
@@ -94,35 +83,48 @@
   }
 
   .ai-premium-card-taste-note-{{ ai_gen_id }} {
-    font-family: var(--font-body--family);
-    font-size: var(--font-h6--size, 0.75rem);
-    color: var(--color-foreground);
-    padding: 4px 10px;
-    border: 1px solid rgb(var(--color-foreground-rgb) / 0.2);
+    font-size: {{ block.settings.taste_notes_size }}px;
+    color: {{ block.settings.taste_notes_color }};
+    padding: 6px 12px;
+    border: {{ block.settings.taste_notes_border_width }}px solid {{ block.settings.taste_notes_border_color }};
     border-radius: {{ block.settings.taste_notes_border_radius }}px;
-    background-color: transparent;
-    letter-spacing: var(--letter-spacing-sm, 0.06em);
+    background-color: {{ block.settings.taste_notes_background }};
   }
 
   .ai-premium-card-pricing-{{ ai_gen_id }} {
     margin: 0 0 16px 0;
-    margin-top: auto;
   }
 
   .ai-premium-card-price-{{ ai_gen_id }} {
-    font-family: var(--font-body--family);
-    font-size: var(--font-h5--size, 1rem);
+    font-size: {{ block.settings.price_size }}px;
     font-weight: 700;
-    color: var(--color-foreground-heading);
+    color: {{ block.settings.price_color }};
     margin: 0 0 4px 0;
   }
 
   .ai-premium-card-subscription-price-{{ ai_gen_id }} {
-    font-family: var(--font-body--family);
-    font-size: var(--font-h6--size, 0.8rem);
-    color: var(--color-foreground);
-    opacity: 0.7;
+    font-size: {{ block.settings.subscription_price_size }}px;
+    color: {{ block.settings.subscription_price_color }};
     margin: 0;
+  }
+
+  .ai-premium-card-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: {{ block.settings.button_background }};
+    color: {{ block.settings.button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.button_border_radius }}px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: center;
+  }
+
+  .ai-premium-card-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.button_hover_background }};
   }
 
   .ai-premium-card-overlay-{{ ai_gen_id }} {
@@ -143,15 +145,31 @@
   }
 
   .ai-premium-card-overlay-text-{{ ai_gen_id }} {
-    font-family: var(--font-heading--family);
-    font-style: var(--font-heading--style);
-    font-size: var(--font-h3--size, 1.5rem);
-    font-weight: var(--font-heading--weight);
-    color: var(--color-foreground-heading);
+    font-size: {{ block.settings.overlay_text_size }}px;
+    font-weight: 700;
+    color: {{ block.settings.overlay_text_color }};
     text-align: center;
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: var(--letter-spacing-sm, 0.06em);
+    letter-spacing: 1px;
+  }
+
+  .ai-premium-card-overlay-button-{{ ai_gen_id }} {
+    display: inline-block;
+    padding: 14px 28px;
+    background-color: {{ block.settings.overlay_button_background }};
+    color: {{ block.settings.overlay_button_text_color }};
+    text-decoration: none;
+    border-radius: {{ block.settings.overlay_button_border_radius }}px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    border: 2px solid {{ block.settings.overlay_button_border }};
+  }
+
+  .ai-premium-card-overlay-button-{{ ai_gen_id }}:hover {
+    background-color: {{ block.settings.overlay_button_hover_background }};
+    color: {{ block.settings.overlay_button_hover_text_color }};
+    border-color: {{ block.settings.overlay_button_hover_border }};
   }
 
   @media screen and (max-width: 749px) {
@@ -216,7 +234,7 @@
     </div>
 
     {% if block.settings.button_text != blank %}
-      <a href="{{ block.settings.button_link }}" class="button" style="width: 100%; justify-content: center;">
+      <a href="{{ block.settings.button_link }}" class="ai-premium-card-button-{{ ai_gen_id }}">
         {{ block.settings.button_text }}
       </a>
     {% endif %}
@@ -225,7 +243,7 @@
   {% if block.settings.show_overlay %}
     <div class="ai-premium-card-overlay-{{ ai_gen_id }}">
       <h2 class="ai-premium-card-overlay-text-{{ ai_gen_id }}">{{ block.settings.overlay_text }}</h2>
-      <a href="{{ block.settings.overlay_button_link }}" class="button-secondary button">
+      <a href="{{ block.settings.overlay_button_link }}" class="ai-premium-card-overlay-button-{{ ai_gen_id }}">
         {{ block.settings.overlay_button_text }}
       </a>
     </div>
