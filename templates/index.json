@@ -185,7 +185,6 @@
       "block_order": [
         "group_3cB4GW"
       ],
-      "disabled": true,
       "settings": {
         "media_type_1": "video",
         "image_1": "shopify://shop_images/pexels-begum-19971153.jpg",
@@ -390,7 +389,7 @@
         "section_height_custom": 50,
         "color_scheme": "scheme-1",
         "toggle_overlay": false,
-        "overlay_color": "#FFFFFF",
+        "overlay_color": "#ffffff",
         "overlay_style": "solid",
         "gradient_direction": "to top",
         "blurred_reflection": false,
