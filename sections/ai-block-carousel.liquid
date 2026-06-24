@@ -41,6 +41,12 @@
       </svg>
     </button>
   </div>
+
+  <div class="ai-block-carousel__scrollbar-wrap" aria-hidden="true">
+    <div class="ai-block-carousel__scrollbar-track" data-carousel-scrollbar-track="{{ section.id }}">
+      <div class="ai-block-carousel__scrollbar-thumb" data-carousel-scrollbar-thumb="{{ section.id }}"></div>
+    </div>
+  </div>
 </div>
 
 {% stylesheet %}
@@ -77,30 +83,39 @@
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     padding-inline: 56px;
-    padding-bottom: 12px;
+    padding-bottom: 16px;
     flex: 1;
-    /* Custom scrollbar */
-    scrollbar-width: thin;
-    scrollbar-color: rgba(0, 0, 0, 0.35) transparent;
+    scrollbar-width: none;
   }
 
   .ai-block-carousel__track::-webkit-scrollbar {
-    height: 2px;
+    display: none;
   }
 
-  .ai-block-carousel__track::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.08);
+  /* Custom scrollbar */
+  .ai-block-carousel__scrollbar-wrap {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .ai-block-carousel__scrollbar-track {
+    position: relative;
+    width: 50vw;
+    height: 0.5px;
+    background: rgba(0, 0, 0, 0.12);
     border-radius: 1px;
-    margin-inline: calc((100% - 65vw) / 2);
+    overflow: hidden;
   }
 
-  .ai-block-carousel__track::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.35);
+  .ai-block-carousel__scrollbar-thumb {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
     border-radius: 1px;
-  }
-
-  .ai-block-carousel__track::-webkit-scrollbar-thumb:hover {
-    background: rgba(0, 0, 0, 0.55);
+    transition: left 0.1s linear, width 0.1s linear;
   }
 
   /* Force each card to show 3.25 on desktop */
@@ -163,6 +178,7 @@
       var id = track.dataset.carouselTrack;
       var prev = document.querySelector('[data-carousel-prev="' + id + '"]');
       var next = document.querySelector('[data-carousel-next="' + id + '"]');
+      var sbThumb = document.querySelector('[data-carousel-scrollbar-thumb="' + id + '"]');
 
       function cardWidth() {
         var first = track.firstElementChild;
@@ -177,6 +193,20 @@
         next.disabled = track.scrollLeft + track.clientWidth >= track.scrollWidth - 4;
       }
 
+      function updateScrollbar() {
+        if (!sbThumb) return;
+        var scrollable = track.scrollWidth - track.clientWidth;
+        if (scrollable <= 0) {
+          sbThumb.style.width = '100%';
+          sbThumb.style.left = '0%';
+          return;
+        }
+        var ratio = track.clientWidth / track.scrollWidth;
+        var progress = track.scrollLeft / scrollable;
+        sbThumb.style.width = (ratio * 100) + '%';
+        sbThumb.style.left = (progress * (100 - ratio * 100)) + '%';
+      }
+
       if (prev) {
         prev.addEventListener('click', function () {
           track.scrollBy({ left: -cardWidth(), behavior: 'smooth' });
@@ -189,8 +219,13 @@
         });
       }
 
-      track.addEventListener('scroll', updateArrows, { passive: true });
+      track.addEventListener('scroll', function () {
+        updateArrows();
+        updateScrollbar();
+      }, { passive: true });
+
       updateArrows();
+      updateScrollbar();
     });
   })();
 {% endjavascript %}
