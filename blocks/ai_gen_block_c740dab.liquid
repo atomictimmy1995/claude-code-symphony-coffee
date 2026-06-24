@@ -127,6 +127,15 @@
     background-color: {{ block.settings.button_hover_background }};
   }
 
+  .ai-premium-card-atc-form-{{ ai_gen_id }} {
+    display: block;
+  }
+
+  .ai-premium-card-button-{{ ai_gen_id }}:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
   .ai-premium-card-overlay-{{ ai_gen_id }} {
     position: absolute;
     top: 0;
@@ -234,9 +243,28 @@
     </div>
 
     {% if block.settings.button_text != blank %}
-      <a href="{{ block.settings.button_link }}" class="ai-premium-card-button-{{ ai_gen_id }}">
-        {{ block.settings.button_text }}
-      </a>
+      {% if block.settings.product != blank %}
+        {% assign atc_product = block.settings.product %}
+        <form action="/cart/add" method="post" class="ai-premium-card-atc-form-{{ ai_gen_id }}">
+          <input type="hidden" name="id" value="{{ atc_product.selected_or_first_available_variant.id }}">
+          <input type="hidden" name="quantity" value="1">
+          <button
+            type="submit"
+            class="ai-premium-card-button-{{ ai_gen_id }}"
+            {% unless atc_product.selected_or_first_available_variant.available %}disabled{% endunless %}
+          >
+            {% if atc_product.selected_or_first_available_variant.available %}
+              {{ block.settings.button_text }}
+            {% else %}
+              Sold out
+            {% endif %}
+          </button>
+        </form>
+      {% else %}
+        <a href="{{ block.settings.button_link }}" class="ai-premium-card-button-{{ ai_gen_id }}">
+          {{ block.settings.button_text }}
+        </a>
+      {% endif %}
     {% endif %}
   </div>
 
@@ -258,6 +286,11 @@
     {
       "type": "header",
       "content": "Product details"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product (for Add to Cart)"
     },
     {
       "type": "image_picker",
