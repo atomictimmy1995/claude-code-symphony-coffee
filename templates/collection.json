@@ -939,7 +939,7 @@
             "product_price": "$20.00",
             "subscription_price": "$17 when you Pre-Order!",
             "button_text": "Pre-Order",
-            "button_link": "shopify://products/symphony-blend",
+            "button_link": "shopify://products/triangle-blend",
             "show_overlay": false,
             "overlay_text": "Subscriber Exclusive",
             "overlay_button_text": "Subscribe Now",
