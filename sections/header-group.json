@@ -97,7 +97,7 @@
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "weight": "",
-            "letter_spacing": "normal",
+            "letter_spacing": "tight",
             "case": "none"
           },
           "blocks": {}
@@ -112,8 +112,8 @@
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "divider_width": 1,
-        "padding-block-start": 10,
-        "padding-block-end": 10
+        "padding-block-start": 17,
+        "padding-block-end": 17
       }
     }
   },
