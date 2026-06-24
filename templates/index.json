@@ -9,54 +9,6 @@
  */
 {
   "sections": {
-    "coffee_landing_hero": {
-      "type": "coffee-landing-hero",
-      "blocks": {
-        "slide_1": {
-          "type": "product_slide",
-          "settings": {
-            "image": "shopify://shop_images/4862a93a-704d-4578-9130-ff845a867983.png",
-            "bag_color": "#c8b830",
-            "description": "Symphony Blend — nutty, chocolate, and praline notes",
-            "more_link": ""
-          }
-        },
-        "slide_2": {
-          "type": "product_slide",
-          "settings": {
-            "image": "shopify://shop_images/xylophone_blend-mockup-1.png",
-            "bag_color": "#e05c1a",
-            "description": "Colombian coffee with notes of cocoa and caramel",
-            "more_link": ""
-          }
-        },
-        "slide_3": {
-          "type": "product_slide",
-          "settings": {
-            "image": "shopify://shop_images/034cc907-eb38-4d00-a2c9-dc4e7a360d3e.png",
-            "bag_color": "#2a9e6a",
-            "description": "Trombone Blend — bold, smooth, and full of character",
-            "more_link": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_1",
-        "slide_2",
-        "slide_3"
-      ],
-      "disabled": true,
-      "settings": {
-        "background_image": "shopify://shop_images/xylophone_blend-mockup-1.png",
-        "heading": "Carefully selected beans roasted with love & care",
-        "button_label": "KNOW MORE",
-        "button_link": "/collections/all",
-        "description": "Colombian coffee with notes of cocoa and caramel",
-        "more_link": "/collections/all",
-        "facebook_url": "",
-        "instagram_url": ""
-      }
-    },
     "hero_RkimKJ": {
       "type": "hero",
       "blocks": {
@@ -233,6 +185,7 @@
       "block_order": [
         "group_3cB4GW"
       ],
+      "disabled": true,
       "settings": {
         "media_type_1": "video",
         "image_1": "shopify://shop_images/pexels-begum-19971153.jpg",
@@ -265,6 +218,131 @@
         "reflection_opacity": 70,
         "padding-block-start": 0,
         "padding-block-end": 0
+      }
+    },
+    "hero_HweCCW": {
+      "type": "hero",
+      "blocks": {
+        "jumbo_text_Ep6pb6": {
+          "type": "jumbo-text",
+          "name": "t:names.jumbo_text",
+          "settings": {
+            "text": "Be bold.",
+            "font": "heading",
+            "alignment": "left",
+            "line_height": "0.8",
+            "letter_spacing": "-0.03em",
+            "case": "none",
+            "text_effect": "none",
+            "animation_repeat": false
+          },
+          "blocks": {}
+        },
+        "text_znjVYe": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<h1>New arrivals</h1>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "h1",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_GdnE48": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "<p>Made with care and unconditionally loved by our customers.</p>",
+            "width": "fit-content",
+            "max_width": "narrow",
+            "alignment": "left",
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "color": "var(--color-foreground)",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 32,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "button_eFrHmD": {
+          "type": "button",
+          "name": "t:names.button",
+          "disabled": true,
+          "settings": {
+            "label": "Shop now",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "fit-content",
+            "custom_width": 100,
+            "width_mobile": "fit-content",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "jumbo_text_Ep6pb6",
+        "text_znjVYe",
+        "text_GdnE48",
+        "button_eFrHmD"
+      ],
+      "name": "t:names.hero",
+      "settings": {
+        "media_type_1": "image",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "column",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "center",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_width": "page-width",
+        "section_height": "large",
+        "section_height_custom": 50,
+        "color_scheme": "scheme-5",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "padding-block-start": 40,
+        "padding-block-end": 40
       }
     },
     "product_list_X8Q7bi": {
@@ -2086,8 +2164,8 @@
     }
   },
   "order": [
-    "coffee_landing_hero",
     "hero_RkimKJ",
+    "hero_HweCCW",
     "product_list_X8Q7bi",
     "177769213156d73ef0",
     "product_list_rmB4N4",
