@@ -297,6 +297,7 @@
         "text_GdnE48",
         "button_eFrHmD"
       ],
+      "disabled": true,
       "name": "t:names.hero",
       "settings": {
         "media_type_1": "image",
