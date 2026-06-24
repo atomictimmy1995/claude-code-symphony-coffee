@@ -707,7 +707,7 @@
             "subscription_price": "$17/month with subscription",
             "button_text": "View Now",
             "button_link": "shopify://products/snare-roast",
-            "show_overlay": true,
+            "show_overlay": false,
             "overlay_text": "Coming Soon!",
             "overlay_button_text": "Find out more!",
             "overlay_button_link": "",
