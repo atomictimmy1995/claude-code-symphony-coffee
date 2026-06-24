@@ -263,6 +263,32 @@
             "padding-inline-end": 0
           },
           "blocks": {
+            "text_PyRFnK": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "<p>Coming July 1st!</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "h5",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "text_JMnLh4": {
               "type": "text",
               "settings": {
@@ -330,6 +356,7 @@
             }
           },
           "block_order": [
+            "text_PyRFnK",
             "text_JMnLh4",
             "text_gwDJQL",
             "button_MhEbRp"
