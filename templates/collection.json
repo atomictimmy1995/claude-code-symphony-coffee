@@ -563,6 +563,7 @@
           "type": "ai_gen_block_c740dab",
           "name": "Premium product card-sub overlay-1",
           "settings": {
+            "product": "",
             "product_image": "shopify://shop_images/mockup-1_93827d2d-0ac3-425e-ada2-ed223cc4f797.png",
             "eyebrow_text": "Sip the Symphony",
             "product_title": "Symphony Blend",
@@ -620,6 +621,7 @@
           "type": "ai_gen_block_c740dab",
           "name": "Premium product card-sub overlay-1",
           "settings": {
+            "product": "",
             "product_image": "shopify://shop_images/034cc907-eb38-4d00-a2c9-dc4e7a360d3e.png",
             "eyebrow_text": "March on to your morning",
             "product_title": "Snare  Roast",
@@ -677,6 +679,7 @@
           "type": "ai_gen_block_c740dab",
           "name": "Premium product card-sub overlay-1",
           "settings": {
+            "product": "",
             "product_image": "shopify://shop_images/trombone_blend-mockup-1_updated.png",
             "eyebrow_text": "Smooth Sliding Coffee",
             "product_title": "Trombone Blend",
@@ -734,6 +737,7 @@
           "type": "ai_gen_block_c740dab",
           "name": "Premium product card-sub overlay-1",
           "settings": {
+            "product": "",
             "product_image": "shopify://shop_images/2f39cab9-c81d-458f-ae5a-02ee4d2ed1f8.png",
             "eyebrow_text": "The Ultimate Charmer",
             "product_title": "Oboe Solo",
@@ -791,6 +795,7 @@
           "type": "ai_gen_block_c740dab",
           "name": "Premium product card-sub overlay-1",
           "settings": {
+            "product": "",
             "product_image": "shopify://shop_images/2a3e8675-ac3f-43ea-8f64-997dfa29e929.png",
             "eyebrow_text": "The Ultimate Charmer",
             "product_title": "Cello Reserve",
