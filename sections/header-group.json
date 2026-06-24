@@ -92,7 +92,7 @@
         "announcement_pgf3z6": {
           "type": "_announcement",
           "settings": {
-            "text": "Percussion Section coming soon! Pre-order now!",
+            "text": "Percussion Section coming July 1st! Pre-order now!",
             "link": "shopify://collections/coffee",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
@@ -106,15 +106,14 @@
       "block_order": [
         "announcement_pgf3z6"
       ],
-      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
         "section_width": "page-width",
         "color_scheme": "scheme-1",
         "divider_width": 1,
-        "padding-block-start": 17,
-        "padding-block-end": 17
+        "padding-block-start": 5,
+        "padding-block-end": 5
       }
     }
   },
