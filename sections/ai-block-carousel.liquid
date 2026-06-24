@@ -129,9 +129,13 @@
 
   /* 1 card on mobile */
   @media screen and (max-width: 749px) {
+    .ai-block-carousel__track {
+      padding-inline: 0;
+    }
+
     .ai-block-carousel__track > * {
-      flex: 0 0 calc(100% - 112px) !important;
-      width: calc(100% - 112px) !important;
+      flex: 0 0 100% !important;
+      width: 100% !important;
     }
   }
 
