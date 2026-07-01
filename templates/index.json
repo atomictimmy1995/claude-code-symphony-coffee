@@ -266,7 +266,7 @@
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Coming July 1st!</p>",
+                "text": "<p>Introducing!</p>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
@@ -316,7 +316,7 @@
             "text_gwDJQL": {
               "type": "text",
               "settings": {
-                "text": "<p>Pre-order from the Percussion Section and save %15!</p>",
+                "text": "<p>Shop our exclusive blends!</p>",
                 "width": "fit-content",
                 "max_width": "narrow",
                 "alignment": "left",
@@ -342,8 +342,8 @@
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "Pre-Order Now",
-                "link": "shopify://collections/the-percussion-section",
+                "label": "Order Now!",
+                "link": "shopify://collections/coffee",
                 "open_in_new_tab": false,
                 "style_class": "button",
                 "width": "fit-content",
@@ -879,10 +879,10 @@
             "taste_note_2": "Almond",
             "taste_note_3": "Smooth",
             "product_price": "$20.00",
-            "subscription_price": "$17 when you pre-order!",
+            "subscription_price": "$17/month when you subscribe",
             "button_text": "View Now",
             "button_link": "shopify://products/snare-roast",
-            "show_overlay": true,
+            "show_overlay": false,
             "overlay_text": "Coming Soon!",
             "overlay_button_text": "Find out more!",
             "overlay_button_link": "shopify://products/snare-roast",
