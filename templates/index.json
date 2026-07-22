@@ -219,186 +219,6 @@
         "padding-block-end": 0
       }
     },
-    "hero_HweCCW": {
-      "type": "hero",
-      "blocks": {
-        "group_T7f6dB": {
-          "type": "group",
-          "name": "t:names.group",
-          "settings": {
-            "content_direction": "column",
-            "vertical_on_mobile": true,
-            "horizontal_alignment": "flex-start",
-            "vertical_alignment": "center",
-            "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "flex-end",
-            "vertical_alignment_flex_direction_column": "space-between",
-            "gap": 13,
-            "width": "fit-content",
-            "custom_width": 100,
-            "width_mobile": "fit-content",
-            "custom_width_mobile": 100,
-            "height": "fit",
-            "custom_height": 100,
-            "inherit_color_scheme": true,
-            "color_scheme": "",
-            "background_media": "none",
-            "video_position": "cover",
-            "background_image_position": "cover",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "toggle_overlay": false,
-            "overlay_color": "#00000026",
-            "overlay_style": "solid",
-            "gradient_direction": "to top",
-            "link": "",
-            "open_in_new_tab": false,
-            "placeholder": "",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          },
-          "blocks": {
-            "text_PyRFnK": {
-              "type": "text",
-              "name": "t:names.text",
-              "settings": {
-                "text": "<p>Introducing!</p>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h5",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_JMnLh4": {
-              "type": "text",
-              "settings": {
-                "text": "<h1>The Percussion</h1><h1>Section</h1>",
-                "width": "fit-content",
-                "max_width": "normal",
-                "alignment": "left",
-                "type_preset": "h1",
-                "font": "var(--font-heading--family)",
-                "font_size": "4.5rem",
-                "line_height": "tight",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_gwDJQL": {
-              "type": "text",
-              "settings": {
-                "text": "<p>Shop our exclusive blends!</p>",
-                "width": "fit-content",
-                "max_width": "narrow",
-                "alignment": "left",
-                "type_preset": "paragraph",
-                "font": "var(--font-body--family)",
-                "font_size": "1rem",
-                "line_height": "normal",
-                "letter_spacing": "normal",
-                "case": "none",
-                "wrap": "pretty",
-                "color": "var(--color-foreground)",
-                "background": false,
-                "background_color": "#00000026",
-                "corner_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 32,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "button_MhEbRp": {
-              "type": "button",
-              "name": "t:names.button",
-              "settings": {
-                "label": "Order Now!",
-                "link": "shopify://collections/coffee",
-                "open_in_new_tab": false,
-                "style_class": "button",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
-              },
-              "blocks": {}
-            }
-          },
-          "block_order": [
-            "text_PyRFnK",
-            "text_JMnLh4",
-            "text_gwDJQL",
-            "button_MhEbRp"
-          ]
-        }
-      },
-      "block_order": [
-        "group_T7f6dB"
-      ],
-      "name": "t:names.hero",
-      "settings": {
-        "media_type_1": "image",
-        "image_1": "shopify://shop_images/Untitled_-_June_24_2026_at_14.37.00.png",
-        "media_type_2": "image",
-        "stack_media_on_mobile": false,
-        "custom_mobile_media": false,
-        "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/pexels-gezerasph-26570782.jpg",
-        "media_type_2_mobile": "image",
-        "link": "",
-        "open_in_new_tab": false,
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "flex-end",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 16,
-        "section_width": "page-width",
-        "section_height": "full-screen",
-        "section_height_custom": 50,
-        "color_scheme": "scheme-1",
-        "toggle_overlay": true,
-        "overlay_color": "#ffffff94",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "blurred_reflection": false,
-        "reflection_opacity": 75,
-        "padding-block-start": 40,
-        "padding-block-end": 40
-      }
-    },
     "divider_q7bWKG": {
       "type": "divider",
       "name": "t:names.divider_section",
@@ -1046,7 +866,7 @@
           "settings": {
             "product": "",
             "product_image": "shopify://shop_images/2a3e8675-ac3f-43ea-8f64-997dfa29e929.png",
-            "eyebrow_text": "The Ultimate Charmer",
+            "eyebrow_text": "You'll be Bach for more",
             "product_title": "Cello Reserve",
             "product_description": "Crafted for those who appreciate warmth with complexity.",
             "taste_note_1": "Citrus",
@@ -2260,7 +2080,6 @@
   },
   "order": [
     "hero_RkimKJ",
-    "hero_HweCCW",
     "divider_q7bWKG",
     "product_list_X8Q7bi",
     "177769213156d73ef0",
