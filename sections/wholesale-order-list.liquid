@@ -3,9 +3,25 @@
   assign minimum_units = section.settings.minimum_units
   assign default_quantity = section.settings.default_quantity
 
+  # Order the rows independently of the collection's own sort order, so changing
+  # this doesn't affect the collection anywhere else it's used.
+  assign wholesale_products = wholesale_collection.products
+  case section.settings.sort_by
+    when 'title_asc'
+      assign wholesale_products = wholesale_products | sort_natural: 'title'
+    when 'title_desc'
+      assign wholesale_products = wholesale_products | sort_natural: 'title' | reverse
+    when 'price_asc'
+      assign wholesale_products = wholesale_products | sort: 'price'
+    when 'price_desc'
+      assign wholesale_products = wholesale_products | sort: 'price' | reverse
+    when 'created_desc'
+      assign wholesale_products = wholesale_products | sort: 'created_at' | reverse
+  endcase
+
   assign wholesale_units = 0
   for item in cart.items
-    for wholesale_product in wholesale_collection.products
+    for wholesale_product in wholesale_products
       if item.product_id == wholesale_product.id
         assign wholesale_units = wholesale_units | plus: item.quantity
         break
@@ -32,7 +48,7 @@
   endif
 
   assign wholesale_variant_ids = ''
-  for wholesale_product in wholesale_collection.products
+  for wholesale_product in wholesale_products
     for wholesale_variant in wholesale_product.variants
       assign wholesale_variant_ids = wholesale_variant_ids | append: wholesale_variant.id | append: ','
     endfor
@@ -72,7 +88,7 @@
       <div class="wholesale-order-list__subheading rte">{{ section.settings.subheading }}</div>
     {%- endif -%}
 
-    {%- if wholesale_collection == blank or wholesale_collection.products_count == 0 -%}
+    {%- if wholesale_collection == blank or wholesale_products.size == 0 -%}
       <p class="wholesale-order-list__empty">{{ 'content.wholesale_no_products' | t }}</p>
     {%- else -%}
       <div
@@ -109,7 +125,7 @@
           </div>
         </div>
 
-        {%- for product in wholesale_collection.products -%}
+        {%- for product in wholesale_products -%}
           {% liquid
             assign variant = product.selected_or_first_available_variant
             assign form_id = 'WholesaleOrder-ProductForm-' | append: product.id | append: '-' | append: section.id
@@ -515,6 +531,39 @@
       "id": "subheading",
       "label": "t:settings.text",
       "default": "<p>Order 25 units or more to unlock 25% off and free shipping.</p>"
+    },
+    {
+      "type": "select",
+      "id": "sort_by",
+      "label": "Sort products by",
+      "info": "Only affects this page, not the collection itself.",
+      "options": [
+        {
+          "value": "collection_default",
+          "label": "Collection's own sort order"
+        },
+        {
+          "value": "title_asc",
+          "label": "Alphabetical (A–Z)"
+        },
+        {
+          "value": "title_desc",
+          "label": "Alphabetical (Z–A)"
+        },
+        {
+          "value": "price_asc",
+          "label": "Price (low to high)"
+        },
+        {
+          "value": "price_desc",
+          "label": "Price (high to low)"
+        },
+        {
+          "value": "created_desc",
+          "label": "Newest first"
+        }
+      ],
+      "default": "collection_default"
     },
     {
       "type": "range",
