@@ -24,7 +24,7 @@
       "settings": {
         "collection": "wholesale",
         "heading": "Wholesale ordering",
-        "subheading": "<p>Select your blends and quantities below. Minimum order of 25 units required. Wholesale orders receive 25% off retail pricing and free shipping.</p>",
+        "subheading": "<p>Select your blends and quantities below. Minimum order of 25 units required. Wholesale orders receive 20% off retail pricing and free shipping.</p>",
         "sort_by": "title_asc",
         "minimum_units": 25,
         "default_quantity": 1,
