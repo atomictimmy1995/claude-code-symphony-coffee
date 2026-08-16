@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
@@ -15,7 +24,7 @@
       "settings": {
         "collection": "wholesale",
         "heading": "Wholesale ordering",
-        "subheading": "<p>Select your blends and quantities below. Orders of 25 units or more receive 25% off and free shipping.</p>",
+        "subheading": "<p>Select your blends and quantities below. Minimum order of 25 units required. Wholesale orders receive 25% off retail pricing and free shipping.</p>",
         "minimum_units": 25,
         "default_quantity": 25,
         "section_width": "page-width",
@@ -25,5 +34,8 @@
       }
     }
   },
-  "order": ["main", "wholesale_order_list"]
+  "order": [
+    "main",
+    "wholesale_order_list"
+  ]
 }
