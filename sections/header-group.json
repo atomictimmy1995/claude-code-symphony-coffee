@@ -106,6 +106,7 @@
       "block_order": [
         "announcement_pgf3z6"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
