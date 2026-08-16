@@ -1,0 +1,598 @@
+{% liquid
+  assign wholesale_collection = section.settings.collection
+  assign minimum_units = section.settings.minimum_units
+  assign default_quantity = section.settings.default_quantity
+
+  assign wholesale_units = 0
+  for item in cart.items
+    for wholesale_product in wholesale_collection.products
+      if item.product_id == wholesale_product.id
+        assign wholesale_units = wholesale_units | plus: item.quantity
+        break
+      endif
+    endfor
+  endfor
+
+  assign units_remaining = minimum_units | minus: wholesale_units
+  if units_remaining < 0
+    assign units_remaining = 0
+  endif
+
+  assign meets_minimum = false
+  if wholesale_units >= minimum_units
+    assign meets_minimum = true
+  endif
+
+  assign progress_percent = 0
+  if minimum_units > 0
+    assign progress_percent = wholesale_units | times: 100 | divided_by: minimum_units
+    if progress_percent > 100
+      assign progress_percent = 100
+    endif
+  endif
+
+  assign wholesale_variant_ids = ''
+  for wholesale_product in wholesale_collection.products
+    for wholesale_variant in wholesale_product.variants
+      assign wholesale_variant_ids = wholesale_variant_ids | append: wholesale_variant.id | append: ','
+    endfor
+  endfor
+%}
+
+<script
+  src="{{ 'wholesale-order-list.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<div class="section-background color-{{ section.settings.color_scheme }}"></div>
+
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    color-{{ section.settings.color_scheme }}
+    spacing-style
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <wholesale-order-list-component
+    class="wholesale-order-list"
+    data-minimum-units="{{ minimum_units }}"
+    data-wholesale-variant-ids="{{ wholesale_variant_ids | split: ',' | json | escape }}"
+    data-progress-template="{{ 'content.wholesale_progress' | t: units: '__UNITS__', minimum: '__MINIMUM__' | escape }}"
+    data-remaining-template="{{ 'content.wholesale_units_remaining' | t: units: '__UNITS__' | escape }}"
+    data-unlocked-text="{{ 'content.wholesale_minimum_met' | t | escape }}"
+  >
+    {%- if section.settings.heading != blank -%}
+      <h2 class="wholesale-order-list__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <div class="wholesale-order-list__subheading rte">{{ section.settings.subheading }}</div>
+    {%- endif -%}
+
+    {%- if wholesale_collection == blank or wholesale_collection.products_count == 0 -%}
+      <p class="wholesale-order-list__empty">{{ 'content.wholesale_no_products' | t }}</p>
+    {%- else -%}
+      <div
+        class="wholesale-order-list__grid"
+        role="table"
+      >
+        <div
+          class="wholesale-order-list__row wholesale-order-list__row--header"
+          role="row"
+        >
+          <div
+            class="wholesale-order-list__cell wholesale-order-list__cell--product"
+            role="columnheader"
+          >
+            {{ 'content.wholesale_product' | t }}
+          </div>
+          <div
+            class="wholesale-order-list__cell wholesale-order-list__cell--price"
+            role="columnheader"
+          >
+            {{ 'content.price' | t }}
+          </div>
+          <div
+            class="wholesale-order-list__cell wholesale-order-list__cell--quantity"
+            role="columnheader"
+          >
+            {{ 'content.quantity' | t }}
+          </div>
+          <div
+            class="wholesale-order-list__cell wholesale-order-list__cell--action"
+            role="columnheader"
+          >
+            <span class="visually-hidden">{{ 'actions.add_to_cart' | t }}</span>
+          </div>
+        </div>
+
+        {%- for product in wholesale_collection.products -%}
+          {% liquid
+            assign variant = product.selected_or_first_available_variant
+            assign form_id = 'WholesaleOrder-ProductForm-' | append: product.id | append: '-' | append: section.id
+            assign in_cart = cart | line_items_for: product | sum: 'quantity' | default: 0
+
+            assign can_add_to_cart = false
+            assign add_to_cart_text = 'products.product.sold_out' | t
+            if product.available
+              assign can_add_to_cart = true
+              assign add_to_cart_text = 'actions.add' | t
+            endif
+          %}
+          <div
+            class="wholesale-order-list__row"
+            role="row"
+            data-product-id="{{ product.id }}"
+          >
+            <product-form-component
+              class="wholesale-order-list__form"
+              data-section-id="{{ section.id }}"
+              data-product-id="{{ product.id }}"
+              data-product-url="{{ product.url }}"
+              on:submit="/handleSubmit"
+            >
+              <div
+                class="visually-hidden"
+                aria-live="assertive"
+                role="status"
+                aria-atomic="true"
+                ref="liveRegion"
+              ></div>
+              {%- form 'product', product, id: form_id, data-type: 'add-to-cart-form' -%}
+                <div
+                  class="wholesale-order-list__cell wholesale-order-list__cell--product"
+                  role="cell"
+                >
+                  {%- if product.featured_media -%}
+                    {{
+                      product.featured_media
+                      | image_url: width: 120
+                      | image_tag:
+                        widths: '60,120',
+                        sizes: '60px',
+                        class: 'wholesale-order-list__image',
+                        loading: 'lazy'
+                    }}
+                  {%- endif -%}
+                  <div class="wholesale-order-list__details">
+                    <a
+                      class="wholesale-order-list__title"
+                      href="{{ product.url }}"
+                    >
+                      {{- product.title -}}
+                    </a>
+                    {%- if in_cart > 0 -%}
+                      <span class="wholesale-order-list__in-cart">
+                        {{- in_cart }} {{ 'products.product.in_cart' | t -}}
+                      </span>
+                    {%- endif -%}
+                    {%- if product.variants.size > 1 -%}
+                      <label
+                        class="visually-hidden"
+                        for="{{ form_id }}-variant"
+                      >
+                        {{- product.options.first -}}
+                      </label>
+                      <select
+                        id="{{ form_id }}-variant"
+                        class="wholesale-order-list__variant-select select"
+                        name="id"
+                        ref="variantId"
+                      >
+                        {%- for product_variant in product.variants -%}
+                          <option
+                            value="{{ product_variant.id }}"
+                            {% if product_variant.available == false %}
+                              disabled
+                            {% endif %}
+                            {% if product_variant.id == variant.id %}
+                              selected
+                            {% endif %}
+                          >
+                            {{ product_variant.title }}
+                          </option>
+                        {%- endfor -%}
+                      </select>
+                    {%- else -%}
+                      <input
+                        type="hidden"
+                        name="id"
+                        ref="variantId"
+                        value="{{ variant.id }}"
+                      >
+                    {%- endif -%}
+                  </div>
+                </div>
+
+                <div
+                  class="wholesale-order-list__cell wholesale-order-list__cell--price"
+                  role="cell"
+                >
+                  <span class="wholesale-order-list__price">
+                    {%- render 'format-price', price: variant.price, type: 'per_item' -%}
+                  </span>
+                </div>
+
+                <div
+                  class="wholesale-order-list__cell wholesale-order-list__cell--quantity"
+                  role="cell"
+                >
+                  {%- render 'quantity-selector',
+                    product: product,
+                    variant: variant,
+                    in_cart_quantity: default_quantity
+                  -%}
+                </div>
+
+                <div
+                  class="wholesale-order-list__cell wholesale-order-list__cell--action"
+                  role="cell"
+                >
+                  <span
+                    class="product-form-text__error hidden"
+                    ref="addToCartTextError"
+                  >
+                    <span class="svg-wrapper">
+                      {{- 'icon-error.svg' | inline_asset_content -}}
+                    </span>
+                  </span>
+                  {%- render 'add-to-cart-button',
+                    add_to_cart_text: add_to_cart_text,
+                    can_add_to_cart: can_add_to_cart,
+                    class: 'wholesale-order-list__add-button add-to-cart-button',
+                    product: product
+                  -%}
+                </div>
+              {%- endform -%}
+            </product-form-component>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="wholesale-order-list__summary">
+        <div class="wholesale-order-list__progress">
+          <div
+            class="wholesale-order-list__progress-track"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="{{ minimum_units }}"
+            aria-valuenow="{{ wholesale_units }}"
+            ref="progressBar"
+          >
+            <span
+              class="wholesale-order-list__progress-fill"
+              style="--wholesale-progress: {{ progress_percent }}%;"
+              ref="progressFill"
+            ></span>
+          </div>
+          <p
+            class="wholesale-order-list__progress-text"
+            aria-live="polite"
+            ref="progressText"
+          >
+            {{ 'content.wholesale_progress' | t: units: wholesale_units, minimum: minimum_units }}
+          </p>
+          <p
+            class="wholesale-order-list__status{% if meets_minimum %} wholesale-order-list__status--met{% endif %}"
+            ref="statusText"
+          >
+            {%- if meets_minimum -%}
+              {{ 'content.wholesale_minimum_met' | t }}
+            {%- else -%}
+              {{ 'content.wholesale_units_remaining' | t: units: units_remaining }}
+            {%- endif -%}
+          </p>
+        </div>
+
+        <div class="wholesale-order-list__actions">
+          <a
+            class="button wholesale-order-list__checkout{% unless meets_minimum %} wholesale-order-list__checkout--disabled{% endunless %}"
+            href="{{ routes.cart_url }}"
+            ref="checkoutButton"
+            {% unless meets_minimum %}
+              aria-disabled="true"
+              tabindex="-1"
+            {% endunless %}
+          >
+            {{ 'content.view_cart' | t }}
+          </a>
+        </div>
+      </div>
+    {%- endif -%}
+  </wholesale-order-list-component>
+</div>
+
+{% stylesheet %}
+  .wholesale-order-list {
+    --wholesale-image-size: 60px;
+    --wholesale-quantity-width: 124px;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-md);
+  }
+
+  .wholesale-order-list__heading {
+    margin: 0;
+  }
+
+  .wholesale-order-list__subheading {
+    margin: 0;
+    opacity: var(--opacity-85);
+  }
+
+  .wholesale-order-list__grid {
+    display: block;
+    width: 100%;
+  }
+
+  .wholesale-order-list__row--header,
+  .wholesale-order-list__form .shopify-product-form {
+    display: grid;
+    grid-template-columns: 2fr 1fr var(--wholesale-quantity-width) minmax(120px, 1fr);
+    gap: var(--gap-md);
+    align-items: center;
+  }
+
+  .wholesale-order-list__row--header {
+    border-block-end: var(--style-border-width) solid var(--color-border);
+    padding-block-end: var(--padding-xl);
+    margin-block-end: var(--padding-sm);
+    opacity: var(--opacity-85);
+    font-size: var(--font-size--xs);
+    letter-spacing: var(--letter-spacing--body-loose);
+  }
+
+  .wholesale-order-list__row:not(.wholesale-order-list__row--header) {
+    padding-block: var(--padding-md);
+    border-block-end: var(--style-border-width) solid var(--color-border);
+  }
+
+  .wholesale-order-list__form {
+    display: block;
+  }
+
+  .wholesale-order-list__cell--price,
+  .wholesale-order-list__cell--action {
+    text-align: end;
+  }
+
+  .wholesale-order-list__cell--product {
+    display: flex;
+    align-items: center;
+    gap: var(--gap-sm);
+    text-align: start;
+  }
+
+  .wholesale-order-list__image {
+    width: var(--wholesale-image-size);
+    height: auto;
+    flex-shrink: 0;
+  }
+
+  .wholesale-order-list__details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2xs);
+    min-width: 0;
+  }
+
+  .wholesale-order-list__title {
+    font-weight: var(--font-weight-medium);
+    text-decoration: none;
+    color: var(--color-foreground);
+  }
+
+  .wholesale-order-list__in-cart {
+    font-size: var(--font-size--xs);
+    color: var(--color-foreground-secondary);
+  }
+
+  .wholesale-order-list__variant-select {
+    max-width: 160px;
+    font-size: var(--font-size--sm);
+  }
+
+  .wholesale-order-list__cell--quantity .quantity-selector {
+    flex: 0 0 var(--wholesale-quantity-width);
+    min-width: var(--wholesale-quantity-width);
+    font-size: var(--font-size--xs);
+  }
+
+  .wholesale-order-list__add-button {
+    width: 100%;
+  }
+
+  .wholesale-order-list__summary {
+    position: sticky;
+    inset-block-end: 0;
+    z-index: var(--layer-raised);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-md);
+    padding-block: var(--padding-xl);
+    background: var(--color-background);
+    border-block-start: var(--style-border-width) solid var(--color-border);
+  }
+
+  .wholesale-order-list__progress {
+    flex: 1 1 280px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2xs);
+  }
+
+  .wholesale-order-list__progress-track {
+    width: 100%;
+    height: 6px;
+    border-radius: 3px;
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    overflow: hidden;
+  }
+
+  .wholesale-order-list__progress-fill {
+    display: block;
+    height: 100%;
+    width: var(--wholesale-progress, 0%);
+    background: var(--color-primary);
+    transition: width var(--animation-speed-slow) var(--animation-easing);
+  }
+
+  .wholesale-order-list__progress-text {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
+  }
+
+  .wholesale-order-list__status {
+    margin: 0;
+    font-size: var(--font-size--sm);
+    color: var(--color-foreground-secondary);
+  }
+
+  .wholesale-order-list__status--met {
+    color: var(--color-primary);
+  }
+
+  .wholesale-order-list__checkout--disabled {
+    opacity: var(--opacity-50, 0.5);
+    pointer-events: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .wholesale-order-list__form .shopify-product-form {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .wholesale-order-list__row--header {
+      display: none;
+    }
+
+    .wholesale-order-list__cell--product {
+      grid-column: 1 / -1;
+    }
+
+    .wholesale-order-list__cell--price {
+      text-align: start;
+      align-self: center;
+    }
+
+    .wholesale-order-list__summary {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .wholesale-order-list__checkout {
+      width: 100%;
+      text-align: center;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Wholesale order list",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:settings.collection"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "Wholesale ordering"
+    },
+    {
+      "type": "richtext",
+      "id": "subheading",
+      "label": "t:settings.text",
+      "default": "<p>Order 25 units or more to unlock 25% off and free shipping.</p>"
+    },
+    {
+      "type": "range",
+      "id": "minimum_units",
+      "label": "Minimum units for checkout",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "range",
+      "id": "default_quantity",
+      "label": "Default quantity per product",
+      "min": 1,
+      "max": 100,
+      "step": 1,
+      "default": 25
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:settings.color_scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 48
+    }
+  ],
+  "presets": [
+    {
+      "name": "Wholesale order list",
+      "category": "t:categories.products",
+      "settings": {
+        "collection": "wholesale"
+      }
+    }
+  ]
+}
+{% endschema %}
