@@ -647,7 +647,7 @@
             "show_overlay": true,
             "overlay_text": "Coming Tomorrow!",
             "overlay_button_text": "Discover our Coffee!",
-            "overlay_button_link": "",
+            "overlay_button_link": "shopify://collections/coffee",
             "blur_amount": 8,
             "desktop_width_percent": 100,
             "card_background": "#ffffff",
