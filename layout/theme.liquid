@@ -7,6 +7,12 @@
 >
   <head>
 
+    <!-- Basic Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#000000">
+
     <!-- Google Tag Manager -->
     <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -14,12 +20,6 @@
     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer','GTM-W7SJMHG3');</script>
     <!-- End Google Tag Manager -->
-
-    <!-- Basic Meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="theme-color" content="#000000">
 
     <!-- Preconnect (Performance Boost) -->
     <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
@@ -43,7 +43,6 @@
     {%- render 'fonts' -%}
     {%- render 'theme-styles-variables' -%}
     {%- render 'color-schemes' -%}
-    {{ 'product-card-symphony.css' | asset_url | stylesheet_tag }}
 
     <!-- Scripts -->
     {%- render 'scripts' -%}
@@ -76,9 +75,11 @@
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "name": "{{ shop.name }}",
-      "url": "{{ shop.url }}",
-      "logo": "{{ shop.logo | image_url }}"
+      "name": {{ shop.name | json }},
+      {%- if settings.logo != blank %}
+      "logo": {{ settings.logo | image_url: width: 500 | prepend: 'https:' | json }},
+      {%- endif %}
+      "url": {{ shop.url | json }}
     }
     </script>
 
