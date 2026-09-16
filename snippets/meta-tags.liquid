@@ -1,8 +1,12 @@
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="">
-<meta name="robots" content="index, follow">
+{%- comment -%}
+  Sole owner of the document head's SEO tags.
+
+  charset, X-UA-Compatible, viewport and theme-color are declared once in
+  layout/theme.liquid — don't reintroduce them here. Robots directives are left
+  to Shopify, which already emits noindex for the templates that warrant it
+  (internal search, filtered views); a blanket "index, follow" here would
+  override that.
+{%- endcomment -%}
 
 {%- liquid
   assign og_title = page_title | default: shop.name
@@ -21,10 +25,10 @@
 
 <!-- SEO Title -->
 <title>
-  {{ page_title }}
+  {{- page_title -}}
   {%- if current_tags %} – {{ current_tags | join: ', ' }}{% endif -%}
   {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
-  | Coffee for Musicians – {{ shop.name }}
+  {{- ' | Coffee for Musicians – ' }}{{ shop.name -}}
 </title>
 
 <!-- Canonical -->
@@ -77,8 +81,28 @@
 {
   "@context": "https://schema.org",
   "@type": "Organization",
-  "name": "{{ shop.name }}",
-  "url": "{{ shop.url }}",
-  "logo": "{{ shop.logo | image_url }}"
+  "name": {{ shop.name | json }},
+  "url": {{ shop.url | json }},
+  "logo": {{ shop.logo | image_url | json }},
+  "description": {{ shop.description | json }}
+}
+</script>
+
+{%- comment -%}
+  Sitelinks searchbox. Previously supplied by the Booster SEO snippet, which was
+  removed once its app metafields came back empty — kept here so the capability
+  survives the removal.
+{%- endcomment -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ shop.name | json }},
+  "url": {{ shop.secure_url | json }},
+  "potentialAction": {
+    "@type": "SearchAction",
+    "query-input": "required name=query",
+    "target": "{{ shop.secure_url }}/search?q={query}"
+  }
 }
 </script>

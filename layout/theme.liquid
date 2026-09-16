@@ -6,8 +6,6 @@
   lang="{{ request.locale.iso_code }}"
 >
   <head>
-{% include 'booster-seo' %}
-
     <!-- Basic Meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -65,17 +63,6 @@
       <img height="1" width="1" style="display:none"
       src="https://www.facebook.com/tr?id=951613044197146&ev=PageView&noscript=1"/>
     </noscript>
-
-    <!-- Organization Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Organization",
-      "name": "{{ shop.name }}",
-      "url": "{{ shop.url }}",
-      "logo": "{{ shop.logo | image_url }}"
-    }
-    </script>
 
     {% if request.design_mode %}
       {%- render 'theme-editor' -%}
