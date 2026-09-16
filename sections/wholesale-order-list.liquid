@@ -96,6 +96,34 @@
       <div class="wholesale-order-list__subheading rte">{{ section.settings.subheading }}</div>
     {%- endif -%}
 
+    {%- comment -%}
+      The order terms as a definition list rather than only a sentence, so a
+      shopping agent reading this page can extract them without parsing prose.
+      Minimum quantity comes from the same setting that drives the progress bar,
+      so the two cannot disagree. Discount and shipping are optional and render
+      only when filled in -- they describe an automatic discount configured in
+      Shopify, which Liquid cannot read, so an unset value is left unstated
+      rather than guessed.
+    {%- endcomment -%}
+    <dl class="wholesale-order-list__terms">
+      <div class="wholesale-order-list__term">
+        <dt>{{ 'content.wholesale_term_minimum' | t }}</dt>
+        <dd>{{ 'content.wholesale_term_minimum_value' | t: units: minimum_units }}</dd>
+      </div>
+      {%- if section.settings.discount_summary != blank -%}
+        <div class="wholesale-order-list__term">
+          <dt>{{ 'content.wholesale_term_discount' | t }}</dt>
+          <dd>{{ section.settings.discount_summary }}</dd>
+        </div>
+      {%- endif -%}
+      {%- if section.settings.shipping_summary != blank -%}
+        <div class="wholesale-order-list__term">
+          <dt>{{ 'content.wholesale_term_shipping' | t }}</dt>
+          <dd>{{ section.settings.shipping_summary }}</dd>
+        </div>
+      {%- endif -%}
+    </dl>
+
     {%- if wholesale_collection == blank or wholesale_products.size == 0 -%}
       <p class="wholesale-order-list__empty">{{ 'content.wholesale_no_products' | t }}</p>
     {%- else -%}
@@ -329,6 +357,74 @@
   </wholesale-order-list-component>
 </div>
 
+{%- comment -%}
+  Structured data for the list itself. Product detail pages already publish full
+  Product/Offer schema via Shopify's structured_data filter; this describes the
+  page as an ordered catalogue so an agent can enumerate what is offered here
+  without crawling each product.
+
+  Prices are the list prices actually shown on the page. The 20% wholesale
+  discount is deliberately not encoded: it is an automatic discount applied at
+  checkout once the cart reaches the minimum, so publishing a reduced price
+  would contradict the visible price, and the minimum is counted across the
+  whole order rather than per product -- putting eligibleQuantity on an
+  individual offer would misstate it.
+{%- endcomment -%}
+{%- if wholesale_products.size > 0 -%}
+  {%- capture item_list_elements -%}
+    {%- for product in wholesale_products -%}
+      {%- assign list_variant = product.selected_or_first_available_variant -%}
+      {%- comment -%}
+        Build the price as a fixed two-decimal string from cents. money filters
+        apply locale formatting and would introduce thousands separators, which
+        are not valid in a schema.org price.
+      {%- endcomment -%}
+      {%- assign price_units = list_variant.price | divided_by: 100 -%}
+      {%- assign price_cents = list_variant.price | modulo: 100 -%}
+      {%- capture price_string -%}
+        {{- price_units }}.{% if price_cents < 10 %}0{% endif %}{{ price_cents -}}
+      {%- endcapture -%}
+      {%- unless forloop.first %},{% endunless -%}
+      {
+        "@type": "ListItem",
+        "position": {{ forloop.index }},
+        "item": {
+          "@type": "Product",
+          "name": {{ product.title | json }},
+          "url": {{ product.url | prepend: request.origin | json }}
+          {%- if product.featured_media -%}
+            , "image": {{ product.featured_media | image_url: width: 800 | prepend: 'https:' | json }}
+          {%- endif -%}
+          {%- if product.vendor != blank -%}
+            , "brand": { "@type": "Brand", "name": {{ product.vendor | json }} }
+          {%- endif -%}
+          {%- if list_variant.sku != blank -%}
+            , "sku": {{ list_variant.sku | json }}
+          {%- endif -%}
+          , "offers": {
+            "@type": "Offer",
+            "url": {{ product.url | prepend: request.origin | json }},
+            "price": {{ price_string | json }},
+            "priceCurrency": {{ cart.currency.iso_code | json }},
+            "availability": "https://schema.org/{% if product.available %}InStock{% else %}OutOfStock{% endif %}"
+          }
+        }
+      }
+    {%- endfor -%}
+  {%- endcapture -%}
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ItemList",
+      "name": {{ section.settings.heading | default: 'Wholesale ordering' | json }},
+      "url": {{ request.path | prepend: request.origin | json }},
+      "numberOfItems": {{ wholesale_products.size }},
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "itemListElement": [{{ item_list_elements }}]
+    }
+  </script>
+{%- endif -%}
+
 {% stylesheet %}
   .wholesale-order-list {
     --wholesale-image-size: 60px;
@@ -346,6 +442,33 @@
   .wholesale-order-list__subheading {
     margin: 0;
     opacity: var(--opacity-85);
+  }
+
+  .wholesale-order-list__terms {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm) var(--gap-2xl);
+    margin: 0;
+    padding-block: var(--padding-md);
+    border-block: var(--style-border-width) solid var(--color-border);
+  }
+
+  .wholesale-order-list__term {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-2xs);
+  }
+
+  .wholesale-order-list__terms dt {
+    font-size: var(--font-size--xs);
+    text-transform: uppercase;
+    letter-spacing: var(--letter-spacing--body-loose);
+    color: var(--color-foreground-secondary);
+  }
+
+  .wholesale-order-list__terms dd {
+    margin: 0;
+    font-weight: var(--font-weight-medium);
   }
 
   .wholesale-order-list__grid {
@@ -570,6 +693,20 @@
       "label": "t:settings.text",
       "info": "If you state a discount percentage here, keep it in sync with the automatic discount in Shopify Discounts — nothing validates the two against each other.",
       "default": "<p>Order in bulk to unlock wholesale pricing and free shipping.</p>"
+    },
+    {
+      "type": "text",
+      "id": "discount_summary",
+      "label": "Discount terms",
+      "info": "Shown as a labelled term and readable by shopping agents. Leave empty if there is no discount. Must match the automatic discount in Shopify Discounts — Liquid cannot read it.",
+      "default": ""
+    },
+    {
+      "type": "text",
+      "id": "shipping_summary",
+      "label": "Shipping terms",
+      "info": "For example: Free on qualifying orders. Leave empty to omit.",
+      "default": ""
     },
     {
       "type": "select",
