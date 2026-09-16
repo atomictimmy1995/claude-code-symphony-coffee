@@ -23,12 +23,29 @@
   endif
 -%}
 
+{%- comment -%}
+  Title suffix. The previous " | Coffee for Musicians – Symphony Coffee" spent 40
+  characters of a ~60 character search result on every page, truncating the part
+  that distinguishes one page from another. The positioning line lives in the
+  meta description instead, where there is room for it.
+
+  The suffix is skipped when the page title already contains the shop name,
+  which is the case on the homepage -- otherwise it reads "Symphony Coffee |
+  Symphony Coffee".
+{%- endcomment -%}
+{%- liquid
+  assign title_suffix = ''
+  unless page_title contains shop.name
+    assign title_suffix = ' | ' | append: shop.name
+  endunless
+-%}
+
 <!-- SEO Title -->
 <title>
   {{- page_title -}}
   {%- if current_tags %} – {{ current_tags | join: ', ' }}{% endif -%}
   {%- if current_page != 1 %} – Page {{ current_page }}{% endif -%}
-  {{- ' | Coffee for Musicians – ' }}{{ shop.name -}}
+  {{- title_suffix -}}
 </title>
 
 <!-- Canonical -->
