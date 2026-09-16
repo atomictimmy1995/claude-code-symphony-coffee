@@ -15,13 +15,20 @@ import { ThemeEvents } from '@theme/events';
  * @extends Component<WholesaleOrderListRefs>
  */
 class WholesaleOrderListComponent extends Component {
-  requiredRefs = ['progressBar', 'progressFill', 'progressText', 'statusText', 'checkoutButton'];
+  // These refs live in the progress summary, which the section renders only when
+  // the collection has products. They are deliberately NOT declared as
+  // requiredRefs: an empty or unset collection is a valid state, and Component
+  // throws MissingRefError for any required ref it cannot find, which would take
+  // the component down on a page that is otherwise fine.
 
-  /** @type {() => void} */
-  #boundRefresh;
+  /** @type {(() => void) | null} */
+  #boundRefresh = null;
 
   connectedCallback() {
     super.connectedCallback();
+
+    // Nothing to track without the summary, so don't hold a document listener.
+    if (!this.#hasProgressUi()) return;
 
     this.#boundRefresh = this.#refresh.bind(this);
     document.addEventListener(ThemeEvents.cartUpdate, this.#boundRefresh);
@@ -30,7 +37,20 @@ class WholesaleOrderListComponent extends Component {
   disconnectedCallback() {
     super.disconnectedCallback();
 
+    if (!this.#boundRefresh) return;
+
     document.removeEventListener(ThemeEvents.cartUpdate, this.#boundRefresh);
+    this.#boundRefresh = null;
+  }
+
+  /**
+   * Whether the progress summary is present in the DOM.
+   * @returns {boolean}
+   */
+  #hasProgressUi() {
+    const { progressBar, progressFill, progressText, statusText, checkoutButton } = this.refs;
+
+    return Boolean(progressBar && progressFill && progressText && statusText && checkoutButton);
   }
 
   get minimumUnits() {
@@ -42,18 +62,35 @@ class WholesaleOrderListComponent extends Component {
     const raw = this.dataset.wholesaleVariantIds;
     if (!raw) return new Set();
 
-    return new Set(
-      JSON.parse(raw)
-        .filter(Boolean)
-        .map(/** @param {string|number} id */ (id) => String(id))
-    );
+    try {
+      const parsed = JSON.parse(raw);
+      if (!Array.isArray(parsed)) return new Set();
+
+      return new Set(parsed.filter(Boolean).map(/** @param {string|number} id */ (id) => String(id)));
+    } catch {
+      // Malformed attribute shouldn't take the progress bar down with it.
+      return new Set();
+    }
   }
 
   async #refresh() {
-    const response = await fetch(`${Theme.routes.cart_url}.js`);
-    if (!response.ok) return;
+    if (!this.#hasProgressUi()) return;
 
-    const cart = await response.json();
+    let cart;
+
+    try {
+      const response = await fetch(`${Theme.routes.cart_url}.js`);
+      if (!response.ok) return;
+
+      cart = await response.json();
+    } catch {
+      // A dropped connection mid-add shouldn't surface as an unhandled rejection.
+      // The last rendered total stays on screen, and the next cart:update retries.
+      return;
+    }
+
+    if (!Array.isArray(cart?.items)) return;
+
     const variantIds = this.wholesaleVariantIds;
     const units = cart.items.reduce(
       /** @param {number} total @param {{id: number, quantity: number}} item */
