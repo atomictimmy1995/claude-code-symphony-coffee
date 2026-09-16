@@ -146,7 +146,7 @@
               "type": "button",
               "settings": {
                 "label": "Buy Now",
-                "link": "shopify://collections/coffee",
+                "link": "shopify://collections/our-coffee",
                 "open_in_new_tab": false,
                 "style_class": "button-secondary",
                 "width": "fit-content",
@@ -647,7 +647,7 @@
             "show_overlay": true,
             "overlay_text": "Coming Tomorrow!",
             "overlay_button_text": "Discover our Coffee!",
-            "overlay_button_link": "shopify://collections/coffee",
+            "overlay_button_link": "shopify://collections/our-coffee",
             "blur_amount": 5,
             "desktop_width_percent": 100,
             "card_background": "#ffffff",
