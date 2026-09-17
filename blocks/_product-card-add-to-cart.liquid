@@ -29,6 +29,15 @@
 {%- endif -%}
 
 {% stylesheet %}
+  /* A card carrying this block does not also need the hover overlay in the
+     corner of the image -- two Add to cart controls on one card. Scoped to the
+     gallery, because this block renders the same quick-add markup and would
+     otherwise hide its own button. :has() keeps it self-maintaining: remove the
+     block and the overlay comes back on its own. */
+  .product-card__content:has(.product-card__cta) .card-gallery .quick-add {
+    display: none;
+  }
+
   .product-card__cta {
     position: relative;
     width: 100%;
