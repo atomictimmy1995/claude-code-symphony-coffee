@@ -1281,7 +1281,7 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "card_background": "linear-gradient(145deg, rgba(63, 122, 67, 1), rgba(143, 192, 143, 1) 100%)",
+            "card_background": "linear-gradient(51deg, rgba(63, 122, 67, 1), rgba(160, 204, 160, 1) 100%)",
             "card_foreground": "#ffffff",
             "card_radius": 50,
             "card_image_lift": 80,
