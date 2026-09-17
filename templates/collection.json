@@ -788,19 +788,6 @@
               },
               "blocks": {}
             },
-            "card_cta_woodwind_secti": {
-              "type": "_product-card-add-to-cart",
-              "name": "Card add to cart",
-              "settings": {
-                "button_label": "Add to cart",
-                "button_background": "#000000",
-                "button_text_color": "#ffffff",
-                "button_radius": 40,
-                "padding-block-start": 8,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
             "variant_picker_i6QAj4": {
               "type": "variant-picker",
               "settings": {
@@ -814,6 +801,19 @@
               },
               "blocks": {}
             },
+            "card_cta_woodwind_secti": {
+              "type": "_product-card-add-to-cart",
+              "name": "Card add to cart",
+              "settings": {
+                "button_label": "Add to cart",
+                "button_background": "#000000",
+                "button_text_color": "#ffffff",
+                "button_radius": 40,
+                "padding-block-start": 8,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "judge_me_reviews_preview_badge_ziGXXG": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
@@ -824,8 +824,8 @@
             "product_title_jKegAU",
             "text_LarVPj",
             "price_DiY7c9",
-            "card_cta_woodwind_secti",
             "variant_picker_i6QAj4",
+            "card_cta_woodwind_secti",
             "judge_me_reviews_preview_badge_ziGXXG"
           ]
         }
@@ -1047,19 +1047,6 @@
               },
               "blocks": {}
             },
-            "card_cta_the_brass_sect": {
-              "type": "_product-card-add-to-cart",
-              "name": "Card add to cart",
-              "settings": {
-                "button_label": "Add to cart",
-                "button_background": "#000000",
-                "button_text_color": "#ffffff",
-                "button_radius": 40,
-                "padding-block-start": 8,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
             "variant_picker_FjzVVq": {
               "type": "variant-picker",
               "settings": {
@@ -1073,6 +1060,19 @@
               },
               "blocks": {}
             },
+            "card_cta_the_brass_sect": {
+              "type": "_product-card-add-to-cart",
+              "name": "Card add to cart",
+              "settings": {
+                "button_label": "Add to cart",
+                "button_background": "#000000",
+                "button_text_color": "#ffffff",
+                "button_radius": 40,
+                "padding-block-start": 8,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "judge_me_reviews_preview_badge_BFpQ4f": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
@@ -1083,8 +1083,8 @@
             "product_title_bbjYRc",
             "text_rrV6UN",
             "price_WrkCGY",
-            "card_cta_the_brass_sect",
             "variant_picker_FjzVVq",
+            "card_cta_the_brass_sect",
             "judge_me_reviews_preview_badge_BFpQ4f"
           ]
         }
@@ -1306,19 +1306,6 @@
               },
               "blocks": {}
             },
-            "card_cta_the_percussion": {
-              "type": "_product-card-add-to-cart",
-              "name": "Card add to cart",
-              "settings": {
-                "button_label": "Add to cart",
-                "button_background": "#000000",
-                "button_text_color": "#ffffff",
-                "button_radius": 40,
-                "padding-block-start": 8,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
             "variant_picker_6Fjer6": {
               "type": "variant-picker",
               "settings": {
@@ -1332,6 +1319,19 @@
               },
               "blocks": {}
             },
+            "card_cta_the_percussion": {
+              "type": "_product-card-add-to-cart",
+              "name": "Card add to cart",
+              "settings": {
+                "button_label": "Add to cart",
+                "button_background": "#000000",
+                "button_text_color": "#ffffff",
+                "button_radius": 40,
+                "padding-block-start": 8,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "judge_me_reviews_preview_badge_3nDUBF": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
@@ -1342,8 +1342,8 @@
             "product_title_DEXGkq",
             "text_geeYnq",
             "price_UmbxBR",
-            "card_cta_the_percussion",
             "variant_picker_6Fjer6",
+            "card_cta_the_percussion",
             "judge_me_reviews_preview_badge_3nDUBF"
           ]
         }
@@ -1565,19 +1565,6 @@
               },
               "blocks": {}
             },
-            "card_cta_music_fundamen": {
-              "type": "_product-card-add-to-cart",
-              "name": "Card add to cart",
-              "settings": {
-                "button_label": "Add to cart",
-                "button_background": "#000000",
-                "button_text_color": "#ffffff",
-                "button_radius": 40,
-                "padding-block-start": 8,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
             "variant_picker_fjF6NL": {
               "type": "variant-picker",
               "settings": {
@@ -1591,6 +1578,19 @@
               },
               "blocks": {}
             },
+            "card_cta_music_fundamen": {
+              "type": "_product-card-add-to-cart",
+              "name": "Card add to cart",
+              "settings": {
+                "button_label": "Add to cart",
+                "button_background": "#000000",
+                "button_text_color": "#ffffff",
+                "button_radius": 40,
+                "padding-block-start": 8,
+                "padding-block-end": 0
+              },
+              "blocks": {}
+            },
             "judge_me_reviews_preview_badge_iy4tdY": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
@@ -1601,8 +1601,8 @@
             "product_title_6F7CYn",
             "text_jFPUtL",
             "price_WCYf7q",
-            "card_cta_music_fundamen",
             "variant_picker_fjF6NL",
+            "card_cta_music_fundamen",
             "judge_me_reviews_preview_badge_iy4tdY"
           ]
         }
