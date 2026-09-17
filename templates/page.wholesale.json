@@ -1,0 +1,42 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "content_direction": "column",
+        "gap": 0,
+        "color_scheme": "",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "wholesale_order_list": {
+      "type": "wholesale-order-list",
+      "settings": {
+        "collection": "wholesale",
+        "heading": "Wholesale ordering",
+        "subheading": "<p>Select your blends and quantities below. Minimum order of 25 units required. Wholesale orders receive 20% off retail pricing and free shipping.</p>",
+        "sort_by": "title_asc",
+        "minimum_units": 25,
+        "default_quantity": 1,
+        "section_width": "page-width",
+        "color_scheme": "scheme-1",
+        "padding-block-start": 24,
+        "padding-block-end": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "wholesale_order_list"
+  ]
+}

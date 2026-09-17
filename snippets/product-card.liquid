@@ -52,6 +52,15 @@
   if product.id == empty or product == blank
     assign onboarding = true
   endif
+
+  # A custom background turns the card into a panel: a rounded rectangle that
+  # starts below the top of the card, so the product image stands above it.
+  # Carousel slides clip vertically, so the space is reserved inside the card
+  # rather than overflowing it.
+  assign has_panel = false
+  if block_settings.card_background != blank
+    assign has_panel = true
+  endif
 %}
 
 <product-card
@@ -90,6 +99,7 @@
       spacing-style
       border-style
       gap-style
+      {% if has_panel %} product-card__content--panel{% endif %}
       {% if block_settings.inherit_color_scheme == false %} color-{{ block_settings.color_scheme }}{% endif %}
     "
     style="
@@ -100,6 +110,14 @@
       --quick-add-display: {% if has_quick_add %}flex{% else %}none{% endif %};
       --quick-add-mobile-display: {% if has_mobile_quick_add %}flex{% else %}none{% endif %};
       --quick-add-mobile-opacity: {% if has_mobile_quick_add %}1{% else %}0{% endif %};
+      {%- if has_panel -%}
+        --product-card-panel-background: {{ block_settings.card_background }};
+        --product-card-panel-radius: {{ block_settings.card_radius }}px;
+        --product-card-panel-lift: {{ block_settings.card_image_lift }}px;
+        {%- if block_settings.card_foreground != blank -%}
+          --product-card-panel-foreground: {{ block_settings.card_foreground }};
+        {%- endif -%}
+      {%- endif -%}
       {% if block_settings.padding-inline-start > 0 %}--zoom-out-padding-inline-start: min(var(--padding-xs), {{ block_settings.padding-inline-start | times: 0.7}}px);{% endif %}
       {% if block_settings.padding-inline-end > 0 %}--zoom-out-padding-inline-end: min(var(--padding-xs), {{ block_settings.padding-inline-end | times: 0.7}}px);{% endif %}
       {% if block_settings.padding-block-start > 0 %}--zoom-out-padding-block-start: min(var(--padding-xs), {{ block_settings.padding-block-start | times: 0.7}}px);{% endif %}
@@ -111,6 +129,33 @@
 </product-card>
 
 {% stylesheet %}
+  /* Panelled card: the rounded rectangle is a pseudo-element inset from the top
+     so the product image reads as standing above it. The card keeps its normal
+     box, which matters because carousel slides clip vertically -- nothing here
+     escapes the slide. */
+  .product-card__content--panel {
+    position: relative;
+    isolation: isolate;
+    text-align: center;
+    padding-inline: var(--padding-lg);
+    padding-block-end: var(--padding-lg);
+  }
+
+  .product-card__content--panel::before {
+    content: '';
+    position: absolute;
+    inset: var(--product-card-panel-lift, 0) 0 0 0;
+    background: var(--product-card-panel-background);
+    border-radius: var(--product-card-panel-radius, 24px);
+    z-index: -1;
+  }
+
+  /* Children opt into the panel's foreground by referencing the same variable
+     in their own colour setting, so one control drives title, notes and price. */
+  .product-card__content--panel .product-card__link {
+    border-radius: var(--product-card-panel-radius, 24px);
+  }
+
   .product-card__placeholder-image svg {
     height: 100%;
   }

@@ -66,7 +66,13 @@
     ><span class="jumbo-text-line">{{ text }}</span></jumbo-text
   >
 {% else %}
-  <span class="visually-hidden">{{ shown_text }}</span>
+  {%- comment -%}
+    The animated lines below are aria-hidden, so this element is the only copy of
+    the text exposed to assistive tech and to crawlers. Marking it up as the
+    heading gives the page a real h1 without touching the visual treatment.
+  {%- endcomment -%}
+  {%- assign heading_tag = block_settings.heading_tag | default: 'h1' -%}
+  <{{ heading_tag }} class="visually-hidden">{{ shown_text }}</{{ heading_tag }}>
   <jumbo-text
     {{ attributes }}
     data-text-effect="{{ block_settings.text_effect }}"

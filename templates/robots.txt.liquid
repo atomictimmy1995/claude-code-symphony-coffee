@@ -1,0 +1,55 @@
+{%- comment -%}
+  robots.txt
+
+  Renders Shopify's default rule set, which is maintained upstream and updated
+  as SEO practice changes, then records this store's position on AI crawlers.
+
+  On purpose, there are no per-bot `Allow: /` groups here. Under the robots
+  exclusion protocol a crawler obeys only the most specific group that matches
+  its user agent, so adding
+
+      User-agent: GPTBot
+      Allow: /
+
+  would make GPTBot ignore the `*` group entirely -- including Shopify's
+  disallows for /checkout, /cart, /orders, /account and internal search. The
+  result is a bot that crawls checkout URLs and surfaces them in answers. Being
+  absent from this file is what "allowed" looks like: unnamed agents fall under
+  `*`, which permits the storefront and protects everything else.
+
+  To block an AI crawler later, add a group for it below the default rules:
+
+      User-agent: <name>
+      Disallow: /
+
+  That direction is safe to state explicitly, because `Disallow: /` needs no
+  inherited rules to be complete.
+{%- endcomment -%}
+# Symphony Coffee -- symphony-coffee.com
+#
+# AI assistants, answer engines and shopping agents are welcome to crawl this
+# store and cite it. Agents not named below are covered by the `*` group, which
+# allows the storefront and excludes checkout, cart, account and search paths.
+#
+# Covered by that allowance, among others:
+#   OAI-SearchBot, ChatGPT-User  (ChatGPT search and browsing)
+#   ClaudeBot, Claude-User       (Claude)
+#   PerplexityBot, Perplexity-User
+#   Google-Extended              (Gemini grounding; absence here means allowed)
+#   Applebot-Extended            (Apple Intelligence; absence here means allowed)
+#   GPTBot, CCBot, meta-externalagent, Amazonbot
+#
+# Product, offer and breadcrumb data is published as JSON-LD on product pages,
+# which is the most reliable source for pricing and availability.
+
+{% for group in robots.default_groups -%}
+{%- capture agent %}{{ group.user_agent }}{% endcapture -%}
+{{ agent | strip }}
+{% for rule in group.rules -%}
+{{ rule.directive }}: {{ rule.value }}
+{% endfor -%}
+{%- if group.sitemap != blank -%}
+{%- capture map %}{{ group.sitemap }}{% endcapture -%}
+{{ map | strip }}
+{% endif -%}
+{% endfor -%}

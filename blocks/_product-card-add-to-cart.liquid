@@ -1,0 +1,163 @@
+{%- doc -%}
+  Renders an always-visible Add to cart button inside a product card.
+
+  The theme's quick-add is an overlay: absolutely positioned over the card and
+  revealed on hover. This block reuses that same markup and component -- so the
+  add-to-cart request, the choose-options modal for multi-option products, and
+  the added-state animation all behave exactly as they do elsewhere -- and only
+  restyles it into a button that sits in the card's flow.
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign product = closest.product
+%}
+
+{%- if product != blank -%}
+  <div
+    class="product-card__cta"
+    style="
+      --card-cta-background: {{ block_settings.button_background | default: '#000000' }};
+      --card-cta-foreground: {{ block_settings.button_text_color | default: '#ffffff' }};
+      --card-cta-radius: {{ block_settings.button_radius }}px;
+      {% render 'spacing-style', settings: block_settings %}
+    "
+    {{ block.shopify_attributes }}
+  >
+    {% render 'quick-add', product: product, section_id: section.id, block: block %}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-card__cta {
+    position: relative;
+    width: 100%;
+  }
+
+  /* Lift the overlay out of its absolute positioning and into the card flow. */
+  .product-card__cta .quick-add {
+    position: static;
+    inset: auto;
+    pointer-events: auto;
+    background: transparent;
+  }
+
+  .product-card__cta .quick-add__product-form-component .shopify-product-form {
+    display: block;
+    height: auto;
+  }
+
+  .product-card__cta .quick-add__button {
+    position: static;
+    display: flex;
+    opacity: 1;
+    width: 100%;
+    height: auto;
+    min-height: var(--minimum-touch-target);
+    justify-content: center;
+    align-items: center;
+    border: none;
+    border-radius: var(--card-cta-radius, 999px);
+    background: var(--card-cta-background);
+    color: var(--card-cta-foreground);
+    backdrop-filter: none;
+    padding-block: var(--padding-sm);
+  }
+
+  /* The overlay variant animates the label open on hover; in the card the label
+     is always shown, so the collapsing grid track is fixed open. */
+  .product-card__cta .quick-add__button .add-to-cart-text {
+    background: transparent;
+    color: inherit;
+    gap: var(--gap-2xs);
+  }
+
+  .product-card__cta .quick-add__button .add-to-cart-text__content {
+    grid-template-columns: 1fr;
+  }
+
+  .product-card__cta .quick-add__button .add-to-cart-text__content > span span {
+    opacity: 1;
+    translate: none;
+    filter: none;
+    padding-right: 0;
+  }
+
+  .product-card__cta .quick-add__button .add-to-cart-icon {
+    display: none;
+  }
+
+  .product-card__cta .quick-add__button:is(:hover, :focus-visible) {
+    scale: 1;
+    opacity: var(--opacity-85, 0.85);
+  }
+
+  /* The card-wide link sits above the content; the button has to beat it. */
+  .product-card__cta {
+    z-index: var(--layer-raised, 2);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Card add to cart",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "An Add to cart button that is always visible, rather than appearing on hover."
+    },
+    {
+      "type": "color",
+      "id": "button_background",
+      "label": "Button background",
+      "default": "#000000"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "range",
+      "id": "button_radius",
+      "label": "Button corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 40
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 8
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Card add to cart"
+    }
+  ]
+}
+{% endschema %}

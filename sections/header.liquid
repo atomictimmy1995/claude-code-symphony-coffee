@@ -322,8 +322,13 @@
   <div
     class="header__underlay header__underlay-open"
   ></div>
+  {%- comment -%}
+    The homepage h1 belongs to the hero headline, which describes what the shop
+    sells. This is kept as a plain visually-hidden label so the shop name is
+    still announced early in the document without competing for the h1.
+  {%- endcomment -%}
   {%- if request.page_type == 'index' -%}
-    <h1 class="visually-hidden">{{ shop.name }}</h1>
+    <p class="visually-hidden">{{ shop.name }}</p>
   {%- endif -%}
   {% for row in rows %}
     {% liquid

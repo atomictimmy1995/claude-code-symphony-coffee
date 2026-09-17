@@ -146,7 +146,7 @@
               "type": "button",
               "settings": {
                 "label": "Buy Now",
-                "link": "shopify://collections/coffee",
+                "link": "shopify://collections/our-coffee",
                 "open_in_new_tab": false,
                 "style_class": "button-secondary",
                 "width": "fit-content",
@@ -633,22 +633,22 @@
           "name": "Premium product card-sub overlay-1",
           "settings": {
             "product": "symphony-blend",
-            "product_image": "shopify://shop_images/symphony_blend-mockup-1.png",
-            "eyebrow_text": "Sip the Symphony",
-            "product_title": "Symphony Blend",
-            "product_description": "Our flagship blend that brings the entire orchestra together.",
-            "taste_note_1": "Nutty",
-            "taste_note_2": "Chocolate",
-            "taste_note_3": "Praline",
+            "product_image": "shopify://shop_images/harp-cadenza-front.png",
+            "eyebrow_text": "The Sweetheart of the Symphony",
+            "product_title": "Harp Cadenza",
+            "product_description": "The Belle of the Ball, The Sweetheart of the Symphony, The Harp Cadenza",
+            "taste_note_1": "Light",
+            "taste_note_2": "Airy",
+            "taste_note_3": "Bright",
             "product_price": "$20.00",
-            "subscription_price": "$17 when you subscribe",
+            "subscription_price": "$17/month when you subscribe",
             "button_text": "View Now",
             "button_link": "shopify://products/symphony-blend",
-            "show_overlay": false,
-            "overlay_text": "Subscriber Exclusive",
-            "overlay_button_text": "Subscribe Now",
-            "overlay_button_link": "",
-            "blur_amount": 8,
+            "show_overlay": true,
+            "overlay_text": "Coming Tomorrow!",
+            "overlay_button_text": "Discover our Coffee!",
+            "overlay_button_link": "shopify://collections/our-coffee",
+            "blur_amount": 5,
             "desktop_width_percent": 100,
             "card_background": "#ffffff",
             "border_radius": 8,
@@ -1727,6 +1727,9 @@
             "show_sample_reviews": true,
             "reviews_selection": "all",
             "products": [],
+            "filter_pinned": false,
+            "filter_featured": false,
+            "filter_custom_tags": "",
             "star_rating": "all",
             "max_reviews": 20,
             "quote_marks_size": "small",
@@ -1781,6 +1784,114 @@
         "overlay_color": "#00000026",
         "overlay_style": "solid",
         "gradient_direction": "to top",
+        "padding-block-start": 0,
+        "padding-block-end": 0
+      }
+    },
+    "slideshow_yPY88r": {
+      "type": "slideshow",
+      "blocks": {
+        "slide_4K7KcX": {
+          "type": "_slide",
+          "settings": {
+            "media_type_1": "image",
+            "image_1": "shopify://shop_images/Ponce_de_Leon_Music_Logo.jpg",
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "center",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "inherit_color_scheme": true,
+            "color_scheme": "",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "padding-block-start": 48,
+            "padding-block-end": 48,
+            "padding-inline-start": 48,
+            "padding-inline-end": 48
+          },
+          "blocks": {
+            "text_WrfFga": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "<h2>Available Here</h2>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_MKYJen": {
+              "type": "text",
+              "settings": {
+                "text": "<p>We're excited to be partnering with Ponce De Leon Music Center in Cummings, Georgia where you can now find Symphony Coffee in store!</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 20,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_WrfFga",
+            "text_MKYJen"
+          ]
+        }
+      },
+      "block_order": [
+        "slide_4K7KcX"
+      ],
+      "name": "t:names.slideshow_inset",
+      "settings": {
+        "display_mode": "full_frame",
+        "section_width": "full-width",
+        "full_frame_on_mobile": false,
+        "slideshow_gap": 18,
+        "corner_radius": 20,
+        "slide_height": "auto",
+        "content_position": "below-media",
+        "color_scheme": "",
+        "icons_style": "arrows_large",
+        "icons_shape": "none",
+        "slideshow_controls_style": "none",
+        "autoplay": false,
+        "autoplay_speed": 4,
         "padding-block-start": 0,
         "padding-block-end": 0
       }
@@ -2091,6 +2202,7 @@
     "media_with_content_n9bQpm",
     "divider_YVw9Jr",
     "1779989942dba453ae",
+    "slideshow_yPY88r",
     "section_NffkrK"
   ]
 }

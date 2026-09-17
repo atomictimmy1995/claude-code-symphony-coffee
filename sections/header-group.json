@@ -93,7 +93,7 @@
           "type": "_announcement",
           "settings": {
             "text": "The Percussion Section is Here!",
-            "link": "shopify://collections/coffee",
+            "link": "shopify://collections/the-percussion-section",
             "font": "var(--font-body--family)",
             "font_size": "1rem",
             "weight": "",
@@ -106,6 +106,7 @@
       "block_order": [
         "announcement_pgf3z6"
       ],
+      "disabled": true,
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
