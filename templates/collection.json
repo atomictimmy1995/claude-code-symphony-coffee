@@ -516,14 +516,11 @@
               },
               "blocks": {}
             },
-            "judge_me_reviews_preview_badge_U9czGz": {
-              "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-              "settings": {}
-            },
             "card_cta_the_string_sec": {
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
               "settings": {
+                "button_label": "Add to cart",
                 "button_background": "#000000",
                 "button_text_color": "#ffffff",
                 "button_radius": 40,
@@ -531,6 +528,10 @@
                 "padding-block-end": 0
               },
               "blocks": {}
+            },
+            "judge_me_reviews_preview_badge_U9czGz": {
+              "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+              "settings": {}
             }
           },
           "block_order": [
@@ -538,8 +539,8 @@
             "product_title_kyRAWn",
             "notes_GDgKrj",
             "price_Nmm6Aq",
-            "judge_me_reviews_preview_badge_U9czGz",
-            "card_cta_the_string_sec"
+            "card_cta_the_string_sec",
+            "judge_me_reviews_preview_badge_U9czGz"
           ]
         }
       },
@@ -751,6 +752,7 @@
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
               "settings": {
+                "button_label": "Add to cart",
                 "button_background": "#000000",
                 "button_text_color": "#ffffff",
                 "button_radius": 40,
@@ -982,6 +984,7 @@
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
               "settings": {
+                "button_label": "Add to cart",
                 "button_background": "#000000",
                 "button_text_color": "#ffffff",
                 "button_radius": 40,
@@ -1213,6 +1216,7 @@
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
               "settings": {
+                "button_label": "Add to cart",
                 "button_background": "#000000",
                 "button_text_color": "#ffffff",
                 "button_radius": 40,
@@ -1444,6 +1448,7 @@
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
               "settings": {
+                "button_label": "Add to cart",
                 "button_background": "#000000",
                 "button_text_color": "#ffffff",
                 "button_radius": 40,
