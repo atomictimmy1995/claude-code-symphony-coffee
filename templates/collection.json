@@ -1376,8 +1376,8 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "card_background": "linear-gradient(37deg, rgba(0, 0, 0, 1), rgba(148, 148, 148, 1) 100%)",
-            "card_foreground": "#ffffff",
+            "card_background": "linear-gradient(202deg, rgba(0, 0, 0, 1), rgba(209, 209, 209, 1) 77%)",
+            "card_foreground": "#000000",
             "card_radius": 50,
             "card_image_lift": 80,
             "card_padding": 8,
