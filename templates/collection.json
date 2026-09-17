@@ -558,6 +558,18 @@
             "judge_me_reviews_preview_badge_U9czGz": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
+            },
+            "variant_picker_y3q8xi": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "center",
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
             }
           },
           "block_order": [
@@ -567,6 +579,7 @@
             "notes_GDgKrj",
             "price_Nmm6Aq",
             "card_cta_the_string_sec",
+            "variant_picker_y3q8xi",
             "judge_me_reviews_preview_badge_U9czGz"
           ]
         }
@@ -791,6 +804,18 @@
             "judge_me_reviews_preview_badge_ziGXXG": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
+            },
+            "variant_picker_i6QAj4": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "center",
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
             }
           },
           "block_order": [
@@ -799,6 +824,7 @@
             "notes_YXfwGq",
             "price_DiY7c9",
             "card_cta_woodwind_secti",
+            "variant_picker_i6QAj4",
             "judge_me_reviews_preview_badge_ziGXXG"
           ]
         }
@@ -1023,6 +1049,18 @@
             "judge_me_reviews_preview_badge_BFpQ4f": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
+            },
+            "variant_picker_FjzVVq": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "center",
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
             }
           },
           "block_order": [
@@ -1031,6 +1069,7 @@
             "notes_3TDLcz",
             "price_WrkCGY",
             "card_cta_the_brass_sect",
+            "variant_picker_FjzVVq",
             "judge_me_reviews_preview_badge_BFpQ4f"
           ]
         }
@@ -1255,6 +1294,18 @@
             "judge_me_reviews_preview_badge_3nDUBF": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
+            },
+            "variant_picker_6Fjer6": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "center",
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
             }
           },
           "block_order": [
@@ -1263,6 +1314,7 @@
             "notes_YQBWEx",
             "price_UmbxBR",
             "card_cta_the_percussion",
+            "variant_picker_6Fjer6",
             "judge_me_reviews_preview_badge_3nDUBF"
           ]
         }
@@ -1487,6 +1539,18 @@
             "judge_me_reviews_preview_badge_iy4tdY": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
+            },
+            "variant_picker_fjF6NL": {
+              "type": "variant-picker",
+              "settings": {
+                "variant_style": "buttons",
+                "show_swatches": true,
+                "alignment": "center",
+                "padding-block-start": 8,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              }
             }
           },
           "block_order": [
@@ -1495,6 +1559,7 @@
             "notes_pbF4PF",
             "price_WCYf7q",
             "card_cta_music_fundamen",
+            "variant_picker_fjF6NL",
             "judge_me_reviews_preview_badge_iy4tdY"
           ]
         }
