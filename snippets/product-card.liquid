@@ -184,6 +184,15 @@
     z-index: -1;
   }
 
+  /* The card gallery renders the image inside <slideshow-container>, which the
+     theme gives an opaque scheme background. The panel is a ::before at
+     z-index: -1, so that background paints over it and the product sits in a
+     white box instead of standing on the panel. Only panelled cards are
+     cleared -- elsewhere the background is doing its job. */
+  .product-card__content--panel slideshow-container {
+    background-color: transparent;
+  }
+
   .product-card__content--panel .product-card__link {
     border-radius: var(--product-card-panel-radius, 24px);
   }
