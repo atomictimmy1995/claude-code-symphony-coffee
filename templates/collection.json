@@ -1976,7 +1976,7 @@
           "settings": {
             "card_background": "linear-gradient(9deg, rgba(231, 4, 4, 1), rgba(242, 182, 182, 1) 100%)",
             "card_foreground": "#ffffff",
-            "card_radius": 24,
+            "card_radius": 50,
             "card_image_lift": 80,
             "card_padding": 24,
             "product_card_gap": 4,
@@ -2205,7 +2205,7 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "card_background": "linear-gradient(145deg, #6b3f6e 0%, #b48cb8 100%)",
+            "card_background": "linear-gradient(37deg, rgba(0, 0, 0, 1), rgba(148, 148, 148, 1) 100%)",
             "card_foreground": "#ffffff",
             "card_radius": 24,
             "card_image_lift": 80,
@@ -2336,7 +2336,7 @@
         "columns": 4,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
-        "columns_gap": 8,
+        "columns_gap": 25,
         "rows_gap": 24,
         "icons_style": "arrow",
         "icons_shape": "circle",
