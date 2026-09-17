@@ -506,19 +506,6 @@
               },
               "blocks": {}
             },
-            "notes_GDgKrj": {
-              "type": "_product-card-notes",
-              "name": "Tasting notes",
-              "settings": {
-                "max_notes": 3,
-                "roast_suffix": "Roast",
-                "color": "var(--color-foreground)",
-                "font_size": "0.875rem",
-                "padding-block-start": 0,
-                "padding-block-end": 0
-              },
-              "blocks": {}
-            },
             "price_Nmm6Aq": {
               "type": "price",
               "name": "t:names.product_price",
@@ -577,7 +564,6 @@
             "product_card_gallery_9n9K9G",
             "product_title_kyRAWn",
             "text_xaKWK9",
-            "notes_GDgKrj",
             "price_Nmm6Aq",
             "variant_picker_y3q8xi",
             "card_cta_the_string_sec",
@@ -735,7 +721,7 @@
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
-                "type_preset": "h6",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -753,16 +739,29 @@
               },
               "blocks": {}
             },
-            "notes_YXfwGq": {
-              "type": "_product-card-notes",
-              "name": "Tasting notes",
+            "text_LarVPj": {
+              "type": "text",
+              "name": "roast",
               "settings": {
-                "max_notes": 3,
-                "roast_suffix": "Roast",
+                "text": "<p>{{ closest.product.metafields.shopify[\"coffee-roast\"] | metafield_text: field: 'label' }} Roast</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
                 "color": "var(--color-foreground)",
-                "font_size": "0.875rem",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
                 "padding-block-start": 0,
-                "padding-block-end": 0
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -823,7 +822,7 @@
           "block_order": [
             "product_card_gallery_TRL9Dg",
             "product_title_jKegAU",
-            "notes_YXfwGq",
+            "text_LarVPj",
             "price_DiY7c9",
             "card_cta_woodwind_secti",
             "variant_picker_i6QAj4",
