@@ -61,6 +61,11 @@
   if block_settings.card_background != blank
     assign has_panel = true
   endif
+
+  assign panel_inset = block_settings.card_padding
+  if panel_inset == blank
+    assign panel_inset = 24
+  endif
 %}
 
 <product-card
@@ -114,6 +119,23 @@
         --product-card-panel-background: {{ block_settings.card_background }};
         --product-card-panel-radius: {{ block_settings.card_radius }}px;
         --product-card-panel-lift: {{ block_settings.card_image_lift }}px;
+        {%- comment -%}
+          .product-grid__card takes its padding from these variables, and the
+          spacing-style render above has already emitted zeros for them. They
+          have to be re-emitted here, later in the same style attribute, to
+          inset the panel's contents -- a stylesheet rule cannot do it, because
+          .product-grid__card.product-grid__card outranks a single class. Only
+          an unset padding is replaced, so a merchant's own value still wins.
+        {%- endcomment -%}
+        {%- unless block_settings.padding-inline-start > 0 -%}
+          --padding-inline-start: {{ panel_inset }}px;
+        {%- endunless -%}
+        {%- unless block_settings.padding-inline-end > 0 -%}
+          --padding-inline-end: {{ panel_inset }}px;
+        {%- endunless -%}
+        {%- unless block_settings.padding-block-end > 0 -%}
+          --padding-block-end: {{ panel_inset }}px;
+        {%- endunless -%}
         {%- if block_settings.card_foreground != blank -%}
           {%- comment -%}
             The child blocks' colour setting is a select limited to the theme's
@@ -151,8 +173,6 @@
     position: relative;
     isolation: isolate;
     text-align: center;
-    padding-inline: var(--padding-lg);
-    padding-block-end: var(--padding-lg);
   }
 
   .product-card__content--panel::before {
