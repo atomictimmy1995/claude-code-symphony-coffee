@@ -493,6 +493,32 @@
               },
               "blocks": {}
             },
+            "text_xaKWK9": {
+              "type": "text",
+              "name": "roast",
+              "settings": {
+                "text": "<p>{{ closest.product.metafields.shopify[\"coffee-roast\"] | metafield_text: field: 'label' }} Roast</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
             "price_Nmm6Aq": {
               "type": "price",
               "name": "t:names.product_price",
@@ -538,6 +564,7 @@
             "product_card_gallery_9n9K9G",
             "product_title_kyRAWn",
             "notes_GDgKrj",
+            "text_xaKWK9",
             "price_Nmm6Aq",
             "card_cta_the_string_sec",
             "judge_me_reviews_preview_badge_U9czGz"
