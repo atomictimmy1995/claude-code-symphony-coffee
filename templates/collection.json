@@ -1745,10 +1745,10 @@
           "settings": {
             "card_background": "linear-gradient(224deg, rgba(88, 169, 247, 1), rgba(16, 79, 207, 1) 100%)",
             "card_foreground": "#ffffff",
-            "card_radius": 24,
+            "card_radius": 50,
             "card_image_lift": 80,
-            "card_padding": 24,
-            "product_card_gap": 4,
+            "card_padding": 8,
+            "product_card_gap": 8,
             "inherit_color_scheme": true,
             "color_scheme": "",
             "border": "none",
