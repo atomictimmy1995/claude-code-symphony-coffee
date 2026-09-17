@@ -7,6 +7,8 @@
   @param {string} [color_scheme] - The color scheme to use
   @param {string} [add_to_cart_text] - Overrides the Add button's label
   @param {string} [choose_options_text] - Overrides the Choose button's label
+  @param {boolean} [icon_only_on_mobile] - Defaults to true. Pass false to keep
+    the label visible on mobile, for a button that is not an icon-sized overlay.
 {%- enddoc -%}
 
 {% liquid
@@ -16,6 +18,14 @@
   assign add_to_cart_text = add_to_cart_text | default: default_add_text
   assign choose_options_text = choose_options_text | default: default_choose_text
   assign color_scheme = color_scheme | default: settings.quick_add_color_scheme
+
+  # Not `| default: true` -- that filter treats a passed false as absent and
+  # would force the label back off. nil == false is false in Liquid, so an
+  # unpassed parameter leaves the default alone.
+  assign hide_label_on_mobile = true
+  if icon_only_on_mobile == false
+    assign hide_label_on_mobile = false
+  endif
 
   # Logic to determine which variant to use (matching swatch selection logic from product-card)
   assign variant = product.selected_or_first_available_variant
@@ -82,7 +92,7 @@
         add_to_cart_text: add_to_cart_text,
         class: 'button quick-add__button quick-add__button--add add-to-cart-button',
         can_add_to_cart: can_add_to_cart,
-        icon_only_on_mobile: true,
+        icon_only_on_mobile: hide_label_on_mobile,
         product: product
       %}
 
@@ -103,7 +113,7 @@
           >
             {{- 'icon-add-to-cart.svg' | inline_asset_content -}}
           </span>
-          <span class="add-to-cart-text__content is-visually-hidden-mobile">
+          <span class="add-to-cart-text__content{% if hide_label_on_mobile %} is-visually-hidden-mobile{% endif %}">
             <span>
               {% comment %} use a double-nested span to bake the padding into the text {% endcomment %}
               <span>
