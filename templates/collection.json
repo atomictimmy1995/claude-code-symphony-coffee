@@ -516,6 +516,10 @@
               },
               "blocks": {}
             },
+            "judge_me_reviews_preview_badge_U9czGz": {
+              "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+              "settings": {}
+            },
             "card_cta_the_string_sec": {
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
@@ -527,10 +531,6 @@
                 "padding-block-end": 0
               },
               "blocks": {}
-            },
-            "judge_me_reviews_preview_badge_U9czGz": {
-              "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-              "settings": {}
             }
           },
           "block_order": [
@@ -538,8 +538,8 @@
             "product_title_kyRAWn",
             "notes_GDgKrj",
             "price_Nmm6Aq",
-            "card_cta_the_string_sec",
-            "judge_me_reviews_preview_badge_U9czGz"
+            "judge_me_reviews_preview_badge_U9czGz",
+            "card_cta_the_string_sec"
           ]
         }
       },
