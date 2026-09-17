@@ -550,7 +550,7 @@
                 "button_background": "#000000",
                 "button_text_color": "#ffffff",
                 "button_radius": 40,
-                "padding-block-start": 8,
+                "padding-block-start": 0,
                 "padding-block-end": 0
               },
               "blocks": {}
