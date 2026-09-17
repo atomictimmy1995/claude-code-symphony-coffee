@@ -1974,7 +1974,7 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "card_background": "linear-gradient(145deg, #8a4a2b 0%, #d49a74 100%)",
+            "card_background": "linear-gradient(9deg, rgba(231, 4, 4, 1), rgba(242, 182, 182, 1) 100%)",
             "card_foreground": "#ffffff",
             "card_radius": 24,
             "card_image_lift": 80,
