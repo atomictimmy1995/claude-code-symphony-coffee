@@ -5,12 +5,16 @@
   @param {string} section_id - The section ID
   @param {object} [block] - The block object
   @param {string} [color_scheme] - The color scheme to use
+  @param {string} [add_to_cart_text] - Overrides the Add button's label
+  @param {string} [choose_options_text] - Overrides the Choose button's label
 {%- enddoc -%}
 
 {% liquid
   assign product_form_id = 'QuickAdd-ProductForm-' | append: product.id | append: '-' | append: block.id
-  assign add_to_cart_text = 'actions.add' | t
-  assign choose_options_text = 'actions.choose' | t
+  assign default_add_text = 'actions.add' | t
+  assign default_choose_text = 'actions.choose' | t
+  assign add_to_cart_text = add_to_cart_text | default: default_add_text
+  assign choose_options_text = choose_options_text | default: default_choose_text
   assign color_scheme = color_scheme | default: settings.quick_add_color_scheme
 
   # Logic to determine which variant to use (matching swatch selection logic from product-card)

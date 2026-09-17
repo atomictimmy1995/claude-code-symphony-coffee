@@ -11,6 +11,14 @@
 {% liquid
   assign block_settings = block.settings
   assign product = closest.product
+
+  # Quick add renders two buttons and shows one: "Add" when the product needs no
+  # choice, "Choose" when it has options to pick. Both are labelled the same
+  # here so the card reads consistently whichever product it holds.
+  assign button_label = block_settings.button_label
+  if button_label == blank
+    assign button_label = 'actions.add_to_cart' | t
+  endif
 %}
 
 {%- if product != blank -%}
@@ -24,7 +32,13 @@
     "
     {{ block.shopify_attributes }}
   >
-    {% render 'quick-add', product: product, section_id: section.id, block: block %}
+    {% render 'quick-add',
+      product: product,
+      section_id: section.id,
+      block: block,
+      add_to_cart_text: button_label,
+      choose_options_text: button_label
+    %}
   </div>
 {%- endif -%}
 
@@ -115,6 +129,13 @@
     {
       "type": "paragraph",
       "content": "An Add to cart button that is always visible, rather than appearing on hover."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "info": "Leave empty to use the theme's default. Applies whether or not the product has options to choose.",
+      "default": "Add to cart"
     },
     {
       "type": "color",
