@@ -184,6 +184,23 @@
     z-index: -1;
   }
 
+  /* The option name ("Grind Type") is redundant on a card where the only
+     choice is the grind. It stays in the DOM rather than being removed,
+     because a <legend> is the fieldset's accessible name -- the radio group
+     would otherwise be announced without saying what is being chosen. These
+     are the theme's own .visually-hidden declarations. */
+  .product-card__content--panel .variant-option--buttons legend:not(:focus, :active) {
+    position: absolute;
+    overflow: hidden;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+    clip: rect(0 0 0 0);
+    word-wrap: normal;
+  }
+
   /* Round the grind picker to a pill, matching the card's Add to cart button.
      --options-border-radius is set on .variant-option and read by the labels
      inside it, so overriding it here reaches every button. Scoped to panelled
