@@ -115,7 +115,21 @@
         --product-card-panel-radius: {{ block_settings.card_radius }}px;
         --product-card-panel-lift: {{ block_settings.card_image_lift }}px;
         {%- if block_settings.card_foreground != blank -%}
-          --product-card-panel-foreground: {{ block_settings.card_foreground }};
+          {%- comment -%}
+            The child blocks' colour setting is a select limited to the theme's
+            colour tokens, so a panel colour cannot be set per block. Redefining
+            the tokens here re-points those same values at the panel colour, and
+            title, notes and price follow from one control.
+          {%- endcomment -%}
+          --color-foreground: {{ block_settings.card_foreground }};
+          --color-foreground-heading: {{ block_settings.card_foreground }};
+          {%- comment -%}
+            Subdued text (compare-at price, tax note) is built from the -rgb
+            token rather than the colour itself, so it needs repointing too or
+            it keeps the scheme's colour and disappears on a dark panel.
+          {%- endcomment -%}
+          --color-foreground-rgb: {{ block_settings.card_foreground.rgb }};
+          --color-foreground-heading-rgb: {{ block_settings.card_foreground.rgb }};
         {%- endif -%}
       {%- endif -%}
       {% if block_settings.padding-inline-start > 0 %}--zoom-out-padding-inline-start: min(var(--padding-xs), {{ block_settings.padding-inline-start | times: 0.7}}px);{% endif %}
@@ -129,15 +143,6 @@
 </product-card>
 
 {% stylesheet %}
-  /* Declared here so the JSON template can reference this variable with a
-     single-level var(). Cards that set a panel foreground override it inline;
-     everything else falls back to the scheme colour. Nested var() fallbacks in
-     a template's colour setting are not used anywhere else in this theme and
-     are not accepted on sync. */
-  .product-card__content {
-    --product-card-panel-foreground: var(--color-foreground);
-  }
-
   /* Panelled card: the rounded rectangle is a pseudo-element inset from the top
      so the product image reads as standing above it. The card keeps its normal
      box, which matters because carousel slides clip vertically -- nothing here
@@ -159,8 +164,6 @@
     z-index: -1;
   }
 
-  /* Children opt into the panel's foreground by referencing the same variable
-     in their own colour setting, so one control drives title, notes and price. */
   .product-card__content--panel .product-card__link {
     border-radius: var(--product-card-panel-radius, 24px);
   }

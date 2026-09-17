@@ -1166,9 +1166,9 @@
       ],
       "disabled": true,
       "custom_css": [
-        ".carousel {display: flex; overflow-x: auto; scroll-snap-type: x mandatory;  gap: 16px; padding: 20px; scrollbar-width: none; }",
-        " .carousel::-webkit-scrollbar {display: none;}",
-        ".carousel-item {flex: 0 0 80%;  scroll-snap-align: center;   height: 200px; background: #ddd; border-radius: 8px;}"
+        ".carousel {display: flex; overflow-x: auto; scroll-snap-type: x mandatory; /* Makes items 'snap' into place */ gap: 16px; padding: 20px; scrollbar-width: none; /* Hides scrollbar on Firefox */}",
+        " /* Optional: Hide scrollbar for Chrome/Safari */.carousel::-webkit-scrollbar {display: none;}",
+        ".carousel-item {flex: 0 0 80%; /* Width of each item (adjust as needed) */ scroll-snap-align: center; /* Snaps item to the middle of the container */ /* Just for styling */ height: 200px; background: #ddd; border-radius: 8px;}"
       ],
       "settings": {
         "heading": "",
@@ -1313,7 +1313,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -1339,7 +1339,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -1357,7 +1357,7 @@
               "settings": {
                 "max_notes": 3,
                 "roast_suffix": "Roast",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "font_size": "0.875rem",
                 "padding-block-start": 0,
                 "padding-block-end": 0
@@ -1543,7 +1543,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -1569,7 +1569,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -1587,7 +1587,7 @@
               "settings": {
                 "max_notes": 3,
                 "roast_suffix": "Roast",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "font_size": "0.875rem",
                 "padding-block-start": 0,
                 "padding-block-end": 0
@@ -1773,7 +1773,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -1799,7 +1799,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -1817,7 +1817,7 @@
               "settings": {
                 "max_notes": 3,
                 "roast_suffix": "Roast",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "font_size": "0.875rem",
                 "padding-block-start": 0,
                 "padding-block-end": 0
@@ -2003,7 +2003,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -2029,7 +2029,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -2047,7 +2047,7 @@
               "settings": {
                 "max_notes": 3,
                 "roast_suffix": "Roast",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "font_size": "0.875rem",
                 "padding-block-start": 0,
                 "padding-block-end": 0
@@ -2233,7 +2233,7 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -2259,7 +2259,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -2277,7 +2277,7 @@
               "settings": {
                 "max_notes": 3,
                 "roast_suffix": "Roast",
-                "color": "var(--product-card-panel-foreground)",
+                "color": "var(--color-foreground)",
                 "font_size": "0.875rem",
                 "padding-block-start": 0,
                 "padding-block-end": 0
