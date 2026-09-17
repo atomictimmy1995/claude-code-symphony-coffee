@@ -129,6 +129,15 @@
 </product-card>
 
 {% stylesheet %}
+  /* Declared here so the JSON template can reference this variable with a
+     single-level var(). Cards that set a panel foreground override it inline;
+     everything else falls back to the scheme colour. Nested var() fallbacks in
+     a template's colour setting are not used anywhere else in this theme and
+     are not accepted on sync. */
+  .product-card__content {
+    --product-card-panel-foreground: var(--color-foreground);
+  }
+
   /* Panelled card: the rounded rectangle is a pseudo-element inset from the top
      so the product image reads as standing above it. The card keeps its normal
      box, which matters because carousel slides clip vertically -- nothing here
