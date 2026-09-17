@@ -12,21 +12,22 @@
     "hero_RkimKJ": {
       "type": "hero",
       "blocks": {
-        "group_3cB4GW": {
+        "group_CxGwa6": {
           "type": "group",
+          "name": "t:names.group",
           "settings": {
             "content_direction": "column",
             "vertical_on_mobile": true,
             "horizontal_alignment": "flex-start",
             "vertical_alignment": "center",
             "align_baseline": false,
-            "horizontal_alignment_flex_direction_column": "center",
-            "vertical_alignment_flex_direction_column": "center",
-            "gap": 12,
-            "width": "custom",
-            "custom_width": 63,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-end",
+            "gap": 10,
+            "width": "fill",
+            "custom_width": 100,
             "width_mobile": "fill",
-            "custom_width_mobile": 25,
+            "custom_width_mobile": 100,
             "height": "fit",
             "custom_height": 100,
             "inherit_color_scheme": true,
@@ -46,44 +47,20 @@
             "open_in_new_tab": false,
             "placeholder": "",
             "padding-block-start": 0,
-            "padding-block-end": 0,
+            "padding-block-end": 20,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
           "blocks": {
-            "image_hKLGQD": {
-              "type": "image",
-              "name": "t:names.image",
-              "disabled": true,
-              "settings": {
-                "image": "shopify://shop_images/Profile_pic_icon_8e9c6c34-6b59-4be1-afb9-2673858bca2f.png",
-                "link": "",
-                "image_ratio": "adapt",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100,
-                "height": "fit",
-                "border": "none",
-                "border_width": 1,
-                "border_opacity": 100,
-                "border_radius": 0,
-                "padding-block-start": 0,
-                "padding-block-end": 0,
-                "padding-inline-start": 0,
-                "padding-inline-end": 0
-              },
-              "blocks": {}
-            },
-            "text_qMKWQe": {
+            "text_b6HiQi": {
               "type": "text",
               "name": "t:names.text",
               "settings": {
-                "text": "<p>Coffee for Musicians</p>",
+                "text": "<h5>Introducing:</h5>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "h4",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -101,30 +78,15 @@
               },
               "blocks": {}
             },
-            "jumbo_text_JHG9Xj": {
-              "type": "jumbo-text",
-              "name": "t:names.jumbo_text",
-              "settings": {
-                "text": "fuel your love of music",
-                "font": "heading",
-                "alignment": "left",
-                "line_height": "1.2",
-                "letter_spacing": "-0.03em",
-                "case": "uppercase",
-                "text_effect": "blur",
-                "animation_repeat": false
-              },
-              "blocks": {}
-            },
-            "text_aPaRMr": {
+            "text_PFTGJi": {
               "type": "text",
-              "name": "t:names.text",
+              "name": "t:names.heading",
               "settings": {
-                "text": "<p>Specialty coffee roasted for musicians, artists and music lovers. </p>",
+                "text": "<h2>Harp Cadenza</h2>",
                 "width": "fit-content",
                 "max_width": "normal",
                 "alignment": "left",
-                "type_preset": "paragraph",
+                "type_preset": "rte",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -142,58 +104,68 @@
               },
               "blocks": {}
             },
-            "button_nazDaa": {
-              "type": "button",
+            "text_6MgVkK": {
+              "type": "text",
+              "name": "t:names.text",
               "settings": {
-                "label": "Buy Now",
-                "link": "shopify://collections/our-coffee",
-                "open_in_new_tab": false,
-                "style_class": "button-secondary",
+                "text": "<p>It's Here! The Belle of the ball, the Sweetheart of the Symphony, the Harp Cadenza!</p>",
                 "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
-                "custom_width_mobile": 100
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "color": "var(--color-foreground)",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
-            "button_HQdNbm": {
+            "button_rNpbc4": {
               "type": "button",
               "name": "t:names.button",
               "settings": {
-                "label": "Subscribe & Save",
-                "link": "shopify://pages/subscriptions",
+                "label": "Shop now",
+                "link": "shopify://products/bass-drum",
                 "open_in_new_tab": false,
-                "style_class": "button-secondary",
-                "width": "fit-content",
-                "custom_width": 100,
-                "width_mobile": "fit-content",
+                "style_class": "button",
+                "width": "custom",
+                "custom_width": 21,
+                "width_mobile": "custom",
                 "custom_width_mobile": 100
               },
               "blocks": {}
             }
           },
           "block_order": [
-            "image_hKLGQD",
-            "text_qMKWQe",
-            "jumbo_text_JHG9Xj",
-            "text_aPaRMr",
-            "button_nazDaa",
-            "button_HQdNbm"
+            "text_b6HiQi",
+            "text_PFTGJi",
+            "text_6MgVkK",
+            "button_rNpbc4"
           ]
         }
       },
       "block_order": [
-        "group_3cB4GW"
+        "group_CxGwa6"
       ],
       "settings": {
-        "media_type_1": "video",
-        "image_1": "shopify://shop_images/pexels-begum-19971153.jpg",
+        "media_type_1": "image",
+        "image_1": "shopify://shop_images/FE468653-FEF1-4688-97F2-6AF79F04BBF5.png",
         "video_1": "shopify://files/videos/Untitled.mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/pexels-begum-19971153.jpg",
+        "image_1_mobile": "shopify://shop_images/IMG-1846.png",
         "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -203,13 +175,13 @@
         "vertical_alignment": "center",
         "align_baseline": false,
         "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "flex-end",
         "gap": 16,
         "section_width": "page-width",
         "section_height": "full-screen",
         "section_height_custom": 50,
-        "color_scheme": "scheme-5",
-        "toggle_overlay": true,
+        "color_scheme": "scheme-1",
+        "toggle_overlay": false,
         "overlay_color": "#00000080",
         "overlay_style": "solid",
         "gradient_direction": "to top",
@@ -632,11 +604,11 @@
           "type": "ai_gen_block_c740dab",
           "name": "Premium product card-sub overlay-1",
           "settings": {
-            "product": "symphony-blend",
-            "product_image": "shopify://shop_images/harp-cadenza-front.png",
+            "product": "harp-cadenza",
+            "product_image": "shopify://shop_images/mockup-1_6.png",
             "eyebrow_text": "The Sweetheart of the Symphony",
             "product_title": "Harp Cadenza",
-            "product_description": "The Belle of the Ball, The Sweetheart of the Symphony, The Harp Cadenza",
+            "product_description": "The Belle of the Ball, the Sweetheart of the Symphony, the Harp Cadenza",
             "taste_note_1": "Light",
             "taste_note_2": "Airy",
             "taste_note_3": "Bright",
@@ -644,11 +616,11 @@
             "subscription_price": "$17/month when you subscribe",
             "button_text": "View Now",
             "button_link": "shopify://products/symphony-blend",
-            "show_overlay": true,
-            "overlay_text": "Coming Tomorrow!",
-            "overlay_button_text": "Discover our Coffee!",
-            "overlay_button_link": "shopify://collections/our-coffee",
-            "blur_amount": 5,
+            "show_overlay": false,
+            "overlay_text": "Coming Soon!",
+            "overlay_button_text": "View Coffees",
+            "overlay_button_link": "shopify://collections/all",
+            "blur_amount": 8,
             "desktop_width_percent": 100,
             "card_background": "#ffffff",
             "border_radius": 8,
@@ -2206,3 +2178,4 @@
     "section_NffkrK"
   ]
 }
+
