@@ -1239,7 +1239,7 @@
                 "width": "100%",
                 "max_width": "normal",
                 "alignment": "center",
-                "type_preset": "h6",
+                "type_preset": "h4",
                 "font": "var(--font-body--family)",
                 "font_size": "1rem",
                 "line_height": "normal",
@@ -1257,16 +1257,29 @@
               },
               "blocks": {}
             },
-            "notes_YQBWEx": {
-              "type": "_product-card-notes",
-              "name": "Tasting notes",
+            "text_geeYnq": {
+              "type": "text",
+              "name": "roast",
               "settings": {
-                "max_notes": 3,
-                "roast_suffix": "Roast",
+                "text": "<p>{{ closest.product.metafields.shopify[\"coffee-roast\"] | metafield_text: field: 'label' }} Roast</p>",
+                "width": "100%",
+                "max_width": "normal",
+                "alignment": "center",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
                 "color": "var(--color-foreground)",
-                "font_size": "0.875rem",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
                 "padding-block-start": 0,
-                "padding-block-end": 0
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
               },
               "blocks": {}
             },
@@ -1327,7 +1340,7 @@
           "block_order": [
             "product_card_gallery_eWNmny",
             "product_title_DEXGkq",
-            "notes_YQBWEx",
+            "text_geeYnq",
             "price_UmbxBR",
             "card_cta_the_percussion",
             "variant_picker_6Fjer6",
