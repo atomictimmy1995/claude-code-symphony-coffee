@@ -184,6 +184,15 @@
     z-index: -1;
   }
 
+  /* Round the grind picker to a pill, matching the card's Add to cart button.
+     --options-border-radius is set on .variant-option and read by the labels
+     inside it, so overriding it here reaches every button. Scoped to panelled
+     cards: the theme's global variant_button_radius still governs the picker
+     on product pages, the gift card form and the sort dropdown. */
+  .product-card__content--panel .variant-option {
+    --options-border-radius: 999px;
+  }
+
   /* The card gallery renders the image inside <slideshow-container>, which the
      theme gives an opaque scheme background. The panel is a ::before at
      z-index: -1, so that background paints over it and the product sits in a
