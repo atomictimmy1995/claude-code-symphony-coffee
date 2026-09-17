@@ -184,6 +184,24 @@
     z-index: -1;
   }
 
+  /* Keep the grind buttons on one row at phone width. The theme lets them wrap
+     and sizes each to its own text, so "Whole Bean" and "Ground" drop onto
+     separate lines in a narrow card. flex: 1 1 0 with min-width: 0 overrides
+     the fit-content floor and has them share the row instead; the tighter
+     inline padding buys the text the room to do it. Mobile only -- desktop
+     cards are wide enough that the theme's sizing already reads better. */
+  @media screen and (max-width: 749px) {
+    .product-card__content--panel .variant-option--buttons {
+      flex-wrap: nowrap;
+    }
+
+    .product-card__content--panel .variant-option__button-label {
+      flex: 1 1 0;
+      min-width: 0;
+      padding-inline: var(--padding-sm);
+    }
+  }
+
   /* The option name ("Grind Type") is redundant on a card where the only
      choice is the grind. It stays in the DOM rather than being removed,
      because a <legend> is the fieldset's accessible name -- the radio group
