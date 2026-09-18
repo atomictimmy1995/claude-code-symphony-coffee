@@ -131,10 +131,6 @@
      Swiping is the affordance on a touch screen, so the arrows are dropped and
      the peek plus the bar are what say the row scrolls. */
   @media screen and (max-width: 749px) {
-    .ai-block-carousel__arrow {
-      display: none;
-    }
-
     .ai-block-carousel__track {
       gap: 12px;
       /* scroll-padding matches the gutter, or scroll-snap-align: start snaps
@@ -202,6 +198,17 @@
 
   .ai-block-carousel__arrow--next {
     right: 8px;
+  }
+
+  /* Hiding the arrows has to come after the rules above, not with the other
+     mobile rules higher up. A media query adds no specificity, so the
+     display: flex in .ai-block-carousel__arrow would win on source order and
+     the arrows would stay put. Swiping is the affordance on a touch screen;
+     the peek and the scroll bar are what say the row moves. */
+  @media screen and (max-width: 749px) {
+    .ai-block-carousel__arrow {
+      display: none;
+    }
   }
 {% endstylesheet %}
 
