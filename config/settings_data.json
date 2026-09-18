@@ -51,7 +51,7 @@
     "mobile_quick_add": true,
     "show_second_image_on_hover": false,
     "variant_swatch_radius": 0,
-    "variant_button_border_width": 0,
+    "variant_button_border_width": 1,
     "variant_button_radius": 100,
     "variant_button_width": "default-width-buttons",
     "content_for_index": [],
