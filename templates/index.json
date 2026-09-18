@@ -604,7 +604,7 @@
             "overlay_button_link": "shopify://collections/all",
             "blur_amount": 8,
             "desktop_width_percent": 95,
-            "card_background": "linear-gradient(160deg, rgba(74, 143, 95, 1), rgba(158, 206, 167, 1) 100%)",
+            "card_background": "linear-gradient(20deg, rgba(74, 143, 95, 1), rgba(158, 206, 167, 1) 100%)",
             "border_radius": 28,
             "content_alignment": "center",
             "content_padding": 24,
