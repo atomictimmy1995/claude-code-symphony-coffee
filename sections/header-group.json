@@ -33,18 +33,18 @@
             "menu": "main-menu",
             "color_scheme": "scheme-1",
             "type_font_primary_size": "1.25rem",
-            "menu_font_style": "regular",
+            "menu_font_style": "inverse_large",
             "type_font_primary_link": "subheading",
             "type_case_primary_link": "uppercase",
-            "menu_style": "featured_collections",
+            "menu_style": "text",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
             "color_scheme_navigation_bar": "",
-            "drawer_accordion": false,
+            "drawer_accordion": true,
             "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_dividers": true
           },
           "blocks": {}
         }
@@ -85,41 +85,9 @@
         "enable_transparent_header_collection": false,
         "collection_color_scheme": "default"
       }
-    },
-    "header_announcements_WkwMTQ": {
-      "type": "header-announcements",
-      "blocks": {
-        "announcement_pgf3z6": {
-          "type": "_announcement",
-          "settings": {
-            "text": "The Percussion Section is Here!",
-            "link": "shopify://collections/the-percussion-section",
-            "font": "var(--font-body--family)",
-            "font_size": "1rem",
-            "weight": "",
-            "letter_spacing": "tight",
-            "case": "none"
-          },
-          "blocks": {}
-        }
-      },
-      "block_order": [
-        "announcement_pgf3z6"
-      ],
-      "disabled": true,
-      "name": "t:names.announcement_bar",
-      "settings": {
-        "speed": 5,
-        "section_width": "page-width",
-        "color_scheme": "scheme-1",
-        "divider_width": 1,
-        "padding-block-start": 5,
-        "padding-block-end": 5
-      }
     }
   },
   "order": [
-    "header_section",
-    "header_announcements_WkwMTQ"
+    "header_section"
   ]
 }
