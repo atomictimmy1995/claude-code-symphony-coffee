@@ -9,7 +9,7 @@
  */
 {
   "current": {
-    "logo": "shopify://shop_images/Wb_logo.png",
+    "logo": "shopify://shop_images/Profile_pic_icon_8e9c6c34-6b59-4be1-afb9-2673858bca2f.png",
     "logo_inverse": "shopify://shop_images/Be_logo.png",
     "logo_height": 75,
     "logo_height_mobile": 61,
@@ -51,7 +51,7 @@
     "variant_swatch_radius": 0,
     "variant_button_border_width": 0,
     "variant_button_radius": 0,
-    "variant_button_width": "equal-width-buttons",
+    "variant_button_width": "default-width-buttons",
     "content_for_index": [],
     "blocks": {
       "15588394620387169604": {
