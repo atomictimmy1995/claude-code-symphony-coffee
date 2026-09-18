@@ -55,6 +55,7 @@
             "text_b6HiQi": {
               "type": "text",
               "name": "t:names.text",
+              "disabled": true,
               "settings": {
                 "text": "<h5>Introducing:</h5>",
                 "width": "fit-content",
@@ -81,6 +82,7 @@
             "text_PFTGJi": {
               "type": "text",
               "name": "t:names.heading",
+              "disabled": true,
               "settings": {
                 "text": "<h2>Harp Cadenza</h2>",
                 "width": "fit-content",
@@ -107,6 +109,7 @@
             "text_6MgVkK": {
               "type": "text",
               "name": "t:names.text",
+              "disabled": true,
               "settings": {
                 "text": "<p>It's Here! The Belle of the ball, the Sweetheart of the Symphony, the Harp Cadenza!</p>",
                 "width": "fit-content",
@@ -133,6 +136,7 @@
             "button_rNpbc4": {
               "type": "button",
               "name": "t:names.button",
+              "disabled": true,
               "settings": {
                 "label": "Shop now",
                 "link": "shopify://products/bass-drum",
@@ -165,7 +169,7 @@
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/IMG-1846.png",
+        "image_1_mobile": "shopify://shop_images/Untitled_-_September_18_2026_at_09.19.10_1.png",
         "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
