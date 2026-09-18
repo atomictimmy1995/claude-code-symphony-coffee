@@ -1,0 +1,141 @@
+{%- doc -%}
+  Renders the cheapest subscription price for a product card, for example
+  "or $17.00 w/ Subscription".
+
+  The price is read from the variant's selling plan allocations rather than
+  being written into a setting, so it follows the selling plan. The plans here
+  discount by different amounts -- $3 monthly, $2 every six months -- and the
+  lowest is the one worth advertising.
+
+  Renders nothing when the product has no selling plan, or when no plan
+  actually beats the one-time price.
+{%- enddoc -%}
+
+{% liquid
+  assign block_settings = block.settings
+  assign product = closest.product
+  assign variant = product.selected_or_first_available_variant
+
+  # Tracked with a flag rather than seeding a sentinel price, because the first
+  # comparison would otherwise be against nil.
+  assign has_plan = false
+  assign best_price = 0
+
+  for allocation in variant.selling_plan_allocations
+    if has_plan == false
+      assign best_price = allocation.per_delivery_price
+      assign has_plan = true
+    elsif allocation.per_delivery_price < best_price
+      assign best_price = allocation.per_delivery_price
+    endif
+  endfor
+
+  assign show_price = false
+  if has_plan and best_price < variant.price
+    assign show_price = true
+  endif
+%}
+
+{%- if show_price -%}
+  <p
+    class="product-card__subscription-price spacing-style"
+    style="
+      {% render 'spacing-style', settings: block_settings %}
+      --subscription-price-color: {{ block_settings.color | default: 'inherit' }};
+      --subscription-price-size: {{ block_settings.font_size }};
+    "
+    {{ block.shopify_attributes }}
+  >
+    {{- block_settings.prefix_text }} {{ best_price | money }} {{ block_settings.suffix_text -}}
+  </p>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-card__subscription-price {
+    margin: 0;
+    color: var(--subscription-price-color, inherit);
+    font-size: var(--subscription-price-size, var(--font-size--sm));
+    line-height: var(--line-height-tight, 1.3);
+    text-wrap: pretty;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Subscription price",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "Shows the lowest subscription price for the product. Hidden when the product has no subscription, or when no plan beats the one-time price."
+    },
+    {
+      "type": "text",
+      "id": "prefix_text",
+      "label": "Text before the price",
+      "default": "or"
+    },
+    {
+      "type": "text",
+      "id": "suffix_text",
+      "label": "Text after the price",
+      "default": "w/ Subscription"
+    },
+    {
+      "type": "select",
+      "id": "color",
+      "label": "t:settings.color",
+      "options": [
+        {
+          "value": "var(--color-foreground)",
+          "label": "t:options.text"
+        },
+        {
+          "value": "var(--color-foreground-heading)",
+          "label": "t:options.heading"
+        },
+        {
+          "value": "var(--color-primary)",
+          "label": "t:options.link"
+        }
+      ],
+      "default": "var(--color-foreground)"
+    },
+    {
+      "type": "text",
+      "id": "font_size",
+      "label": "Font size",
+      "default": "1rem"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "Subscription price"
+    }
+  ]
+}
+{% endschema %}
