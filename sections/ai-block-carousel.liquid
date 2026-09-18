@@ -127,15 +127,44 @@
     box-sizing: border-box;
   }
 
-  /* 1 card on mobile */
+  /* Mobile: one card with the next peeking in, no arrows, visible scroll bar.
+     Swiping is the affordance on a touch screen, so the arrows are dropped and
+     the peek plus the bar are what say the row scrolls. */
   @media screen and (max-width: 749px) {
+    .ai-block-carousel__arrow {
+      display: none;
+    }
+
     .ai-block-carousel__track {
-      padding-inline: 0;
+      gap: 12px;
+      /* scroll-padding matches the gutter, or scroll-snap-align: start snaps
+         each card to the container edge and fights the padding as you swipe. */
+      padding-inline: 16px;
+      scroll-padding-inline: 16px;
+      padding-bottom: 8px;
     }
 
     .ai-block-carousel__track > * {
-      flex: 0 0 100% !important;
-      width: 100% !important;
+      flex: 0 0 78% !important;
+      width: 78% !important;
+    }
+
+    /* The bar is this section's own element, driven by the track's scroll
+       event, not a native scrollbar -- at its desktop size (0.5px, 12% black)
+       it is invisible on a phone. */
+    .ai-block-carousel__scrollbar-wrap {
+      margin-top: 4px;
+    }
+
+    .ai-block-carousel__scrollbar-track {
+      width: 70vw;
+      height: 4px;
+      border-radius: 999px;
+    }
+
+    .ai-block-carousel__scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 999px;
     }
   }
 
