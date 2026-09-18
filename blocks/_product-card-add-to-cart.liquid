@@ -56,6 +56,17 @@
   .product-card__cta {
     position: relative;
     width: 100%;
+
+    /* The theme resolves this button's display from these variables, and the
+       card sets them from the global quick add setting. Re-pointing them here
+       keeps the button visible without declaring `display` on the button
+       itself -- doing that also overrode
+       [data-quick-add-button='add'] .quick-add__button--choose, which is the
+       rule that hides the Choose button once a variant is picked, so both
+       buttons showed at once. */
+    --quick-add-display: flex;
+    --quick-add-mobile-display: flex;
+    --quick-add-mobile-opacity: 1;
   }
 
   /* Lift the overlay out of its absolute positioning and into the card flow. */
@@ -73,7 +84,6 @@
 
   .product-card__cta .quick-add__button {
     position: static;
-    display: flex;
     opacity: 1;
     width: 100%;
     height: auto;
