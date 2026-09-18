@@ -847,7 +847,7 @@
           "name": "Premium product card-sub overlay-1",
           "settings": {
             "product": "nocturne",
-            "product_image": "shopify://shop_images/2a3e8675-ac3f-43ea-8f64-997dfa29e929.png",
+            "product_image": "shopify://shop_images/nocturne-mockup-1.png",
             "eyebrow_text": "You'll be Bach for more",
             "product_title": "Cello Reserve",
             "product_description": "Crafted for those who appreciate warmth with complexity.",
@@ -864,7 +864,7 @@
             "overlay_button_link": "shopify://pages/subscriptions",
             "blur_amount": 2,
             "desktop_width_percent": 100,
-            "card_background": "linear-gradient(160deg, rgba(74, 143, 95, 1), rgba(158, 206, 167, 1) 100%)",
+            "card_background": "linear-gradient(20deg, rgba(106, 55, 255, 1), rgba(211, 195, 255, 1) 100%)",
             "border_radius": 28,
             "content_alignment": "center",
             "content_padding": 24,
