@@ -938,11 +938,7 @@
         "ai_gen_block_c740dab_7pdcx4",
         "ai_gen_block_c740dab_Mz3mhz"
       ],
-      "custom_css": [
-        ".carousel {display: flex; overflow-x: auto; scroll-snap-type: x mandatory; /* Makes items 'snap' into place */ gap: 16px; padding: 20px; scrollbar-width: none; /* Hides scrollbar on Firefox */}",
-        " /* Optional: Hide scrollbar for Chrome/Safari */.carousel::-webkit-scrollbar {display: none;}",
-        ".carousel-item {flex: 0 0 80%; /* Width of each item (adjust as needed) */ scroll-snap-align: center; /* Snaps item to the middle of the container */ /* Just for styling */ height: 200px; background: #ddd; border-radius: 8px;}"
-      ],
+      "custom_css": [],
       "settings": {
         "heading": "",
         "section_width": "page-width",
