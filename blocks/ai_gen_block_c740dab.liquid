@@ -4,13 +4,24 @@
 {% enddoc %}
 {% assign ai_gen_id = block.id | replace: '_', '' | downcase %}
 
+{%- liquid
+  # text-align governs the text; the taste notes and variant pills are flex
+  # rows and need the matching justify-content value.
+  assign notes_justify = 'flex-start'
+  if block.settings.content_alignment == 'center'
+    assign notes_justify = 'center'
+  elsif block.settings.content_alignment == 'right'
+    assign notes_justify = 'flex-end'
+  endif
+-%}
+
 {% style %}
   .ai-premium-card-{{ ai_gen_id }} {
     position: relative;
     display: block;
     width: {{ block.settings.desktop_width_percent }}%;
     max-width: 100%;
-    background-color: {{ block.settings.card_background }};
+    background: {{ block.settings.card_background }};
     border-radius: {{ block.settings.border_radius }}px;
     overflow: hidden;
     transition: transform 0.3s ease;
@@ -50,6 +61,7 @@
 
   .ai-premium-card-content-{{ ai_gen_id }} {
     padding: {{ block.settings.content_padding }}px;
+    text-align: {{ block.settings.content_alignment }};
   }
 
   .ai-premium-card-eyebrow-{{ ai_gen_id }} {
@@ -80,6 +92,7 @@
     gap: 8px;
     margin: 0 0 16px 0;
     flex-wrap: wrap;
+    justify-content: {{ notes_justify }};
   }
 
   .ai-premium-card-taste-note-{{ ai_gen_id }} {
@@ -186,6 +199,56 @@
       width: 100%;
     }
   }
+
+  /* Variant pills. The radios carry name="id", so the checked one is what the
+     form posts -- the selection needs no JavaScript. The input is hidden from
+     sight but not from assistive tech or the keyboard, so the pills stay
+     focusable and the group is still announced as radios. */
+  .ai-premium-card-variants-{{ ai_gen_id }} {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 12px 0 0 0;
+    justify-content: {{ notes_justify }};
+  }
+
+  .ai-premium-card-variant-{{ ai_gen_id }} {
+    cursor: pointer;
+  }
+
+  .ai-premium-card-variant-{{ ai_gen_id }} input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .ai-premium-card-variant-{{ ai_gen_id }} span {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: {{ block.settings.variant_border_radius }}px;
+    background-color: {{ block.settings.variant_background }};
+    color: {{ block.settings.variant_text_color }};
+    font-size: {{ block.settings.variant_size }}px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .ai-premium-card-variant-{{ ai_gen_id }} input:checked + span {
+    background-color: {{ block.settings.variant_selected_background }};
+    color: {{ block.settings.variant_selected_text_color }};
+  }
+
+  .ai-premium-card-variant-{{ ai_gen_id }} input:focus-visible + span {
+    outline: 2px solid currentcolor;
+    outline-offset: 2px;
+  }
+
+  .ai-premium-card-variant-{{ ai_gen_id }} input:disabled + span {
+    opacity: 0.4;
+    text-decoration: line-through;
+    cursor: not-allowed;
+  }
 {% endstyle %}
 
 <div class="ai-premium-card-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
@@ -246,7 +309,14 @@
       {% if block.settings.product != blank %}
         {% assign atc_product = block.settings.product %}
         <form action="/cart/add" method="post" class="ai-premium-card-atc-form-{{ ai_gen_id }}">
-          <input type="hidden" name="id" value="{{ atc_product.selected_or_first_available_variant.id }}">
+          {%- comment -%}
+            With more than one variant the radios below carry name="id" and
+            post the chosen one, so the hidden input would submit a second,
+            conflicting value. Only one of the two is ever rendered.
+          {%- endcomment -%}
+          {%- if atc_product.variants.size == 1 -%}
+            <input type="hidden" name="id" value="{{ atc_product.selected_or_first_available_variant.id }}">
+          {%- endif -%}
           <input type="hidden" name="quantity" value="1">
           <button
             type="submit"
@@ -259,6 +329,23 @@
               Sold out
             {% endif %}
           </button>
+
+          {%- if atc_product.variants.size > 1 -%}
+            <div class="ai-premium-card-variants-{{ ai_gen_id }}" role="radiogroup" aria-label="{{ atc_product.options.first | escape }}">
+              {%- for variant in atc_product.variants -%}
+                <label class="ai-premium-card-variant-{{ ai_gen_id }}">
+                  <input
+                    type="radio"
+                    name="id"
+                    value="{{ variant.id }}"
+                    {% if variant.id == atc_product.selected_or_first_available_variant.id %}checked{% endif %}
+                    {% unless variant.available %}disabled{% endunless %}
+                  >
+                  <span>{{ variant.title }}</span>
+                </label>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </form>
       {% else %}
         <a href="{{ block.settings.button_link }}" class="ai-premium-card-button-{{ ai_gen_id }}">
@@ -408,9 +495,10 @@
       "default": 100
     },
     {
-      "type": "color",
+      "type": "color_background",
       "id": "card_background",
       "label": "Card background",
+      "info": "Accepts a solid colour or a gradient.",
       "default": "#ffffff"
     },
     {
@@ -422,6 +510,17 @@
       "step": 2,
       "unit": "px",
       "default": 8
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "label": "Content alignment",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Centre" },
+        { "value": "right", "label": "Right" }
+      ],
+      "default": "center"
     },
     {
       "type": "range",
@@ -600,6 +699,58 @@
       "step": 5,
       "unit": "px",
       "default": 15
+    },
+    {
+      "type": "header",
+      "content": "Variant pills"
+    },
+    {
+      "type": "paragraph",
+      "content": "Shown under the button when the selected product has more than one variant."
+    },
+    {
+      "type": "range",
+      "id": "variant_size",
+      "label": "Text size",
+      "min": 10,
+      "max": 20,
+      "step": 1,
+      "unit": "px",
+      "default": 14
+    },
+    {
+      "type": "color",
+      "id": "variant_background",
+      "label": "Background",
+      "default": "#00000059"
+    },
+    {
+      "type": "color",
+      "id": "variant_text_color",
+      "label": "Text",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "variant_selected_background",
+      "label": "Selected background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "variant_selected_text_color",
+      "label": "Selected text",
+      "default": "#1a1a1a"
+    },
+    {
+      "type": "range",
+      "id": "variant_border_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 40
     },
     {
       "type": "header",
