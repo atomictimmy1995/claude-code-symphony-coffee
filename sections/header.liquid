@@ -323,12 +323,17 @@
     class="header__underlay header__underlay-open"
   ></div>
   {%- comment -%}
-    The homepage h1 belongs to the hero headline, which describes what the shop
-    sells. This is kept as a plain visually-hidden label so the shop name is
-    still announced early in the document without competing for the h1.
+    The homepage h1. This was a plain label on the assumption the hero headline
+    would carry the h1, but the hero is image-led -- its visible headings are a
+    product eyebrow and name, which describe one launch rather than the shop --
+    so the page had no h1 at all.
+
+    Hidden rather than visible because the design has no brand-level headline to
+    mark up, and rendered only on the index template: every other template has
+    its own h1, and a second one here would compete with it.
   {%- endcomment -%}
   {%- if request.page_type == 'index' -%}
-    <p class="visually-hidden">{{ shop.name }}</p>
+    <h1 class="visually-hidden">{{ shop.name }}</h1>
   {%- endif -%}
   {% for row in rows %}
     {% liquid
