@@ -254,18 +254,16 @@
 {%- liquid
   # Fall back to the selected product's own image. The picker points at a file
   # in Files, and deleting that file leaves the card with no picture -- which is
-  # what happened to two of these. Resolving the URL rather than testing the
-  # setting catches a reference whose file is gone as well as one never set.
+  # what happened to two of these.
+  #
+  # Test the image itself, not a URL built from it: image_url returns a
+  # non-empty string even for an empty setting, so checking the URL passes when
+  # there is no image and renders a broken one. width is nil on a reference
+  # whose file has been deleted, which the blank check alone does not catch.
   assign card_image = block.settings.product_image
-  capture card_image_src
-    echo card_image | image_url: width: 800
-  endcapture
 
-  if card_image_src == blank and block.settings.product != blank
+  if card_image == blank or card_image.width == blank
     assign card_image = block.settings.product.featured_image
-    capture card_image_src
-      echo card_image | image_url: width: 800
-    endcapture
   endif
 
   assign card_image_alt = card_image.alt | default: block.settings.product_title
@@ -273,9 +271,9 @@
 
 <div class="ai-premium-card-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-premium-card-image-{{ ai_gen_id }}">
-    {% if card_image_src != blank %}
+    {% if card_image != blank %}
       <img
-        src="{{ card_image_src }}"
+        src="{{ card_image | image_url: width: 800 }}"
         alt="{{ card_image_alt | escape }}"
         loading="lazy"
         width="{{ card_image.width }}"
