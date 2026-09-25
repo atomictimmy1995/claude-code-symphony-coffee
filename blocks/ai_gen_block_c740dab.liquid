@@ -251,15 +251,35 @@
   }
 {% endstyle %}
 
+{%- liquid
+  # Fall back to the selected product's own image. The picker points at a file
+  # in Files, and deleting that file leaves the card with no picture -- which is
+  # what happened to two of these. Resolving the URL rather than testing the
+  # setting catches a reference whose file is gone as well as one never set.
+  assign card_image = block.settings.product_image
+  capture card_image_src
+    echo card_image | image_url: width: 800
+  endcapture
+
+  if card_image_src == blank and block.settings.product != blank
+    assign card_image = block.settings.product.featured_image
+    capture card_image_src
+      echo card_image | image_url: width: 800
+    endcapture
+  endif
+
+  assign card_image_alt = card_image.alt | default: block.settings.product_title
+-%}
+
 <div class="ai-premium-card-{{ ai_gen_id }}" {{ block.shopify_attributes }}>
   <div class="ai-premium-card-image-{{ ai_gen_id }}">
-    {% if block.settings.product_image %}
+    {% if card_image_src != blank %}
       <img
-        src="{{ block.settings.product_image | image_url: width: 800 }}"
-        alt="{{ block.settings.product_image.alt | escape }}"
+        src="{{ card_image_src }}"
+        alt="{{ card_image_alt | escape }}"
         loading="lazy"
-        width="{{ block.settings.product_image.width }}"
-        height="{{ block.settings.product_image.height }}"
+        width="{{ card_image.width }}"
+        height="{{ card_image.height }}"
       >
     {% else %}
       <div class="ai-premium-card-image-placeholder-{{ ai_gen_id }}">
