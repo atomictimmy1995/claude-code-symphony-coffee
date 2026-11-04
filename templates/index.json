@@ -163,13 +163,13 @@
       ],
       "settings": {
         "media_type_1": "image",
-        "image_1": "shopify://shop_images/Untitled_-_September_18_2026_at_09.19.10_3.png",
+        "image_1": "shopify://shop_images/Untitled_-_September_18_2026_at_09.19.10_4.png",
         "video_1": "shopify://files/videos/Untitled.mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": true,
         "media_type_1_mobile": "image",
-        "image_1_mobile": "shopify://shop_images/Untitled_-_September_18_2026_at_09.19.10_2.png",
+        "image_1_mobile": "shopify://shop_images/Untitled_-_September_18_2026_at_09.19.10_5.png",
         "media_type_2_mobile": "image",
         "link": "",
         "open_in_new_tab": false,
@@ -652,7 +652,6 @@
           "name": "Premium product card-sub overlay-1",
           "settings": {
             "product": "snare-roast",
-            "product_image": "",
             "eyebrow_text": "March on to your morning",
             "product_title": "Snare  Roast",
             "product_description": "That bright, articulate snap that cuts through. Snare is that beat in a cup.",
@@ -782,7 +781,6 @@
           "name": "Premium product card-sub overlay-1",
           "settings": {
             "product": "oboe-solo",
-            "product_image": "",
             "eyebrow_text": "The Ultimate Charmer",
             "product_title": "Oboe Solo",
             "product_description": "Bold, smooth, and full of character. The most unmistakable voice.",
