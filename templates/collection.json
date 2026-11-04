@@ -419,7 +419,7 @@
         "padding-block-end": 1
       }
     },
-    "product_list_y3q8xi": {
+    "product_list_Jr4CK6": {
       "type": "product-list",
       "blocks": {
         "static-header": {
@@ -456,7 +456,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "product_list_text_yMRdgD": {
+            "product_list_text_MPGjkj": {
               "type": "_product-list-text",
               "name": "t:names.collection_title",
               "settings": {
@@ -482,7 +482,7 @@
               },
               "blocks": {}
             },
-            "product_list_button_ya3qqp": {
+            "product_list_button_zWzzfh": {
               "type": "_product-list-button",
               "name": "t:names.product_list_button",
               "settings": {
@@ -498,8 +498,8 @@
             }
           },
           "block_order": [
-            "product_list_text_yMRdgD",
-            "product_list_button_ya3qqp"
+            "product_list_text_MPGjkj",
+            "product_list_button_zWzzfh"
           ]
         },
         "static-product-card": {
@@ -507,7 +507,7 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "card_background": "linear-gradient(51deg, rgba(63, 122, 67, 1), rgba(160, 204, 160, 1) 100%)",
+            "card_background": "linear-gradient(51deg, rgba(63, 122, 67, 1), rgba(194, 28, 28, 1) 100%)",
             "card_foreground": "#ffffff",
             "card_radius": 50,
             "card_image_lift": 80,
@@ -525,7 +525,7 @@
             "padding-inline-end": 0
           },
           "blocks": {
-            "product_card_gallery_9n9K9G": {
+            "product_card_gallery_9NhAQH": {
               "type": "_product-card-gallery",
               "name": "t:names.product_card_media",
               "settings": {
@@ -541,7 +541,7 @@
               },
               "blocks": {}
             },
-            "product_title_kyRAWn": {
+            "product_title_NR9eqG": {
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
@@ -566,7 +566,7 @@
               },
               "blocks": {}
             },
-            "text_xaKWK9": {
+            "text_3VzA7J": {
               "type": "text",
               "name": "roast",
               "settings": {
@@ -592,7 +592,7 @@
               },
               "blocks": {}
             },
-            "price_Nmm6Aq": {
+            "price_WyAh8P": {
               "type": "price",
               "name": "t:names.product_price",
               "settings": {
@@ -615,7 +615,7 @@
               },
               "blocks": {}
             },
-            "variant_picker_y3q8xi": {
+            "variant_picker_bxXtrr": {
               "type": "variant-picker",
               "settings": {
                 "variant_style": "buttons",
@@ -628,7 +628,7 @@
               },
               "blocks": {}
             },
-            "card_cta_the_string_sec": {
+            "product_card_add_to_cart_rfmCxh": {
               "type": "_product-card-add-to-cart",
               "name": "Card add to cart",
               "settings": {
@@ -641,25 +641,25 @@
               },
               "blocks": {}
             },
-            "judge_me_reviews_preview_badge_U9czGz": {
+            "judge_me_reviews_preview_badge_xVYTeL": {
               "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
               "settings": {}
             }
           },
           "block_order": [
-            "product_card_gallery_9n9K9G",
-            "product_title_kyRAWn",
-            "text_xaKWK9",
-            "price_Nmm6Aq",
-            "variant_picker_y3q8xi",
-            "card_cta_the_string_sec",
-            "judge_me_reviews_preview_badge_U9czGz"
+            "product_card_gallery_9NhAQH",
+            "product_title_NR9eqG",
+            "text_3VzA7J",
+            "price_WyAh8P",
+            "variant_picker_bxXtrr",
+            "product_card_add_to_cart_rfmCxh",
+            "judge_me_reviews_preview_badge_xVYTeL"
           ]
         }
       },
-      "name": "Featured Products",
+      "name": "The String Section",
       "settings": {
-        "collection": "the-string-section",
+        "collection": "featured-products",
         "layout_type": "carousel",
         "carousel_on_mobile": false,
         "max_products": 6,
@@ -1977,7 +1977,7 @@
   "order": [
     "collection_intro",
     "main",
-    "product_list_y3q8xi",
+    "product_list_Jr4CK6",
     "product_list_w6E9Ch",
     "product_list_i6QAj4",
     "product_list_FjzVVq",
