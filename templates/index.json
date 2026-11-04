@@ -12,6 +12,21 @@
     "hero_RkimKJ": {
       "type": "hero",
       "blocks": {
+        "button_7WQxBY": {
+          "type": "button",
+          "name": "t:names.button",
+          "settings": {
+            "label": "Shop Holiday Coffee",
+            "link": "shopify://collections/all",
+            "open_in_new_tab": false,
+            "style_class": "button",
+            "width": "custom",
+            "custom_width": 44,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100
+          },
+          "blocks": {}
+        },
         "group_CxGwa6": {
           "type": "group",
           "name": "t:names.group",
@@ -159,6 +174,7 @@
         }
       },
       "block_order": [
+        "button_7WQxBY",
         "group_CxGwa6"
       ],
       "settings": {
