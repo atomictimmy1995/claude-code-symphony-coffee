@@ -16,7 +16,7 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop Holiday Coffee",
+            "label": "Get Black Friday Deals!",
             "link": "shopify://collections/featured-products",
             "open_in_new_tab": false,
             "style_class": "button",
