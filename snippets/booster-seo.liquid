@@ -194,13 +194,25 @@ Title and Description
   collection, article, page, etc.) get consistent behavior, and so the
   storefront reflects the new mode immediately even before the next BatchScan.
 {%- endcomment -%}
+{%- comment -%}
+  Exception: a homepage title/description the merchant typed in Booster
+  (index_title / index_desc) is an explicit manual edit and always wins.
+  Without this, "Shopify defaults" silently discarded it while the audit page
+  graded the saved value as good (shop 67539861602, 2026-10-11).
+{%- endcomment -%}
+{%- comment -%}booster:shopify_defaults:start{%- endcomment -%}
 {%- if booster_config.auto_meta_title_active and booster_config.auto_meta_title_rules == 'shopify_seo_fields' -%}
-  {%- assign booster_title = "[shopify_seo_title]" -%}
+  {%- unless baType == 'shop' and booster_config.index_title != blank -%}
+    {%- assign booster_title = "[shopify_seo_title]" -%}
+  {%- endunless -%}
 {%- endif -%}
 
 {%- if booster_config.auto_meta_desc_active and booster_config.auto_meta_desc_rules == 'shopify_seo_fields' -%}
-  {%- assign booster_desc = "[shopify_seo_description]" -%}
+  {%- unless baType == 'shop' and booster_config.index_desc != blank -%}
+    {%- assign booster_desc = "[shopify_seo_description]" -%}
+  {%- endunless -%}
 {%- endif -%}
+{%- comment -%}booster:shopify_defaults:end{%- endcomment -%}
 
 {%- comment -%}
   Multi-market safety net. On a NON-primary storefront locale, Booster must not
@@ -273,12 +285,19 @@ Title and Description
 {%- endif -%}
 {%- comment -%}booster:title:end{%- endcomment -%}
 
+{%- comment -%}
+The merchant pastes either the bare token or Google's whole <meta> tag. Only
+the token is ever emitted, inside our own escaped attribute: the config
+metafield is in a namespace any app with write access could change.
+{%- endcomment -%}
 {%- unless booster_config.google_verification_meta_tag == blank -%}
-  {%- if booster_config.google_verification_meta_tag contains '<meta' -%}
-    {{ booster_config.google_verification_meta_tag }}
-  {%- else -%}
-    <meta name="google-site-verification" content="{{ booster_config.google_verification_meta_tag }}" />
+  {%- assign ba_gsv = booster_config.google_verification_meta_tag -%}
+  {%- if ba_gsv contains 'content="' -%}
+    {%- assign ba_gsv = ba_gsv | split: 'content="' | last | split: '"' | first -%}
+  {%- elsif ba_gsv contains "content='" -%}
+    {%- assign ba_gsv = ba_gsv | split: "content='" | last | split: "'" | first -%}
   {%- endif -%}
+  <meta name="google-site-verification" content="{{ ba_gsv | strip | escape }}" />
 {%- endunless -%}
 
 {%- comment -%}booster:desc:start{%- endcomment -%}
@@ -314,7 +333,28 @@ Title and Description
 <meta name="robots" content="noindex">
 {%- endif -%}
 
+{%- comment -%}booster:schema_origin:start{%- endcomment -%}
+{%- comment -%}
+  Absolute schema URLs are built from the request origin, never shop.secure_url.
+  Under Shopify Markets shop.secure_url is the market-localized root
+  (https://valinde.shop/en-de) AND object urls (product.url, collection.url,
+  variant.url, blog.url, article.url) already carry the same prefix, so
+  concatenating them doubled it: /en-de/en-de/products/... (shop 92669608262).
+  request.origin is only protocol + host. shop.secure_url stays as the
+  fallback for any Liquid runtime without request.origin.
+{%- endcomment -%}
+{%- assign ba_origin = request.origin | default: shop.secure_url -%}
+{%- comment -%}booster:schema_origin:end{%- endcomment -%}
+
+{%- comment -%}booster:schema_types:start{%- endcomment -%}
+{%- comment -%}
+  Per-type switches: booster_config.schema_disabled lists the schema types the
+  merchant turned off (organization, product, breadcrumbs, collection, blog,
+  article, faq). A missing list means every type is on.
+{%- endcomment -%}
+{%- comment -%}booster:schema_types:end{%- endcomment -%}
 {%- if booster_config.google_snippets_enabled -%}
+{%- unless booster_config.schema_disabled contains 'organization' -%}
 {%- comment -%}
 Organization and Website Schema Markup
 {%- endcomment -%}
@@ -330,13 +370,13 @@ Organization and Website Schema Markup
     "url": "https://{{ shop.domain }}",
     "description": {{ shop.description | json }},
     {%- unless logo_url == blank -%}
-      "image": "{{ logo_url | remove: "\" }}",
-      "logo": "{{ logo_url | remove: "\" }}",
+      "image": {{ logo_url | json }},
+      "logo": {{ logo_url | json }},
     {%- else -%}
       "image": "https:{{ 'logo.png' | asset_url }}",
       "logo": "https:{{ 'logo.png' | asset_url }}",
     {%- endunless -%}
-    "sameAs": ["{{ booster_config.same_as | join: '", "'}}"]
+    "sameAs": {{ booster_config.same_as | json }}
   }
 </script>
 {%- endif -%}
@@ -354,20 +394,22 @@ Organization and Website Schema Markup
     }
   }
 </script>
+{%- endunless -%}
 {%- endif -%}
 
 {%- if template.name == 'product' or template == 'product' -%}
 {%- if booster_config.google_snippets_enabled -%}
+{%- unless booster_config.schema_disabled contains 'product' -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Product",
     "name": {{ product.title | json }},
     "brand": {"@type": "Brand","name": {{ product.vendor | json }}},
-    "sku": "{{ product.selected_or_first_available_variant.sku }}",
-    "mpn": "{{ product.selected_or_first_available_variant.barcode }}",
+    "sku": {{ product.selected_or_first_available_variant.sku | json }},
+    "mpn": {{ product.selected_or_first_available_variant.barcode | json }},
     "description": {{ product.description | strip_html | json }},
-    "url": "{{ shop.secure_url }}{{ product.url }}",
+    "url": "{{ ba_origin }}{{ product.url }}",
     {%- if product.featured_image -%}
     {%- assign image_size = product.featured_image.width | append: 'x' -%}
     "image": "https:{{ product.featured_image.src | img_url: image_size }}",
@@ -379,24 +421,29 @@ Organization and Website Schema Markup
       {%- for variant in product.variants -%}
         {
           "@type": "Offer",
-        {%- if shop.money_format contains 'amount_with_comma_separator' -%}
-          "price": "{{ variant.price | money_without_currency | remove: '.' | replace: ',', '.' }}",
-        {%- else -%}
-           "price": "{{ variant.price | money_without_currency | remove: "," }}",
-        {%- endif -%}
-          "priceCurrency": "{{ shop.currency }}",
+{%- comment -%}
+  Under Shopify Markets variant.price is already converted to the visitor's
+  presentment currency, so the currency must be the cart's (shop.currency
+  stays the store default: USD prices were labelled AUD, shop 10269433).
+  The price is computed from cents rather than money_without_currency, whose
+  separators follow the presentment currency, not shop.money_format.
+{%- endcomment -%}
+{%- comment -%}booster:offer_price:start{%- endcomment -%}
+          "price": "{{ variant.price | divided_by: 100.0 }}",
+          "priceCurrency": "{{ cart.currency.iso_code | default: shop.currency }}",
+{%- comment -%}booster:offer_price:end{%- endcomment -%}
           "itemCondition": "https://schema.org/NewCondition",
-          "url": "{{ shop.secure_url }}{{ variant.url }}",
-          "sku": "{{ variant.sku }}",
-          "mpn": "{{ variant.barcode }}",
+          "url": "{{ ba_origin }}{{ variant.url }}",
+          "sku": {{ variant.sku | json }},
+          "mpn": {{ variant.barcode | json }},
           "availability" : "https://schema.org/{%- if variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
           "priceValidUntil": {{ "today" | date: '%s' | plus: 2592000 | date: "%Y-%m-%d" | json }},
         {%- if variant.barcode.size == 12 -%}
-          "gtin12": "{{ variant.barcode }}"
+          "gtin12": {{ variant.barcode | json }}
         {%- elsif variant.barcode.size == 13 -%}
-          "gtin13": "{{ variant.barcode }}"
+          "gtin13": {{ variant.barcode | json }}
         {%- else -%}
-          "gtin14": "{{ variant.barcode }}"
+          "gtin14": {{ variant.barcode | json }}
         {%- endif -%}
 {%- assign ba_refund_url = booster_config.custom_refund_policy_url -%}
 {%- if ba_refund_url == blank -%}
@@ -411,7 +458,7 @@ Organization and Website Schema Markup
             "@type": "MerchantReturnPolicy",
             "applicableCountry": "US",
             "returnPolicyCountry": "US",
-            "merchantReturnLink": "{{ ba_refund_url }}"
+            "merchantReturnLink": {{ ba_refund_url | json }}
 {%- if booster_config.return_policy_category == 'finite_window' -%}
             ,"returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow"
 {%- if booster_config.merchant_return_days != blank -%}
@@ -446,7 +493,7 @@ Organization and Website Schema Markup
 {%- if ba_shipping_url != blank -%}
           ,"shippingDetails": {
             "@type": "OfferShippingDetails",
-            "shippingSettingsLink": "{{ ba_shipping_url }}",
+            "shippingSettingsLink": {{ ba_shipping_url | json }},
             "shippingDestination": {
               "@type": "DefinedRegion",
               "addressCountry": "US"
@@ -454,7 +501,7 @@ Organization and Website Schema Markup
 {%- if booster_config.shipping_rate_value != blank -%}
             ,"shippingRate": {
               "@type": "MonetaryAmount",
-              "value": "{{ booster_config.shipping_rate_value }}",
+              "value": {{ booster_config.shipping_rate_value | json }},
               "currency": "{{ shop.currency }}"
             }
 {%- endif -%}
@@ -764,9 +811,12 @@ Organization and Website Schema Markup
 {%- endif -%}
 }
 </script>
+{%- endunless -%}
 {%- comment -%}
 Breadcrumb Schema Markup (Home > Collection > Product)
 {%- endcomment -%}
+{%- comment -%}booster:product_breadcrumb:start{%- endcomment -%}
+{%- unless booster_config.schema_disabled contains 'breadcrumbs' -%}
 {%- assign bc_col = collection -%}
 {%- if bc_col == blank -%}{%- assign bc_col = product.collections.first -%}{%- endif -%}
 <script type="application/ld+json">
@@ -776,26 +826,29 @@ Breadcrumb Schema Markup (Home > Collection > Product)
     "itemListElement": [
       {"@type": "ListItem","position": 1,"name": "Home","item": "{{ shop.secure_url }}"}
       {%- if bc_col != blank -%},
-      {"@type": "ListItem","position": 2,"name": {{ bc_col.title | json }},"item": "{{ shop.secure_url }}{{ bc_col.url }}"},
-      {"@type": "ListItem","position": 3,"name": {{ product.title | json }},"item": "{{ shop.secure_url }}{{ product.url }}"}
+      {"@type": "ListItem","position": 2,"name": {{ bc_col.title | json }},"item": "{{ ba_origin }}{{ bc_col.url }}"},
+      {"@type": "ListItem","position": 3,"name": {{ product.title | json }},"item": "{{ ba_origin }}{{ product.url }}"}
       {%- else -%},
-      {"@type": "ListItem","position": 2,"name": {{ product.title | json }},"item": "{{ shop.secure_url }}{{ product.url }}"}
+      {"@type": "ListItem","position": 2,"name": {{ product.title | json }},"item": "{{ ba_origin }}{{ product.url }}"}
       {%- endif -%}
     ]
   }
 </script>
+{%- endunless -%}
+{%- comment -%}booster:product_breadcrumb:end{%- endcomment -%}
 {%- endif -%}
 {%- elsif template.name == 'collection' or template == 'collection' -%}
 {%- if booster_config.google_snippets_enabled -%}
 {%- comment -%}
 Collection (CollectionPage + ItemList) and Breadcrumb Schema Markup
 {%- endcomment -%}
+{%- unless booster_config.schema_disabled contains 'collection' -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     "name": {{ collection.title | json }},
-    "url": "{{ shop.secure_url }}{{ collection.url }}",
+    "url": "{{ ba_origin }}{{ collection.url }}",
     {%- if collection.description != blank -%}
     "description": {{ collection.description | strip_html | truncate: 500 | json }},
     {%- endif -%}
@@ -808,49 +861,55 @@ Collection (CollectionPage + ItemList) and Breadcrumb Schema Markup
           "@type": "ListItem",
           "position": {{ forloop.index }},
           "name": {{ product.title | json }},
-          "url": "{{ shop.secure_url }}{{ product.url }}"
+          "url": "{{ ba_origin }}{{ product.url }}"
         }{%- unless forloop.last -%},{%- endunless -%}
         {%- endfor -%}
       ]
     }
   }
 </script>
+{%- endunless -%}
+{%- unless booster_config.schema_disabled contains 'breadcrumbs' -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     "itemListElement": [
       {"@type": "ListItem","position": 1,"name": "Home","item": "{{ shop.secure_url }}"},
-      {"@type": "ListItem","position": 2,"name": {{ collection.title | json }},"item": "{{ shop.secure_url }}{{ collection.url }}"}
+      {"@type": "ListItem","position": 2,"name": {{ collection.title | json }},"item": "{{ ba_origin }}{{ collection.url }}"}
     ]
   }
 </script>
+{%- endunless -%}
 {%- endif -%}
 {%- elsif template.name == 'blog' or template == 'blog' -%}
 {%- if booster_config.google_snippets_enabled -%}
+{%- unless booster_config.schema_disabled contains 'blog' -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Blog",
-    "mainEntityOfPage": {"@type": "WebPage","@id": "{{ shop.secure_url }}{{ blog.url }}"},
+    "mainEntityOfPage": {"@type": "WebPage","@id": "{{ ba_origin }}{{ blog.url }}"},
     "publisher": {
       "@type": "Organization",
       "name": "{{ shop.name }}",
       "description": {{ shop.description | json }}
     },
-    "url": "{{ shop.secure_url }}{{ blog.url }}",
-    "name": "{{ blog.title }}"
+    "url": "{{ ba_origin }}{{ blog.url }}",
+    "name": {{ blog.title | json }}
   }
 </script>
+{%- endunless -%}
 {%- endif -%}
 {%- elsif template.name == 'article' or template == 'article' -%}
 {%- if booster_config.google_snippets_enabled -%}
+{%- unless booster_config.schema_disabled contains 'article' -%}
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Article",
     "mainEntityOfPage": {{ canonical_url | json }},
-    "url": "{{ shop.secure_url }}{{ article.url }}",
+    "url": "{{ ba_origin }}{{ article.url }}",
     "author": {{ article.author | json }},
     "name": {{ article.title | json }},
     "publisher": {
@@ -870,6 +929,7 @@ Collection (CollectionPage + ItemList) and Breadcrumb Schema Markup
     {%- if article.excerpt.size > 0 -%}"description": {{ article.excerpt | strip_html | json }} {%- else -%}"description": {{ article.content | strip_html | json }} {%- endif -%},"articleBody": {{ article.content | strip_html | json }}
   }
 </script>
+{%- endunless -%}
 {%- endif -%}
 {%- elsif template == '404' -%}
 <script type="text/javascript">
@@ -906,6 +966,7 @@ nothing (no empty or malformed FAQPage). Gated on google_snippets_enabled like
 all other Booster schema.
 {%- endcomment -%}
 {%- if booster_config.google_snippets_enabled -%}
+{%- unless booster_config.schema_disabled contains 'faq' -%}
   {%- assign booster_faqs = blank -%}
   {%- if template.name == 'product' or template == 'product' -%}
     {%- assign booster_faqs = product.metafields.custom.faqs.value -%}
@@ -941,5 +1002,6 @@ all other Booster schema.
 </script>
     {%- endif -%}
   {%- endif -%}
+{%- endunless -%}
 {%- endif -%}
 <!-- end of Booster Apps SEO -->
